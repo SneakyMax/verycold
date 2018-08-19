@@ -1,0 +1,13 @@
+# Made using Asset Forge (1.3)
+
+:models
+City/wall_window[(0, 0, 0);(0.0, 0.0, 0.0);(1.0, 3.0, 3.0);wall_window_5;lightStone+lightStone+stone]
+
+:materials
+stone[RGBA(0.667, 0.663, 0.737, 1.000);]
+lightStone[RGBA(0.812, 0.808, 0.855, 1.000);]
+glass[RGBA(0.298, 0.314, 0.365, 1.000);]
+
+:textures
+
+:extra

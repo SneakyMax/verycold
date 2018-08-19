@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/floortiled20x40.model.obj-1bbc4fad1f78a322c7e5a53a3786a796.mesh"
+
+[deps]
+
+files=[ "res://.import/floortiled20x40.model.obj-1bbc4fad1f78a322c7e5a53a3786a796.mesh" ]
+
+source_file="res://Models/AssetForge/objs/floortiled20x40/floortiled20x40.model.obj"
+dest_files=[ "res://.import/floortiled20x40.model.obj-1bbc4fad1f78a322c7e5a53a3786a796.mesh", "res://.import/floortiled20x40.model.obj-1bbc4fad1f78a322c7e5a53a3786a796.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )

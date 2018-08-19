@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/window1x4x4.obj-986c0d78934e6ea3f7c894bf5d11412e.mesh"
+
+[deps]
+
+files=[ "res://.import/window1x4x4.obj-986c0d78934e6ea3f7c894bf5d11412e.mesh" ]
+
+source_file="res://Models/AssetForge/objs/window1x4x4/window1x4x4.obj"
+dest_files=[ "res://.import/window1x4x4.obj-986c0d78934e6ea3f7c894bf5d11412e.mesh", "res://.import/window1x4x4.obj-986c0d78934e6ea3f7c894bf5d11412e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )

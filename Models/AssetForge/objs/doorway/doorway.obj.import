@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/doorway.obj-fea5c3827830d56830a698f30b78d9f1.mesh"
+
+[deps]
+
+files=[ "res://.import/doorway.obj-fea5c3827830d56830a698f30b78d9f1.mesh" ]
+
+source_file="res://Models/AssetForge/objs/doorway/doorway.obj"
+dest_files=[ "res://.import/doorway.obj-fea5c3827830d56830a698f30b78d9f1.mesh", "res://.import/doorway.obj-fea5c3827830d56830a698f30b78d9f1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )

@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/desk2.obj-272067cd7a07526f08b211bf6f695bae.mesh"
+
+[deps]
+
+files=[ "res://.import/desk2.obj-272067cd7a07526f08b211bf6f695bae.mesh" ]
+
+source_file="res://Models/AssetForge/objs/desk2/desk2.obj"
+dest_files=[ "res://.import/desk2.obj-272067cd7a07526f08b211bf6f695bae.mesh", "res://.import/desk2.obj-272067cd7a07526f08b211bf6f695bae.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )

@@ -1,0 +1,14 @@
+# Made using Asset Forge (1.3)
+
+:models
+Primitives/block_default[(-0.45, 0, -1.5);(0.0, 0.0, 0.0);(0.1, 4.0, 4.0);block_default_12;_defaultMat]
+Buildings/window_double[(-1, 0.3, -1.5);(0.0, 0.0, 0.0);(1.0, 4.0, 4.0);window_double_15;element+glass]
+
+:materials
+_defaultMat[RGBA(1.000, 1.000, 1.000, 1.000);]
+element[RGBA(0.945, 0.949, 0.965, 1.000);]
+glass[RGBA(0.298, 0.314, 0.365, 1.000);]
+
+:textures
+
+:extra

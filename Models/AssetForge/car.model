@@ -1,0 +1,26 @@
+# Made using Asset Forge (1.3)
+
+:models
+Vehicles/wheel_small[(0.9, 0.3, -0.9);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);orangeSteel+blueSteel]
+Vehicles/wheel_small[(0.9, 0.3, 0.8);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);orangeSteel+blueSteel]
+Vehicles/wheel_small[(-0.9, 0.3, 0.8);(0.0, 180.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);orangeSteel+blueSteel]
+Vehicles/wheel_small[(-0.9, 0.3, -0.9);(0.0, 180.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);orangeSteel+blueSteel]
+Vehicles/detail_fender[(0.75, 0.2, -0.9);(0.0, 0.0, 0.0);(0.5, 1.0, 1.0);(0.0, 0.0, 0.0);blueSteel]
+Vehicles/detail_fender[(0.75, 0.2, 0.8);(0.0, 0.0, 0.0);(0.5, 1.0, 1.0);(0.0, 0.0, 0.0);blueSteel]
+Vehicles/detail_fender[(-0.75, 0.2, 0.8);(0.0, 180.0, 0.0);(0.5, 1.0, 1.0);(0.0, 0.0, 0.0);blueSteel]
+Vehicles/detail_fender[(-0.75, 0.2, -0.9);(0.0, 180.0, 0.0);(0.5, 1.0, 1.0);(0.0, 0.0, 0.0);blueSteel]
+Vehicles/hood_sleek[(0, 0.3, -1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);hood_sleek_21;blueSteel+blueSteel+blueSteel+orangeSteel]
+Vehicles/windshield_default[(0, 0.3, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);windshield_default_22;blueSteel+blueSteel+orangeSteel+blueSteel]
+Vehicles/trunk_default[(0, 0.3, 1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);trunk_default_24;blueSteel+blueSteel+blueSteel+orangeSteel]
+
+:materials
+tire[RGBA(0.298, 0.314, 0.365, 1.000);]
+_defaultMat[RGBA(1.000, 1.000, 1.000, 1.000);]
+blueSteel[RGBA(0.812, 0.808, 0.855, 1.000);]
+orangeSteel[RGBA(0.440, 0.437, 0.487, 1.000);]
+light[RGBA(1.000, 1.000, 1.000, 1.000);]
+glass[RGBA(0.298, 0.314, 0.365, 1.000);]
+
+:textures
+
+:extra

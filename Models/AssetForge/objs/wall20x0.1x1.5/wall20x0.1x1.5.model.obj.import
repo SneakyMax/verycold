@@ -1,0 +1,17 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/wall20x0.1x1.5.model.obj-6064d8df169e9cd80ca2470de65293a7.mesh"
+
+[deps]
+
+files=[ "res://.import/wall20x0.1x1.5.model.obj-6064d8df169e9cd80ca2470de65293a7.mesh" ]
+
+source_file="res://Models/AssetForge/objs/wall20x0.1x1.5/wall20x0.1x1.5.model.obj"
+dest_files=[ "res://.import/wall20x0.1x1.5.model.obj-6064d8df169e9cd80ca2470de65293a7.mesh", "res://.import/wall20x0.1x1.5.model.obj-6064d8df169e9cd80ca2470de65293a7.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
