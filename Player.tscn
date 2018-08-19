@@ -5,7 +5,7 @@
 
 [sub_resource type="PhysicsMaterial" id=1]
 
-friction = 1.0
+friction = 0.8
 rough = false
 bounce = 0.0
 absorbent = false
@@ -14,18 +14,70 @@ absorbent = false
 
 script/source = "extends RigidBody
 
-# class member variables go here, for example:
-# var a = 2
-# var b = \"textvar\"
+export(float, 0, 100) var max_move_speed = 1
+export(float, 0, 100) var accel_speed = 1;
+export(float, 0, 2) var mouse_sensitivity_x = 1;
+export(float, 0, 2) var mouse_sensitivity_y = 1;
+
+var desiredMoveVector = Vector2()
+var yaw : Spatial
+var pitch : Spatial
 
 func _ready():
-	var handsAnimator = get_node(\"Hands/AnimationPlayer\").play(\"default\")
+	yaw = get_node(\"Yaw\")
+	pitch = get_node(\"Yaw/Pitch\")
+	var handsAnimator = get_node(\"Yaw/Pitch/Hands/AnimationPlayer\").play(\"default\")
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+func _input(event):
+	var mouseMode = Input.get_mouse_mode()
+	if (event.is_action_pressed(\"escape\")):
+		if (mouseMode == Input.MOUSE_MODE_CAPTURED):
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			get_tree().quit()
+		get_tree().set_input_as_handled()
+		
+	
+func _unhandled_input(event):
+	var mouseMode = Input.get_mouse_mode()
+	if (event.is_action(\"fire\")):
+		if (mouseMode != Input.MOUSE_MODE_CAPTURED):
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		else:
+			pass
+	if (event.is_action(\"fire_alt\")):
+		pass
+	if (event.is_action(\"jump\")):
+		pass
+		
+	if (event is InputEventMouseMotion and mouseMode == Input.MOUSE_MODE_CAPTURED):
+		yaw.set_transform( yaw.get_transform() \\
+			.rotated(Vector3.UP, deg2rad(-event.relative.x) * mouse_sensitivity_x))
+			
+		pitch.set_transform( pitch.get_transform() \\
+			.rotated(pitch.get_transform().basis.x, deg2rad(event.relative.y) * mouse_sensitivity_x))
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-"
+	
+func _process(delta):
+	var moveVector = Vector2(
+		Input.get_action_strength(\"strafe_left\") - Input.get_action_strength(\"strafe_right\"),
+		Input.get_action_strength(\"move_forward\") - Input.get_action_strength(\"move_backward\")
+		)
+	
+	desiredMoveVector = moveVector.normalized()
+	
+	Input.get_last_mouse_speed()
+
+func _integrate_forces(state):
+	var localAccelVector = Vector3(desiredMoveVector.x, 0, desiredMoveVector.y) * accel_speed
+	var globalAccelVector = yaw.get_global_transform().basis.xform(localAccelVector);
+	state.add_force(globalAccelVector, Vector3())
+	
+	var flat_motion = Vector2(linear_velocity.x, linear_velocity.z)
+	if (flat_motion.length_squared() > max_move_speed * max_move_speed):
+		flat_motion = flat_motion.normalized() * max_move_speed
+		set_linear_velocity(Vector3(flat_motion.x, linear_velocity.y, flat_motion.y))"
 
 [sub_resource type="CapsuleShape" id=3]
 
@@ -39,7 +91,7 @@ collision_layer = 1
 collision_mask = 1
 mode = 2
 mass = 1.0
-friction = 1.0
+friction = 0.8
 bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.0
@@ -48,7 +100,7 @@ continuous_cd = false
 contacts_reported = 0
 contact_monitor = false
 sleeping = false
-can_sleep = true
+can_sleep = false
 axis_lock_linear_x = false
 axis_lock_linear_y = false
 axis_lock_linear_z = false
@@ -60,16 +112,31 @@ linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 script = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+max_move_speed = 3.0
+accel_speed = 20.0
+mouse_sensitivity_x = 0.169
+mouse_sensitivity_y = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 1.10117, 0 )
 shape = SubResource( 3 )
 disabled = false
 
-[node name="View" type="Spatial" parent="."]
+[node name="Humanoid Reference" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.364192, 0, 0, 0, 0.364192, 0, 0, 0, 0.364192, 0, 0, 0 )
+visible = false
+_sections_unfolded = [ "Transform" ]
 
-[node name="Camera" type="Camera" parent="View"]
-transform = Transform( -1, 0, -2.62269e-007, 0, 1, 0, 2.62269e-007, 0, -1, 0, 1.72082, 0.00107408 )
+[node name="Yaw" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72082, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Pitch" type="Spatial" parent="Yaw"]
+_sections_unfolded = [ "Transform" ]
+
+[node name="Camera" type="Camera" parent="Yaw/Pitch"]
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0, 0 )
 keep_aspect = 1
 cull_mask = 1048575
 environment = null
@@ -84,11 +151,7 @@ near = 0.05
 far = 100.0
 _sections_unfolded = [ "Transform" ]
 
-[node name="Humanoid Reference" parent="View" instance=ExtResource( 1 )]
-transform = Transform( 0.364192, 0, 0, 0, 0.364192, 0, 0, 0, 0.364192, 0, 0, 0 )
-visible = false
+[node name="Hands" parent="Yaw/Pitch" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, -1.74846e-007, 0, 1, 0, 1.74846e-007, 0, 1, -0.213931, -2.05198, -0.293752 )
 _sections_unfolded = [ "Transform" ]
-
-[node name="Hands" parent="View" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.187739, -0.331158, -0.273956 )
 
