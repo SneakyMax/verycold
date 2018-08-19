@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/floor2.obj-433ec3c1375823e5d8e02f5cad6bff02.mesh"
+
+[deps]
+
+files=[ "res://.import/floor2.obj-433ec3c1375823e5d8e02f5cad6bff02.mesh" ]
+
+source_file="res://Models/Floor/floor2.obj"
+dest_files=[ "res://.import/floor2.obj-433ec3c1375823e5d8e02f5cad6bff02.mesh", "res://.import/floor2.obj-433ec3c1375823e5d8e02f5cad6bff02.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
