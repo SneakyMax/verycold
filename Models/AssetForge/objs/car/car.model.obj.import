@@ -15,3 +15,4 @@ dest_files=[ "res://.import/car.model.obj-96a708ba10551b1ec2e67fb31de24434.mesh"
 
 generate_tangents=true
 scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

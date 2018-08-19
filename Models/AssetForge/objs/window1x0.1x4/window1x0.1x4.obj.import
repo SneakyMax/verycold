@@ -15,3 +15,4 @@ dest_files=[ "res://.import/window1x0.1x4.obj-95a76307cd91449b33031035c11b18fe.m
 
 generate_tangents=true
 scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

@@ -15,3 +15,4 @@ dest_files=[ "res://.import/floortiled20x20.model.obj-5c140e02a0c2cf6e82cdcca746
 
 generate_tangents=true
 scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
