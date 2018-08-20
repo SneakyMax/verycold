@@ -1,0 +1,14 @@
+# Made using Asset Forge (1.3)
+
+:models
+Primitives/cylinder_half[(4.47E-08, 0.7, -0.5);(270.0, 180.0, 0.0);(1.0, 1.0, 0.3);cylinder_half_2;_defaultMat]
+Primitives/cylinder_half[(4.47E-08, 0.7, -0.5);(270.0, 180.0, 0.0);(1.0, 1.0, 0.3);cylinder_half_3;_defaultMat]
+
+:materials
+lightStone[RGBA(0.812, 0.808, 0.855, 1.000);]
+wood[RGBA(0.882, 0.579, 0.402, 1.000);]
+_defaultMat[RGBA(1.000, 1.000, 1.000, 1.000);]
+
+:textures
+
+:extra

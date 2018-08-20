@@ -1,0 +1,4 @@
+Lighter white:
+#CFCEDA
+Darker white:
+#AAA9BB
