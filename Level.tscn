@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Models/AssetForge/objs/window/window.model.obj" type="PackedScene" id=9]
 [ext_resource path="res://object scenes/floortiled10x10.tscn" type="PackedScene" id=10]
 [ext_resource path="res://object scenes/doorway.tscn" type="PackedScene" id=11]
+[ext_resource path="res://object scenes/wallWithOpening.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Environment" id=1]
 
@@ -255,7 +256,7 @@ far = 100.0
 _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -9.8, 2.1, -17.5 )
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -9.8, 2.1, -27.9 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.4, 1.6, 4.7 )
@@ -318,7 +319,6 @@ transform = Transform( 0.991875, -1.7546e-007, 2.19132e-015, 0, -7.64949e-008, -
 _sections_unfolded = [ "Transform" ]
 
 [node name="Lights" type="Spatial" parent="LargerRoom"]
-editor/display_folded = true
 
 [node name="Light1" type="Spatial" parent="LargerRoom/Lights"]
 editor/display_folded = true
@@ -511,6 +511,7 @@ transform = Transform( -0.375, 0, -6.55671e-008, 0, 0.75, 0, 3.27835e-008, 0, -0
 _sections_unfolded = [ "Transform" ]
 
 [node name="Windows" type="Spatial" parent="LargerRoom"]
+editor/display_folded = true
 
 [node name="Window" parent="LargerRoom/Windows" instance=ExtResource( 9 )]
 transform = Transform( -2.18557e-008, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-008, -5.8, 1.5, 39.9955 )
@@ -530,15 +531,18 @@ transform = Transform( -2.18557e-008, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-008, 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -15 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="SmallerFloor2" parent="SmallerRoom" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -25 )
+_sections_unfolded = [ "Transform" ]
+
 [node name="SmallerRoomWalls" type="Spatial" parent="SmallerRoom"]
-editor/display_folded = true
 
 [node name="Doorway" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 11 )]
 transform = Transform( -1.12775e-007, 0, 2.94, 0, 3.96, 0, -4.25612, 0, -2.12e-007, -8.5, 0, -7.8 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Wall3" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
-transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, -8.5, 0, -20.5 )
+transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, -8.5, 0, -30.5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Door Fill" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
@@ -546,10 +550,99 @@ transform = Transform( 0.138, 0, 0, 0, 0.774, 0, 0, 0, 1, -8.5, 3.9, -9.9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Wall4" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
-transform = Transform( -2.20551e-008, 0, 1, 0, 1.75, 0, -0.504562, 0, -4.37114e-008, -14, 0, -15.4 )
+transform = Transform( -2.20551e-008, 0, 1, 0, 1.75, 0, -0.983896, 0, -8.52372e-008, -14, 0, -20.2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Wall5" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
-transform = Transform( -2.20551e-008, 0, 1, 0, 1.75, 0, -0.504562, 0, -4.37114e-008, -3, 0, -15.4 )
+[node name="WallWithWindow" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 12 )]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1.78605, 0, -1, 0, -4.37114e-008, -3.01704, -1.2, -20.4 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="CeilingForSmallRoomAndTutorial" parent="SmallerRoom" instance=ExtResource( 3 )]
+transform = Transform( -2.40428e-007, 5.58006, -6.96894e-008, 0, -7.64949e-008, -0.5, -1.02659, -4.55238e-008, 5.68545e-016, -14.1, 7.2, -20.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Lights" type="Spatial" parent="SmallerRoom"]
+
+[node name="Light7" type="Spatial" parent="SmallerRoom/Lights"]
+transform = Transform( -8.74228e-008, 0, 1, 0, 1, 0, -2, 0, -4.37114e-008, -30.5, 0, 10.5 )
+
+[node name="OmniLight" type="OmniLight" parent="SmallerRoom/Lights/Light7"]
+transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 14.75, 6.3, 21.5 )
+layers = 1
+light_color = Color( 0.980392, 0.980392, 0.945098, 1 )
+light_energy = 2.0
+light_indirect_energy = 2.8
+light_negative = false
+light_specular = 0.7
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.15
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+omni_range = 13.7318
+omni_attenuation = 1.0
+omni_shadow_mode = 1
+omni_shadow_detail = 1
+_sections_unfolded = [ "Light" ]
+
+[node name="ceilingLight" parent="SmallerRoom/Lights/Light7" instance=ExtResource( 7 )]
+transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 14.8, 6.3, 21.6 )
+
+[node name="TutorialRoom" type="Spatial" parent="."]
+
+[node name="SmallerFloor3" parent="TutorialRoom" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -25 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="SmallerFloor4" parent="TutorialRoom" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -15 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TutorialRoomWalls" type="Spatial" parent="TutorialRoom"]
+editor/display_folded = true
+
+[node name="Wall5" parent="TutorialRoom/TutorialRoomWalls" instance=ExtResource( 3 )]
+transform = Transform( -2.20551e-008, 0, 1, 0, 1.75, 0, -0.983896, 0, -8.52372e-008, 8, 0, -20.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Wall6" parent="TutorialRoom/TutorialRoomWalls" instance=ExtResource( 3 )]
+transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -27.6 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Wall7" parent="TutorialRoom/TutorialRoomWalls" instance=ExtResource( 3 )]
+transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Lights" type="Spatial" parent="TutorialRoom"]
+
+[node name="Light8" type="Spatial" parent="TutorialRoom/Lights"]
+transform = Transform( -8.74228e-008, 0, 1, 0, 1, 0, -2, 0, -4.37114e-008, -30.5, 0, 10.5 )
+
+[node name="OmniLight" type="OmniLight" parent="TutorialRoom/Lights/Light8"]
+transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 15.75, 6.3, 33.2 )
+layers = 1
+light_color = Color( 0.980392, 0.980392, 0.945098, 1 )
+light_energy = 2.2
+light_indirect_energy = 2.8
+light_negative = false
+light_specular = 0.7
+light_bake_mode = 1
+light_cull_mask = -1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_bias = 0.15
+shadow_contact = 0.0
+shadow_reverse_cull_face = false
+editor_only = false
+omni_range = 13.7318
+omni_attenuation = 1.0
+omni_shadow_mode = 1
+omni_shadow_detail = 1
+_sections_unfolded = [ "Light" ]
+
+[node name="ceilingLight" parent="TutorialRoom/Lights/Light8" instance=ExtResource( 7 )]
+transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 15.8, 6.3, 33.3 )
 
