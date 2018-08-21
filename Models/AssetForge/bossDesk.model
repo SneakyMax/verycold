@@ -1,0 +1,21 @@
+# Made using Asset Forge (1.3)
+
+:models
+Western/column[(-1, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);column_8;woodDark]
+Western/column[(-1, 0, -0.8);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);column_9;woodDark]
+Western/column[(1.5, 0, -0.8);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);column_10;woodDark]
+Western/column[(1.5, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);column_11;woodDark]
+Western/porch_floor_steps[(0.7, 1, -0.55);(0.0, 270.0, 0.0);(2.1, 1.0, 2.6);porch_floor_steps_13;wood+woodDark]
+Primitives/block_default[(0.75, 1.1, 0.25);(0.0, 0.0, 0.0);(0.3, 0.2, 0.1);block_default_14;_defaultMat]
+Primitives/block_default[(0.75, 1.3, 0.15);(0.0, 0.0, 0.0);(0.7, 0.4, 0.1);block_default_15;_defaultMat]
+Primitives/block_default[(1.65, 1.1, 0.15);(0.0, 90.0, 0.0);(0.5, 0.1, 0.3);block_default_16;_defaultMat]
+Primitives/block_default[(1.55, 0, 0);(0.0, 0.0, 0.0);(0.5, 0.7, 1.0);block_default_17;_defaultMat]
+
+:materials
+woodDark[RGBA(0.641, 0.422, 0.293, 1.000);]
+wood[RGBA(0.882, 0.579, 0.402, 1.000);]
+_defaultMat[RGBA(1.000, 1.000, 1.000, 1.000);]
+
+:textures
+
+:extra
