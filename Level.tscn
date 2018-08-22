@@ -554,6 +554,7 @@ transform = Transform( -2.40428e-007, 5.58006, -6.96894e-008, 0, -7.64949e-008, 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9, 6.2577, -19.1 )
 
 [node name="TutorialRoom" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="SmallerFloor3" parent="TutorialRoom" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -25 )
@@ -576,6 +577,7 @@ transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -27.6 )
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -13 )
 
 [node name="Lights" type="Spatial" parent="TutorialRoom"]
+editor/display_folded = true
 
 [node name="Ceiling Light" parent="TutorialRoom/Lights" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 6.26717, -21.1 )

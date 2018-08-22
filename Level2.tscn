@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://object scenes/building5.tscn" type="PackedScene" id=2]
@@ -7,7 +7,8 @@
 [ext_resource path="res://object scenes/building4.tscn" type="PackedScene" id=5]
 [ext_resource path="res://object scenes/building1.tscn" type="PackedScene" id=6]
 [ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=7]
-[ext_resource path="res://object scenes/car.tscn" type="PackedScene" id=8]
+[ext_resource path="res://object scenes/truck.tscn" type="PackedScene" id=8]
+[ext_resource path="res://object scenes/car.tscn" type="PackedScene" id=9]
 
 [node name="Level" type="Spatial"]
 _sections_unfolded = [ "Transform" ]
@@ -57,12 +58,17 @@ near = 0.05
 far = 100.0
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 4.3, 1.7, -0.7 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 1.7, -0.7 )
 
 [node name="Buildings" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="building" parent="Buildings" instance=ExtResource( 2 )]
 transform = Transform( -2.18557e-007, 0, 5, 0, 5, 0, -5, 0, -2.18557e-007, 12.5, 0, 9.1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="building13" parent="Buildings" instance=ExtResource( 2 )]
+transform = Transform( -5, 0, -4.37114e-007, 0, 5, 0, 4.37114e-007, 0, -5, -4.5, 0, 97 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="building2" parent="Buildings" instance=ExtResource( 3 )]
@@ -74,7 +80,11 @@ transform = Transform( -5, 0, -4.37114e-007, 0, 5, 0, 4.37114e-007, 0, -5, -10.4
 _sections_unfolded = [ "Transform" ]
 
 [node name="building11" parent="Buildings" instance=ExtResource( 3 )]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 4.6, 0, 50.5 )
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 17.7, 0, 47 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="building14" parent="Buildings" instance=ExtResource( 3 )]
+transform = Transform( -2.18557e-007, 0, 5, 0, 5, 0, -5, 0, -2.18557e-007, 28.2, 0, 51.8 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="building4" parent="Buildings" instance=ExtResource( 4 )]
@@ -103,6 +113,10 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="building10" parent="Buildings" instance=ExtResource( 6 )]
 transform = Transform( -2.18557e-007, 0, 5, 0, 5, 0, -5, 0, -2.18557e-007, -16.7, 0, 49.9 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="building12" parent="Buildings" instance=ExtResource( 6 )]
+transform = Transform( -2.18557e-007, 0, -5, 0, 5, 0, 5, 0, -2.18557e-007, -1.7, 0, 62.4 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="ground" type="Spatial" parent="."]
@@ -134,11 +148,27 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Cars" type="Spatial" parent="."]
 
-[node name="Car" parent="Cars" instance=ExtResource( 8 )]
+[node name="truck" parent="Cars" instance=ExtResource( 8 )]
+transform = Transform( 2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 5, 1.2, 55.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="truck2" parent="Cars" instance=ExtResource( 8 )]
+transform = Transform( -1.22392e-007, 0, 2.8, 0, 2.8, 0, -2.8, 0, -1.22392e-007, -12.4, 1.2, 41.9 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="truck3" parent="Cars" instance=ExtResource( 8 )]
+transform = Transform( -1.22392e-007, 0, -2.8, 0, 2.8, 0, 4.032, 0, -1.76244e-007, 29.3, 1.2, 36.6 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Car" parent="Cars" instance=ExtResource( 9 )]
 transform = Transform( -1.22392e-007, 0, 2.8, 0, 2.8, 0, -2.8, 0, -1.22392e-007, 4, 0.1, 19.4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Car2" parent="Cars" instance=ExtResource( 8 )]
+[node name="Car3" parent="Cars" instance=ExtResource( 9 )]
+transform = Transform( 2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 3.6, 0.1, 40.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Car2" parent="Cars" instance=ExtResource( 9 )]
 transform = Transform( -2.8, 0, -2.44784e-007, 0, 2.8, 0, 2.44784e-007, 0, -2.8, -26.1, 0.1, 49.1 )
 _sections_unfolded = [ "Transform" ]
 
