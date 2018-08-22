@@ -1,0 +1,493 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://object scenes/Gun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Models/gun_texture.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/circle_05_transparent.png" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends RigidBody
+
+export(float, 0, 100) var recall_accel
+export(float, 0, 100) var recall_max_speed
+export(float, 0, 100) var spin_speed
+export(float, 0, 100) var side_movement_force
+export(float, 0, 2) var side_movement_time = 1
+
+var sideMovementTime = 1
+var sideMovementElapsed = 0
+var sideMovementRight = false
+
+var player;
+var recalling = false
+var originalGravityScale = gravity_scale
+var pickupArea : Area
+
+func _ready():
+	pickupArea = get_node(\"Pickup Area\")
+	apply_torque_impulse(get_transform().basis.x * spin_speed)
+
+func glow():
+	get_node(\"Highlighted Gun\").visible = true
+	get_node(\"Gun\").visible = false
+	
+func unglow():
+	get_node(\"Highlighted Gun\").visible = false
+	get_node(\"Gun\").visible = true
+	
+func recall(left):
+	recalling = true
+	gravity_scale = 0
+	sideMovementRight = !left
+	
+func cantRecall():
+	recalling = false
+	gravity_scale = originalGravityScale
+	
+func _process(delta):
+	if (recalling):
+		sideMovementElapsed += delta
+		
+func _physics_process(delta):
+	if (recalling):
+		if (sideMovementElapsed < sideMovementTime):
+			var dir = player.pitch.global_transform.basis.x if sideMovementRight else -player.pitch.global_transform.basis.x
+			add_central_force(side_movement_force * dir)
+	
+func _integrate_forces(state):
+	if (!player || !recalling):
+		return
+		
+	var toPlayer = player.camera.global_transform.origin - global_transform.origin
+	state.add_central_force(toPlayer * recall_accel)
+	
+	if (state.linear_velocity.length_squared() > recall_max_speed * recall_max_speed):
+		state.linear_velocity = state.linear_velocity.normalized() * recall_max_speed;
+
+func _on_Pickup_Area_body_entered(body):
+	queue_free()
+	player.pickupGun()
+	set_collision_layer_bit(0, false)
+"
+
+[sub_resource type="SpatialMaterial" id=2]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+flags_do_not_receive_shadows = false
+flags_disable_ambient_light = false
+flags_ensure_correct_normals = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_billboard_keep_scale = false
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 1, 1, 1, 1 )
+albedo_texture = ExtResource( 2 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 1.0
+roughness_texture_channel = 0
+emission_enabled = true
+emission = Color( 0.501961, 0.501961, 0.501961, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Emission" ]
+
+[sub_resource type="SpatialMaterial" id=3]
+
+render_priority = 0
+flags_transparent = true
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+flags_do_not_receive_shadows = false
+flags_disable_ambient_light = false
+flags_ensure_correct_normals = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_billboard_keep_scale = false
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 1, 1, 1, 0.337255 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 1.0
+roughness_texture_channel = 0
+emission_enabled = true
+emission = Color( 1, 0.960784, 0, 1 )
+emission_energy = 1.5
+emission_operator = 0
+emission_on_uv2 = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Emission", "Rim", "Transmission" ]
+
+[sub_resource type="BoxShape" id=4]
+
+extents = Vector3( 0.0632877, 0.285868, 0.111728 )
+
+[sub_resource type="BoxShape" id=5]
+
+extents = Vector3( 0.0632877, 0.0869424, 0.352172 )
+
+[sub_resource type="Gradient" id=6]
+
+offsets = PoolRealArray( 0, 0.856397, 1 )
+colors = PoolColorArray( 1, 0, 0, 1, 0.0339426, 0, 0, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=7]
+
+flags = 4
+gradient = SubResource( 6 )
+width = 2048
+_sections_unfolded = [ "gradient" ]
+
+[sub_resource type="Curve" id=8]
+
+min_value = 0.0
+max_value = 1.0
+bake_resolution = 100
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -3.64284, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+
+flags = 4
+width = 2048
+curve = SubResource( 8 )
+_sections_unfolded = [ "curve" ]
+
+[sub_resource type="ParticlesMaterial" id=10]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 0
+flag_align_y = false
+flag_rotate_y = false
+flag_disable_z = false
+spread = 0.0
+flatness = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.0
+initial_velocity_random = 0.0
+angular_velocity = 0.0
+angular_velocity_random = 0.0
+linear_accel = 0.0
+linear_accel_random = 0.0
+radial_accel = 0.0
+radial_accel_random = 0.0
+tangential_accel = 0.0
+tangential_accel_random = 0.0
+damping = 0.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 1.0
+scale_random = 0.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = false
+_sections_unfolded = [ "Animation", "Emission Shape", "Hue Variation", "Initial Velocity", "Resource", "Spread", "Trail", "color_ramp", "scale_curve" ]
+
+[sub_resource type="SpatialMaterial" id=11]
+
+render_priority = 0
+flags_transparent = true
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+flags_ensure_correct_normals = false
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 1
+params_cull_mode = 0
+params_depth_draw_mode = 3
+params_line_width = 0.1
+params_point_size = 1.0
+params_billboard_mode = 3
+params_billboard_keep_scale = false
+params_grow = false
+params_use_alpha_scissor = false
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = 0
+albedo_color = Color( 1, 1, 1, 1 )
+albedo_texture = ExtResource( 3 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 1.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo", "Flags", "Parameters", "Subsurf Scatter", "Vertex Color", "albedo_texture" ]
+
+[sub_resource type="QuadMesh" id=12]
+
+material = SubResource( 11 )
+custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+flip_faces = false
+size = Vector2( 0.3, 0.3 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="SphereShape" id=13]
+
+radius = 1.4215
+
+[sub_resource type="SphereShape" id=14]
+
+radius = 1.42896
+
+[node name="Flying Gun" type="RigidBody"]
+input_ray_pickable = true
+input_capture_on_drag = false
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+physics_material_override = null
+gravity_scale = 0.1
+custom_integrator = false
+continuous_cd = true
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+linear_velocity = Vector3( 0, 0, 0 )
+linear_damp = -1.0
+angular_velocity = Vector3( 0, 0, 0 )
+angular_damp = -1.0
+script = SubResource( 1 )
+_sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear" ]
+recall_accel = 10.0
+recall_max_speed = 10.0
+spin_speed = 0.5
+side_movement_force = 50.0
+side_movement_time = 0.4
+
+[node name="Gun" parent="." instance=ExtResource( 1 )]
+editor/display_folded = true
+transform = Transform( -0.75, 0, 6.55671e-008, 0, 0.75, 0, -6.55671e-008, 0, -0.75, 0, 0, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Highlighted Gun" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.75, 0, 6.55671e-008, 0, 0.75, 0, -6.55671e-008, 0, -0.75, 0, 0, 0 )
+visible = false
+_sections_unfolded = [ "Transform" ]
+
+[node name="MeshInstance" parent="Highlighted Gun" index="0"]
+material/0 = SubResource( 2 )
+
+[node name="Glow" parent="Highlighted Gun" instance=ExtResource( 1 )]
+transform = Transform( 1.3573, 0, -2.13163e-014, 0, 1.3573, 0, 2.13163e-014, 0, 1.3573, 7.32497e-008, -0.139806, -0.0711843 )
+
+[node name="MeshInstance" parent="Highlighted Gun/Glow" index="0"]
+material/0 = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0990103, -0.208082 )
+shape = SubResource( 4 )
+disabled = false
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.310561, 0.0495731 )
+shape = SubResource( 5 )
+disabled = false
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17147, -0.198528 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+emitting = true
+amount = 3000
+lifetime = 5.0
+one_shot = false
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_aabb = AABB( -4.00635, -4, -3.70996, 8, 8, 8 )
+local_coords = false
+draw_order = 2
+process_material = SubResource( 10 )
+draw_passes = 1
+draw_pass_1 = SubResource( 12 )
+_sections_unfolded = [ "Draw Passes", "Drawing", "Geometry", "Lod", "Process Material", "Time", "draw_pass_1", "process_material" ]
+
+[node name="Target Area" type="Area" parent="."]
+input_ray_pickable = true
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 2
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="Target Area"]
+shape = SubResource( 13 )
+disabled = false
+
+[node name="Pickup Area" type="Area" parent="."]
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 4
+collision_mask = 4
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="Pickup Area"]
+shape = SubResource( 14 )
+disabled = false
+
+[connection signal="body_entered" from="Pickup Area" to="." method="_on_Pickup_Area_body_entered"]
+
+[editable path="Highlighted Gun"]
+
+[editable path="Highlighted Gun/Glow"]
