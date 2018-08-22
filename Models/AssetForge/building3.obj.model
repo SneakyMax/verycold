@@ -1,0 +1,38 @@
+# Made using Asset Forge (1.3)
+
+:models
+City/wall_straight[(0, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);wall_straight_112;stone]
+City/wall_straight[(1, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);wall_straight_114;stone]
+City/wall_straight[(0, 1, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);wall_straight_115;stone]
+City/wall_straight[(0, 1, 0);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);wall_straight_116;stone]
+City/wall_straight[(1, 1, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);wall_straight_117;stone]
+Buildings/window_round_detail[(0, 1, -1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);window_round_detail_118;element+glass]
+Buildings/window_width[(0, 1.1, -1.1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);window_width_120;element+glass]
+City/wall_straight[(0, 0, 0);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);wall_straight_121;stone]
+Buildings/door_wide[(0, 0, -1.1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);door_wide_125;element+glass]
+City/fence_modern%[(-1.1, 0, -1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);fence_modern%_127;lightStone]
+City/fence_modern%[(-2.24E-08, 0, -1);(0.0, 90.0, 0.0);(1.0, 1.0, 1.2);fence_modern%_128;lightStone]
+City/fence_modern%[(1.1, 0, -1);(0.0, 180.0, 0.0);(1.0, 1.0, 1.0);fence_modern%_129;lightStone]
+City/wall_straight[(0, 0, 1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);wall_straight_130;stone]
+City/roof_side[(0, 1, 1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);roof_side_132;stone+lightStone]
+City/wall_overhang[(0, 1, -1);(0.0, 90.0, 0.0);(1.0, 1.0, 1.2);wall_overhang_133;lightStone]
+City/fence_modern%[(-0.05, 1, 1);(0.0, 180.0, 0.0);(0.9, 1.0, 1.0);fence_modern%_134;lightStone]
+City/fence_modern%[(1, 1, 1);(0.0, 180.0, 0.0);(1.0, 1.0, 1.0);fence_modern%_135;lightStone]
+City/fence_modern%[(0, 1, 1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);fence_modern%_136;lightStone]
+City/wall_straight[(0, 1, 1);(0.0, 270.0, 0.0);(1.0, 1.0, 1.0);wall_straight_137;stone]
+City/roof_factorySlant[(0, 2, 0);(0.0, 90.0, 0.0);(1.0, 1.0, 1.0);roof_factorySlant_138;darkStone+lightStone+stone+glass]
+Buildings/door[(0, 1.1, 1.1);(0.0, 90.0, 0.0);(1.0, 1.0, 1.0);door_139;element+glass]
+City/detail_bricks[(-1, 1, 0);(0.0, 180.0, 0.0);(1.0, 1.0, 1.0);detail_bricks_140;lightStone]
+City/detail_bricks[(1, 1, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);detail_bricks_141;lightStone]
+
+:materials
+stone[RGBA(0.667, 0.663, 0.737, 1.000);]
+element[RGBA(0.945, 0.949, 0.965, 1.000);]
+glass[RGBA(0.298, 0.314, 0.365, 1.000);]
+lightStone[RGBA(0.812, 0.808, 0.855, 1.000);]
+darkStone[RGBA(0.431, 0.431, 0.478, 1.000);]
+_defaultMat[RGBA(1.000, 1.000, 1.000, 1.000);]
+
+:textures
+
+:extra

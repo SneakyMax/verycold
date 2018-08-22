@@ -1,0 +1,12 @@
+# Made using Asset Forge (www.assetforge.io) version 1.3 
+
+newmtl border (Instance)
+Ka 0.000000 0.000000 0.000000 
+Kd 0.812 0.808 0.855 
+Ks 0.330000 0.330000 0.330000 
+
+newmtl bricks (Instance)
+Ka 0.000000 0.000000 0.000000 
+Kd 0.667 0.663 0.733 
+Ks 0.330000 0.330000 0.330000 
+
