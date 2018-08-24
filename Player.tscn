@@ -317,6 +317,5 @@ texture = ExtResource( 5 )
 stretch_mode = 5
 _sections_unfolded = [ "Mouse", "Rect", "texture" ]
 
-[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
 
 [editable path="Yaw/Pitch/Hands"]
