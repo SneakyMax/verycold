@@ -33,6 +33,9 @@ var targetGun : RayCast
 var shotGun
 var camera : Camera
 
+var lvl1Text: Label
+var lvl2Text: Label
+
 var hasGun : bool = true
 
 func _ready():
@@ -43,6 +46,8 @@ func _ready():
 	targetGun = get_node(\"Yaw/Pitch/Camera/Target Gun\")
 	var handsAnimator = get_node(\"Yaw/Pitch/Hands/AnimationPlayer\").play(\"default\")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	lvl1Text = get_node(\"/root/Level/Lvl1TextArea/Lvl1TextLabel\")
+	lvl2Text = get_node(\"/root/Level/Lvl2TextArea/Lvl2TextLabel\")
 	
 func _input(event):
 	var mouseMode = Input.get_mouse_mode()
@@ -127,7 +132,55 @@ func pickupGun():
 	shotGun = null
 	hasGun = true
 	get_node(\"Yaw/Pitch/Gun\").visible = true
-	"
+	
+
+func _on_Lvl1TextArea_body_entered(body):
+	var t = Timer.new()
+	t.set_wait_time(0.5)
+	t.set_one_shot(true)
+	self.add_child(t)
+	lvl1Text.text = (\"A\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1Text.text = (\"LITTLE\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1Text.text = (\"LESS\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1Text.text = (\"CONVER\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1Text.text = (\"SATION\")
+	t.start()
+	yield(t, \"timeout\")
+	t.queue_free()
+	lvl1Text.text = (\"\")
+	lvl1Text.percent_visible = 0;
+	
+func _on_Lvl2TextArea_body_entered(body):
+	var t = Timer.new()
+	t.set_wait_time(0.5)
+	t.set_one_shot(true)
+	self.add_child(t)
+	lvl2Text.text = (\"A\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl2Text.text = (\"LITTLE\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl2Text.text = (\"MORE\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl2Text.text = (\"ACTION\")
+	t.start()
+	yield(t, \"timeout\")
+	t.queue_free()
+	lvl2Text.text = (\"\")
+	lvl2Text.percent_visible = 0;
+	
+	
+"
 
 [sub_resource type="CapsuleShape" id=3]
 
