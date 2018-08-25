@@ -211,9 +211,10 @@ script/source = "extends Area
 # Declare member variables here. Examples:
 # var a = 2
 # var b = \"text\"
+var TutorialEndText: Label
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	TutorialEndText = get_node(\"/root/Level/TutorialEndArea/TutorialEndLabel\")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -222,10 +223,43 @@ func _ready():
 func _on_TutorialEndArea_body_entered(body):
 	if(body.get_filename() == \"res://Flying Gun.tscn\"):
 		var door = get_node(\"/root/Level/SmallerRoom/SmallerRoomWalls/DoorBlocker\")
+		
+		var t = Timer.new()
+		t.set_wait_time(0.5)
+		t.set_one_shot(true)
+		self.add_child(t)
+		TutorialEndText.text = (\"RIGHT\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"CLICK:\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"RETRIEVE\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"RIGHT\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"LEFT\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"CLICK:\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"RETRIEVE\")
+		t.start()
+		yield(t, \"timeout\")
+		TutorialEndText.text = (\"LEFT\")
+		t.start()
+		yield(t, \"timeout\")
+		t.queue_free()
+		TutorialEndText.text = (\"\")
+		TutorialEndText.percent_visible = 0;
+		
 		if(door):
 			door.queue_free()
-	print(body.get_class())
-	print(body.get_filename())
+	
+	
 "
 
 [sub_resource type="BoxShape" id=6]
@@ -561,6 +595,7 @@ transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, -6.
 transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 6.7, 6.1, 6.2 )
 
 [node name="SmallerRoom" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="SmallerFloor" parent="SmallerRoom" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -15 )
@@ -571,6 +606,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -25 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="SmallerRoomWalls" type="Spatial" parent="SmallerRoom"]
+editor/display_folded = true
 
 [node name="Wall3" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, -8.5, 0, -30.5 )
@@ -638,6 +674,7 @@ compress = false
 data = SubResource( 4 )
 
 [node name="Lvl1TextArea" type="Area" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.87361, 2.97929, 1.695 )
 input_ray_pickable = false
 input_capture_on_drag = false
@@ -690,6 +727,7 @@ max_lines_visible = -1
 _sections_unfolded = [ "Custom Fonts", "custom_fonts/font" ]
 
 [node name="TutorialStartTextArea" type="Area" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.87361, 2.97929, -20.305 )
 input_ray_pickable = false
 input_capture_on_drag = false
@@ -769,6 +807,27 @@ script = SubResource( 7 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 9.05, -1.2, 1.6, -1 )
 shape = SubResource( 6 )
 disabled = false
+
+[node name="TutorialEndLabel" type="Label" parent="TutorialEndArea"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1027.0
+margin_bottom = 604.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 19 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Custom Colors", "Custom Fonts" ]
 
 [connection signal="body_entered" from="Lvl1TextArea" to="Player" method="_on_Lvl1TextArea_body_entered"]
 [connection signal="body_entered" from="TutorialStartTextArea" to="Player" method="_on_TutorialStartTextArea_body_entered"]
