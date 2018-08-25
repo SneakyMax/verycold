@@ -35,6 +35,7 @@ var camera : Camera
 
 var lvl1Text: Label
 var lvl2Text: Label
+var lvl1TutorialText: Label
 
 var hasGun : bool = true
 
@@ -48,6 +49,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	lvl1Text = get_node(\"/root/Level/Lvl1TextArea/Lvl1TextLabel\")
 	lvl2Text = get_node(\"/root/Level/Lvl2TextArea/Lvl2TextLabel\")
+	lvl1TutorialText = get_node(\"/root/Level/TutorialStartTextArea/TutorialStartTextLabel\")
 	
 func _input(event):
 	var mouseMode = Input.get_mouse_mode()
@@ -180,6 +182,31 @@ func _on_Lvl2TextArea_body_entered(body):
 	lvl2Text.percent_visible = 0;
 	
 	
+
+
+func _on_TutorialStartTextArea_body_entered(body):
+	var t = Timer.new()
+	t.set_wait_time(0.5)
+	t.set_one_shot(true)
+	self.add_child(t)
+	lvl1TutorialText.text = (\"CLICK\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1TutorialText.text = (\"TO\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1TutorialText.text = (\"USE\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1TutorialText.text = (\"YOUR\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl1TutorialText.text = (\"GUN\")
+	t.start()
+	yield(t, \"timeout\")
+	t.queue_free()
+	lvl1TutorialText.text = (\"\")
+	lvl1TutorialText.percent_visible = 0;
 "
 
 [sub_resource type="CapsuleShape" id=3]
