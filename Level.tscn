@@ -638,7 +638,7 @@ compress = false
 data = SubResource( 4 )
 
 [node name="Lvl1TextArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.87361, 2.97929, -0.204999 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.87361, 2.97929, 1.695 )
 input_ray_pickable = false
 input_capture_on_drag = false
 space_override = 0
