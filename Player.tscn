@@ -123,7 +123,8 @@ func _physics_process(delta):
 func _integrate_forces(state):
 	var localAccelVector = Vector3(desiredMoveVector.x, 0, desiredMoveVector.y) * accel_speed
 	var globalAccelVector = yaw.get_global_transform().basis.xform(localAccelVector);
-	state.add_force(globalAccelVector, Vector3())
+	if globalAccelVector.length_squared() > 0.1:
+		state.add_force(globalAccelVector, Vector3())
 	
 	var flat_motion = Vector2(linear_velocity.x, linear_velocity.z)
 	if (flat_motion.length_squared() > max_move_speed * max_move_speed):
@@ -211,6 +212,7 @@ func _on_TutorialStartTextArea_body_entered(body):
 
 [sub_resource type="CapsuleShape" id=3]
 
+margin = 0.04
 radius = 0.426508
 height = 2.86018
 
@@ -242,9 +244,9 @@ linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 script = SubResource( 2 )
-_sections_unfolded = [ "Collision", "Transform" ]
-max_move_speed = 3.0
-accel_speed = 20.0
+_sections_unfolded = [ "Angular", "Collision", "Linear", "Transform" ]
+max_move_speed = 6.0
+accel_speed = 40.0
 mouse_sensitivity_x = 0.169
 mouse_sensitivity_y = 0.169
 gun_speed = 10.0
@@ -288,12 +290,17 @@ enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, 0, -999 )
 collision_mask = 1
+collide_with_areas = false
+collide_with_bodies = true
 
 [node name="Target Gun" type="RayCast" parent="Yaw/Pitch/Camera"]
 enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, 0, -999 )
 collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = true
+_sections_unfolded = [ "Collide With" ]
 
 [node name="Hands" parent="Yaw/Pitch" instance=ExtResource( 3 )]
 transform = Transform( 1.7, 0, -2.97238e-007, 0, 1.7, 0, 2.97238e-007, 0, 1.7, -0.537129, -3.54615, -0.293752 )
@@ -372,6 +379,8 @@ enabled = false
 exclude_parent = true
 cast_to = Vector3( 0, -1, 0 )
 collision_mask = 1
+collide_with_areas = false
+collide_with_bodies = true
 
 [node name="Gun" parent="Yaw/Pitch" instance=ExtResource( 4 )]
 transform = Transform( -0.755595, 0, -6.60563e-008, 0, 0.755595, 0, 6.60563e-008, 0, -0.755595, -0.838549, -0.632764, 1.66478 )

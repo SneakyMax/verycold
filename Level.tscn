@@ -1,26 +1,82 @@
 [gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://object scenes/wall20x1x4.tscn" type="PackedScene" id=3]
-[ext_resource path="res://object scenes/doorway.tscn" type="PackedScene" id=4]
-[ext_resource path="res://object scenes/desk1.tscn" type="PackedScene" id=5]
-[ext_resource path="res://object scenes/desk2.tscn" type="PackedScene" id=6]
-[ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=7]
-[ext_resource path="res://object scenes/desk3.tscn" type="PackedScene" id=8]
-[ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=9]
-[ext_resource path="res://object scenes/ceilingLight.tscn" type="PackedScene" id=10]
-[ext_resource path="res://object scenes/bookshelf.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Models/AssetForge/objs/window/window.model.obj" type="PackedScene" id=12]
-[ext_resource path="res://object scenes/bossDesk.tscn" type="PackedScene" id=13]
-[ext_resource path="res://object scenes/decorativeShelf.tscn" type="PackedScene" id=14]
-[ext_resource path="res://object scenes/ceilingVent.tscn" type="PackedScene" id=15]
-[ext_resource path="res://object scenes/ceilingFan.tscn" type="PackedScene" id=16]
-[ext_resource path="res://object scenes/floortiled10x10.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=2]
+[ext_resource path="res://object scenes/floortiled10x10.tscn" type="PackedScene" id=3]
+[ext_resource path="res://object scenes/wall20x1x4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://object scenes/ceilingLight.tscn" type="PackedScene" id=5]
+[ext_resource path="res://object scenes/doorway.tscn" type="PackedScene" id=6]
+[ext_resource path="res://object scenes/desk1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://object scenes/desk2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=9]
+[ext_resource path="res://object scenes/desk3.tscn" type="PackedScene" id=10]
+[ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=11]
+[ext_resource path="res://object scenes/bookshelf.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Models/AssetForge/objs/window/window.model.obj" type="PackedScene" id=13]
+[ext_resource path="res://object scenes/bossDesk.tscn" type="PackedScene" id=14]
+[ext_resource path="res://object scenes/decorativeShelf.tscn" type="PackedScene" id=15]
+[ext_resource path="res://object scenes/ceilingVent.tscn" type="PackedScene" id=16]
+[ext_resource path="res://object scenes/ceilingFan.tscn" type="PackedScene" id=17]
 [ext_resource path="res://object scenes/wallWithOpening.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=19]
 
-[sub_resource type="Environment" id=1]
+[sub_resource type="SpatialMaterial" id=1]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+flags_do_not_receive_shadows = false
+flags_disable_ambient_light = false
+flags_ensure_correct_normals = false
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 2
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_billboard_keep_scale = false
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 1, 1, 1, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 1.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_mode = 0
+_sections_unfolded = [ "Flags", "Parameters", "Vertex Color" ]
+
+[sub_resource type="Environment" id=2]
 
 background_mode = 0
 background_sky_custom_fov = 0.0
@@ -100,7 +156,7 @@ adjustment_contrast = 1.0
 adjustment_saturation = 1.0
 _sections_unfolded = [ "Ambient Light", "Background" ]
 
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id=3]
 
 background_mode = 0
 background_sky_custom_fov = 0.0
@@ -178,13 +234,6 @@ adjustment_enabled = false
 adjustment_brightness = 1.0
 adjustment_contrast = 1.0
 adjustment_saturation = 1.0
-
-[sub_resource type="PhysicsMaterial" id=3]
-
-friction = 1.0
-rough = false
-bounce = 0.0
-absorbent = false
 
 [sub_resource type="GIProbeData" id=4]
 
@@ -269,15 +318,27 @@ extents = Vector3( 1, 1.47307, 1 )
 [node name="Level" type="Spatial"]
 _sections_unfolded = [ "Transform" ]
 
+[node name="geo" type="ImmediateGeometry" parent="."]
+layers = 1
+material_override = SubResource( 1 )
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+_sections_unfolded = [ "Geometry", "Matrix", "Transform" ]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
+environment = SubResource( 2 )
 _sections_unfolded = [ "environment" ]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, -2.8, 3, -8.3 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.8, 3, -8.3 )
 keep_aspect = 1
 cull_mask = 1048575
-environment = SubResource( 2 )
+environment = SubResource( 3 )
 h_offset = 0.0
 v_offset = 0.0
 doppler_tracking = 0
@@ -291,10 +352,40 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8, 2.1, -27.9 )
+continuous_cd = true
+can_sleep = true
+_sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Transform" ]
+
+[node name="GIProbe" type="GIProbe" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.87361, 2.97929, -0.204999 )
+visible = false
+layers = 1
+subdiv = 1
+extents = Vector3( 22.836, 6.07447, 32.2696 )
+dynamic_range = 4
+energy = 1.0
+propagation = 0.7
+bias = 1.5
+normal_bias = 0.0
+interior = true
+compress = false
+data = SubResource( 4 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0.4, 1.6, 2.1 )
-physics_material_override = SubResource( 3 )
+transform = Transform( 1, 0, -4.12384e-08, 0, 1, 0, 4.12384e-08, 0, 1, 5.47845, 0.168898, -2.45508 )
+
+[node name="Navigation" type="Navigation" parent="."]
+up_vector = Vector3( 0, 1, 0 )
+
+[node name="Navigation Mesh" type="NavigationMeshInstance" parent="Navigation"]
+navmesh = SubResource( 5 )
+enabled = true
+
+[node name="TutorialRoom" type="Spatial" parent="Navigation/Navigation Mesh"]
+editor/display_folded = true
+
+[node name="SmallerFloor3" parent="Navigation/Navigation Mesh/TutorialRoom" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -25 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DummyEnemy" parent="." instance=ExtResource( 2 )]
@@ -304,318 +395,334 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="LargerRoom" type="Spatial" parent="."]
 editor/display_folded = true
-transform = Transform( -8.74228e-008, 0, 1, 0, 1, 0, -2, 0, -4.37114e-008, -30.5, 0, 10.5 )
 
-[node name="LargerRoomWalls" type="Spatial" parent="LargerRoom"]
+[node name="Wall5" parent="Navigation/Navigation Mesh/TutorialRoom/TutorialRoomWalls" instance=ExtResource( 4 )]
+transform = Transform( -2.20551e-08, 0, 1, 0, 1.75, 0, -0.983896, 0, -8.52372e-08, 8, 0, -20.2 )
+
+[node name="Wall6" parent="Navigation/Navigation Mesh/TutorialRoom/TutorialRoomWalls" instance=ExtResource( 4 )]
+transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -27.6 )
+
+[node name="Wall7" parent="Navigation/Navigation Mesh/TutorialRoom/TutorialRoomWalls" instance=ExtResource( 4 )]
+transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -13 )
+
+[node name="Lights" type="Spatial" parent="Navigation/Navigation Mesh/TutorialRoom"]
 editor/display_folded = true
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 5.25, 0, 30.5 )
 
-[node name="Wall1" parent="LargerRoom/LargerRoomWalls" instance=ExtResource( 3 )]
+[node name="Ceiling Light" parent="Navigation/Navigation Mesh/TutorialRoom/Lights" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 6.26717, -21.1 )
+
+[node name="LargerRoom" type="Spatial" parent="Navigation/Navigation Mesh"]
+editor/display_folded = true
+transform = Transform( -8.74228e-08, 0, 1, 0, 1, 0, -2, 0, -4.37114e-08, -30.5, 0, 10.5 )
+
+[node name="LargerRoomWalls" type="Spatial" parent="Navigation/Navigation Mesh/LargerRoom"]
+editor/display_folded = true
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 5.25, 0, 30.5 )
+
+[node name="Wall1" parent="Navigation/Navigation Mesh/LargerRoom/LargerRoomWalls" instance=ExtResource( 4 )]
 transform = Transform( 0.679219, 0, 0, 0, 1.75, 0, 0, 0, 1, 3.7, 0, -9.9 )
 
-[node name="Wall2" parent="LargerRoom/LargerRoomWalls" instance=ExtResource( 3 )]
+[node name="Wall2" parent="Navigation/Navigation Mesh/LargerRoom/LargerRoomWalls" instance=ExtResource( 4 )]
 transform = Transform( 0.801929, 0, 0, 0, 1.75, 0, 0, 0, 1, -22, 0, -9.9 )
 
-[node name="Wall4" parent="LargerRoom/LargerRoomWalls" instance=ExtResource( 3 )]
+[node name="Wall4" parent="Navigation/Navigation Mesh/LargerRoom/LargerRoomWalls" instance=ExtResource( 4 )]
 transform = Transform( 2, 0, 0, 0, 1.75, 0, 0, 0, 1, -10, 0, 30.5 )
 
-[node name="Wall5" parent="LargerRoom/LargerRoomWalls" instance=ExtResource( 3 )]
-transform = Transform( -8.74228e-008, 0, 1, 0, 1.75, 0, -2, 0, -4.37114e-008, 10.5, 0, 10.5 )
+[node name="Wall5" parent="Navigation/Navigation Mesh/LargerRoom/LargerRoomWalls" instance=ExtResource( 4 )]
+transform = Transform( -8.74228e-08, 0, 1, 0, 1.75, 0, -2, 0, -4.37114e-08, 10.5, 0, 10.5 )
 
-[node name="Wall6" parent="LargerRoom/LargerRoomWalls" instance=ExtResource( 3 )]
-transform = Transform( -8.74228e-008, 0, 1, 0, 1.75, 0, -2, 0, -4.37114e-008, -30.5, 0, 10.5 )
+[node name="Wall6" parent="Navigation/Navigation Mesh/LargerRoom/LargerRoomWalls" instance=ExtResource( 4 )]
+transform = Transform( -8.74228e-08, 0, 1, 0, 1.75, 0, -2, 0, -4.37114e-08, -30.5, 0, 10.5 )
 
-[node name="Doorway" parent="LargerRoom/LargerRoomWalls" instance=ExtResource( 4 )]
+[node name="Doorway" parent="Navigation/Navigation Mesh/LargerRoom/LargerRoomWalls" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -9.9 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desks" type="Spatial" parent="LargerRoom"]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 5.25, 0, 30.5 )
+[node name="Desks" type="Spatial" parent="Navigation/Navigation Mesh/LargerRoom"]
+editor/display_folded = true
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 5.25, 0, 30.5 )
 
-[node name="Desk" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, -3.0493, 0, -3.75263 )
+[node name="Desk" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, -3.0493, 0, -3.75263 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk3" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, -17.5493, 0, -3.75263 )
+[node name="Desk3" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, -17.5493, 0, -3.75263 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk18" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, -22.1493, 0, 28.9474 )
+[node name="Desk18" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, -22.1493, 0, 28.9474 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk14" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, 3.3507, 0, 5.64737 )
+[node name="Desk14" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, 3.3507, 0, 5.64737 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk17" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
+[node name="Desk17" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
 transform = Transform( 1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 1.7507, 0, 11.0474 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk15" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
-transform = Transform( -1.75, 0, -2.64243e-007, 0, 1.75, 0, 2.64243e-007, 0, -1.75, -0.3493, 0, 9.24737 )
+[node name="Desk15" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
+transform = Transform( -1.75, 0, -2.64243e-07, 0, 1.75, 0, 2.64243e-07, 0, -1.75, -0.3493, 0, 9.24737 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk8" parent="LargerRoom/Desks" instance=ExtResource( 5 )]
-transform = Transform( -1.75, 0, -1.5299e-007, 0, 1.75, 0, 1.5299e-007, 0, -1.75, -21.2493, 0, 3.14737 )
+[node name="Desk8" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 7 )]
+transform = Transform( -1.75, 0, -1.5299e-07, 0, 1.75, 0, 1.5299e-07, 0, -1.75, -21.2493, 0, 3.14737 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk2" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, 0.4, 0, -3.8 )
+[node name="Desk2" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, 0.4, 0, -3.8 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk4" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, -14.1, 0, -3.8 )
+[node name="Desk4" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, -14.1, 0, -3.8 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk5" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -1.75, 0, -1.5299e-007, 0, 1.75, 0, 1.5299e-007, 0, -1.75, -21.3, 0, -3.8 )
+[node name="Desk5" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -1.75, 0, -1.5299e-07, 0, 1.75, 0, 1.5299e-07, 0, -1.75, -21.3, 0, -3.8 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk7" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -1.75, 0, -1.5299e-007, 0, 1.75, 0, 1.5299e-007, 0, -1.75, -21.3, 0, -0.3 )
+[node name="Desk7" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -1.75, 0, -1.5299e-07, 0, 1.75, 0, 1.5299e-07, 0, -1.75, -21.3, 0, -0.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk9" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -1.75, 0, -1.5299e-007, 0, 1.75, 0, 1.5299e-007, 0, -1.75, -21.3, 0, 15.1 )
+[node name="Desk9" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -1.75, 0, -1.5299e-07, 0, 1.75, 0, 1.5299e-07, 0, -1.75, -21.3, 0, 15.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk11" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -1.75, 0, -1.5299e-007, 0, 1.75, 0, 1.5299e-007, 0, -1.75, -21.3, 0, 18.6 )
+[node name="Desk11" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -1.75, 0, -1.5299e-07, 0, 1.75, 0, 1.5299e-07, 0, -1.75, -21.3, 0, 18.6 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk19" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -7.64949e-008, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-008, -19, 0, 20.6 )
+[node name="Desk19" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -7.64949e-08, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-08, -19, 0, 20.6 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk20" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -7.64949e-008, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-008, -19.3, 0, 3.5 )
+[node name="Desk20" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -7.64949e-08, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-08, -19.3, 0, 3.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk21" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -7.64949e-008, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-008, -11.4, 0, 17.4 )
+[node name="Desk21" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -7.64949e-08, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-08, -11.4, 0, 17.4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Desk16" parent="LargerRoom/Desks" instance=ExtResource( 6 )]
-transform = Transform( -1.75, 0, -2.64243e-007, 0, 1.75, 0, 2.64243e-007, 0, -1.75, -0.4, 0, 5.7 )
+[node name="Desk16" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 8 )]
+transform = Transform( -1.75, 0, -2.64243e-07, 0, 1.75, 0, 2.64243e-07, 0, -1.75, -0.4, 0, 5.7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair2" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair2" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( -0.104529, 0, -0.994522, 0, 1.25, 0, 0.994522, 0, -0.104529, -0.3, 0, -4.4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair11" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair11" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 0.984808, 0, 0.173648, 0, 1.25, 0, -0.173648, 0, 0.984808, -1.1, 0, 7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair12" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair12" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 0.996195, 0, -0.0871557, 0, 1.25, 0, 0.0871557, 0, 0.996195, -1.1, 0, 10.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair14" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-008, 0, 1, 0, 1.25, 0, -1, 0, -4.37114e-008, -9.3, 0, 13.3 )
+[node name="Chair14" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1.25, 0, -1, 0, -4.37114e-08, -9.3, 0, 13.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair15" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair15" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( -0.139173, 0, 0.990268, 0, 1.25, 0, -0.990268, 0, -0.139173, -10.3, 0, 18.2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair16" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair16" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 0.987689, 0, 0.156435, 0, 1.25, 0, -0.156435, 0, 0.987689, -8.5, 0, 27.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair17" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
-transform = Transform( 0.358368, 1.16698, -6.83797e-009, 3.78552e-008, -2.73196e-008, -1, -0.933581, 0.44796, -4.31732e-008, -18.5, 0.7, 27.8 )
+[node name="Chair17" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
+transform = Transform( 0.358368, 1.16698, -6.83797e-09, 3.78552e-08, -2.73196e-08, -1, -0.933581, 0.44796, -4.31732e-08, -18.5, 0.7, 27.8 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair3" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair3" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 0.422618, 0, -0.906618, 0, 1.25, 0, 0.906308, 0, 0.422763, -3.9, 0, -4.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair4" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair4" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 0.0348994, 0, -0.999733, 0, 1.25, 0, 0.999391, 0, 0.0349113, -15.3, 0, -4.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair5" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair5" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( -0.121869, 0, -0.992886, 0, 1.25, 0, 0.992546, 0, -0.121911, -18.1, 0, -4.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair6" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair6" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1.00034, -22, 0, -3.4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair8" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair8" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1.00034, -22, 0, 15.7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair9" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
-transform = Transform( -2.18557e-008, -0.625, 0.866322, 1, -5.46392e-008, 0, 3.78552e-008, 1.08253, 0.500171, -28.1, 0.6, 13.4 )
+[node name="Chair9" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
+transform = Transform( -2.18557e-08, -0.625, 0.866322, 1, -5.46392e-08, 0, 3.78552e-08, 1.08253, 0.500171, -28.1, 0.6, 13.4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair10" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
-transform = Transform( 0.866025, -0.625, -3.78681e-008, -4.37114e-008, 2.38836e-015, -1.00034, 0.5, 1.08253, -2.18632e-008, 8.8, 0.6, 2.38419e-006 )
+[node name="Chair10" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
+transform = Transform( 0.866025, -0.625, -3.78681e-08, -4.37114e-08, 2.38836e-15, -1.00034, 0.5, 1.08253, -2.18632e-08, 8.8, 0.6, 2.38419e-06 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair13" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
-transform = Transform( -5.8562e-009, 1.08253, 0.500171, 1, -5.46392e-008, 8.74527e-008, 9.7566e-008, 0.625, -0.866322, 4.7, 0.6, 16 )
+[node name="Chair13" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
+transform = Transform( -5.8562e-09, 1.08253, 0.500171, 1, -5.46392e-08, 8.74527e-08, 9.7566e-08, 0.625, -0.866322, 4.7, 0.6, 16 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair7" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair7" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( -0.422618, 0, 0.906618, 0, 1.25, 0, -0.906308, 0, -0.422763, -28.7, 0, 0.200003 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair18" parent="LargerRoom/Desks" instance=ExtResource( 7 )]
+[node name="Chair18" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 9 )]
 transform = Transform( 0.766045, 0, -0.643008, 0, 1.25, 0, 0.642788, 0, 0.766307, -28.7, 0, -2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BiggerDesk" parent="LargerRoom/Desks" instance=ExtResource( 8 )]
+[node name="BiggerDesk" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 10 )]
 transform = Transform( 1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, -19.1, 0, 17.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BiggerDesk2" parent="LargerRoom/Desks" instance=ExtResource( 8 )]
-transform = Transform( 1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, -19.1, 0, 3.33786e-006 )
+[node name="BiggerDesk2" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 10 )]
+transform = Transform( 1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, -19.1, 0, 3.33786e-06 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BiggerDesk3" parent="LargerRoom/Desks" instance=ExtResource( 8 )]
+[node name="BiggerDesk3" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 10 )]
 transform = Transform( 1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, -11.2, 0, 13.9 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BiggerDesk4" parent="LargerRoom/Desks" instance=ExtResource( 8 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, -9.8, 0, 10.2 )
+[node name="BiggerDesk4" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 10 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, -9.8, 0, 10.2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BiggerDesk5" parent="LargerRoom/Desks" instance=ExtResource( 8 )]
-transform = Transform( -7.64949e-008, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-008, -3.1, 0, -1.6 )
+[node name="BiggerDesk5" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 10 )]
+transform = Transform( -7.64949e-08, 0, -1.75, 0, 1.75, 0, 1.75, 0, -7.64949e-08, -3.1, 0, -1.6 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BiggerDesk6" parent="LargerRoom/Desks" instance=ExtResource( 8 )]
-transform = Transform( -7.64949e-008, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-008, -8.4, 0, 29 )
+[node name="BiggerDesk6" parent="Navigation/Navigation Mesh/LargerRoom/Desks" instance=ExtResource( 10 )]
+transform = Transform( -7.64949e-08, 0, 1.75, 0, 1.75, 0, -1.75, 0, -7.64949e-08, -8.4, 0, 29 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="LargerFloor" parent="LargerRoom" instance=ExtResource( 9 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 5.25, 0, 30.5 )
+[node name="LargerFloor" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 11 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 5.25, 0, 30.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Ceiling" parent="LargerRoom" instance=ExtResource( 3 )]
-transform = Transform( 0.991875, -1.7546e-007, 2.19132e-015, 0, -7.64949e-008, -0.5, -3.45907e-007, 10.0406, -1.25397e-007, 0.150004, 7.2, 0.599998 )
+[node name="Ceiling" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 4 )]
+transform = Transform( 0.991875, -1.7546e-07, 2.19132e-15, 0, -7.64949e-08, -0.5, -3.45907e-07, 10.0406, -1.25397e-07, 0.150004, 7.2, 0.599998 )
+visible = false
 
-[node name="Lights" type="Spatial" parent="LargerRoom"]
+[node name="Lights" type="Spatial" parent="Navigation/Navigation Mesh/LargerRoom"]
 editor/display_folded = true
 
-[node name="Ceiling Light 1" parent="LargerRoom/Lights" instance=ExtResource( 10 )]
+[node name="Ceiling Light 1" parent="Navigation/Navigation Mesh/LargerRoom/Lights" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.72744, 6.25266, 36.7749 )
 
-[node name="Ceiling Light 2" parent="LargerRoom/Lights" instance=ExtResource( 10 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 7.6, 6.25598, 20.1 )
+[node name="Ceiling Light 2" parent="Navigation/Navigation Mesh/LargerRoom/Lights" instance=ExtResource( 5 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 7.6, 6.25598, 20.1 )
 
-[node name="Ceiling Light 3" parent="LargerRoom/Lights" instance=ExtResource( 10 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 7.6, 6.26662, 8 )
+[node name="Ceiling Light 3" parent="Navigation/Navigation Mesh/LargerRoom/Lights" instance=ExtResource( 5 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 7.6, 6.26662, 8 )
 
-[node name="Ceiling Light 4" parent="LargerRoom/Lights" instance=ExtResource( 10 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, -7.09999, 6.23529, 38.7 )
+[node name="Ceiling Light 4" parent="Navigation/Navigation Mesh/LargerRoom/Lights" instance=ExtResource( 5 )]
+editor/display_folded = true
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, -7.09999, 6.23529, 38.7 )
 
-[node name="OmniLight" parent="LargerRoom/Lights/Ceiling Light 4" index="1"]
-light_cull_mask = -1
-shadow_bias = 0.5
-omni_shadow_mode = 1
+[node name="Ceiling Light 5" parent="Navigation/Navigation Mesh/LargerRoom/Lights" instance=ExtResource( 5 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, -4.3, 6.2803, 8 )
 
-[node name="Ceiling Light 5" parent="LargerRoom/Lights" instance=ExtResource( 10 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, -4.3, 6.2803, 8 )
+[node name="Ceiling Light 6" parent="Navigation/Navigation Mesh/LargerRoom/Lights" instance=ExtResource( 5 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, -4.3, 6.25907, 20.1 )
 
-[node name="Ceiling Light 6" parent="LargerRoom/Lights" instance=ExtResource( 10 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, -4.3, 6.25907, 20.1 )
-
-[node name="Bookshelves" type="Spatial" parent="LargerRoom"]
+[node name="Bookshelves" type="Spatial" parent="Navigation/Navigation Mesh/LargerRoom"]
 editor/display_folded = true
 
-[node name="Bookshelf5" parent="LargerRoom/Bookshelves" instance=ExtResource( 11 )]
-transform = Transform( -0.375, 0, -6.55671e-008, 0, 0.75, 0, 3.27835e-008, 0, -0.75, 2.25, 0, 0.9 )
+[node name="Bookshelf5" parent="Navigation/Navigation Mesh/LargerRoom/Bookshelves" instance=ExtResource( 12 )]
+transform = Transform( -0.375, 0, -6.55671e-08, 0, 0.75, 0, 3.27835e-08, 0, -0.75, 2.25, 0, 0.9 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Bookshelf6" parent="LargerRoom/Bookshelves" instance=ExtResource( 11 )]
+[node name="Bookshelf6" parent="Navigation/Navigation Mesh/LargerRoom/Bookshelves" instance=ExtResource( 12 )]
 transform = Transform( 0.375, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -1.39999, 0, 40.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Windows" type="Spatial" parent="LargerRoom"]
+[node name="Windows" type="Spatial" parent="Navigation/Navigation Mesh/LargerRoom"]
 editor/display_folded = true
 
-[node name="Window" parent="LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-008, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-008, -7.3, 1.5, 39.9955 )
+[node name="Window" parent="Navigation/Navigation Mesh/LargerRoom/Windows" instance=ExtResource( 13 )]
+transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, -7.3, 1.5, 39.9955 )
 
-[node name="Window2" parent="LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-008, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-008, 5.55, 1.5, 39.9955 )
+[node name="Window2" parent="Navigation/Navigation Mesh/LargerRoom/Windows" instance=ExtResource( 13 )]
+transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, 5.55, 1.5, 39.9955 )
 
-[node name="Window3" parent="LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-008, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-008, 5.55001, 1.5, 0.00589371 )
+[node name="Window3" parent="Navigation/Navigation Mesh/LargerRoom/Windows" instance=ExtResource( 13 )]
+transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, 5.55001, 1.5, 0.00589371 )
 
-[node name="Window4" parent="LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-008, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-008, -5.14999, 1.5, 0.00588989 )
+[node name="Window4" parent="Navigation/Navigation Mesh/LargerRoom/Windows" instance=ExtResource( 13 )]
+transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, -5.14999, 1.5, 0.00588989 )
 
-[node name="BossOffice" type="Spatial" parent="LargerRoom"]
+[node name="BossOffice" type="Spatial" parent="Navigation/Navigation Mesh/LargerRoom"]
 editor/display_folded = true
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 5.25, 0, 30.5 )
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 5.25, 0, 30.5 )
 
-[node name="Wall7" parent="LargerRoom/BossOffice" instance=ExtResource( 3 )]
+[node name="Wall7" parent="Navigation/Navigation Mesh/LargerRoom/BossOffice" instance=ExtResource( 4 )]
 transform = Transform( 0.56, 0, 0, 0, 1.75, 0, 0, 0, 1, 4.40603, 0, 18.5063 )
 
-[node name="Doorway2" parent="LargerRoom/BossOffice" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -0.7, 0, 19.5 )
+[node name="Doorway2" parent="Navigation/Navigation Mesh/LargerRoom/BossOffice" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.7, 0, 19.5 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="BossDesk" parent="LargerRoom/BossOffice" instance=ExtResource( 13 )]
-transform = Transform( -6.99382e-008, 0, -1.6, 0, 1.6, 0, 1.6, 0, -6.99382e-008, 6.5, 0, 26.1 )
+[node name="BossDesk" parent="Navigation/Navigation Mesh/LargerRoom/BossOffice" instance=ExtResource( 14 )]
+transform = Transform( -6.99382e-08, 0, -1.6, 0, 1.6, 0, 1.6, 0, -6.99382e-08, 6.5, 0, 26.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Shelf" parent="LargerRoom/BossOffice" instance=ExtResource( 14 )]
+[node name="Shelf" parent="Navigation/Navigation Mesh/LargerRoom/BossOffice" instance=ExtResource( 15 )]
 transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 3, 1.4, 29.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair" parent="LargerRoom/BossOffice" instance=ExtResource( 7 )]
-transform = Transform( -1, 0, -1.50996e-007, 0, 1.25, 0, 1.50996e-007, 0, -1, 7, 0, 25.4 )
+[node name="Chair" parent="Navigation/Navigation Mesh/LargerRoom/BossOffice" instance=ExtResource( 9 )]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1.25, 0, 1.50996e-07, 0, -1, 7, 0, 25.4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CeilingVent" parent="LargerRoom" instance=ExtResource( 15 )]
-transform = Transform( -3.27836e-008, 0, -0.75, 0, 1.5, 0, 1.5, 0, -6.55671e-008, 3.55, 5.9, 37.1 )
+[node name="CeilingVent" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 16 )]
+transform = Transform( -3.27836e-08, 0, -0.75, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 3.55, 5.9, 37.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CeilingVent2" parent="LargerRoom" instance=ExtResource( 15 )]
-transform = Transform( -6.55671e-008, 0, 0.75, 0, 1.5, 0, -1.5, 0, -3.27835e-008, -8.4, 5.9, 5.1 )
+[node name="CeilingVent2" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 16 )]
+transform = Transform( -6.55671e-08, 0, 0.75, 0, 1.5, 0, -1.5, 0, -3.27835e-08, -8.4, 5.9, 5.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CeilingFan" parent="LargerRoom" instance=ExtResource( 16 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 4.25, 6.1, 23.4 )
+[node name="CeilingFan" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 17 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 4.25, 6.1, 23.4 )
 
-[node name="CeilingFan2" parent="LargerRoom" instance=ExtResource( 16 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, -0.449999, 6.1, 15.5 )
+[node name="CeilingFan2" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 17 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, -0.449999, 6.1, 15.5 )
 
-[node name="CeilingFan3" parent="LargerRoom" instance=ExtResource( 16 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, -6.3, 6.1, 24.6 )
+[node name="CeilingFan3" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 17 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, -6.3, 6.1, 24.6 )
 
-[node name="CeilingFan4" parent="LargerRoom" instance=ExtResource( 16 )]
-transform = Transform( -2.18557e-008, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-008, 6.7, 6.1, 6.2 )
+[node name="CeilingFan4" parent="Navigation/Navigation Mesh/LargerRoom" instance=ExtResource( 17 )]
+transform = Transform( -2.18557e-08, 0, -0.5, 0, 1, 0, 1, 0, -4.37114e-08, 6.7, 6.1, 6.2 )
 
-[node name="SmallerRoom" type="Spatial" parent="."]
+[node name="SmallerRoom" type="Spatial" parent="Navigation/Navigation Mesh"]
 editor/display_folded = true
 
-[node name="SmallerFloor" parent="SmallerRoom" instance=ExtResource( 17 )]
+[node name="SmallerFloor" parent="Navigation/Navigation Mesh/SmallerRoom" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -15 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="SmallerFloor2" parent="SmallerRoom" instance=ExtResource( 17 )]
+[node name="SmallerFloor2" parent="Navigation/Navigation Mesh/SmallerRoom" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -25 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="SmallerRoomWalls" type="Spatial" parent="SmallerRoom"]
 editor/display_folded = true
 
-[node name="Wall3" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
+[node name="Wall3" parent="Navigation/Navigation Mesh/SmallerRoom/SmallerRoomWalls" instance=ExtResource( 4 )]
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, -8.5, 0, -30.5 )
 
-[node name="Wall4" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
-transform = Transform( -2.20551e-008, 0, 1, 0, 1.75, 0, -0.983896, 0, -8.52372e-008, -14, 0, -20.2 )
+[node name="Wall4" parent="Navigation/Navigation Mesh/SmallerRoom/SmallerRoomWalls" instance=ExtResource( 4 )]
+transform = Transform( -2.20551e-08, 0, 1, 0, 1.75, 0, -0.983896, 0, -8.52372e-08, -14, 0, -20.2 )
 
-[node name="WallWithWindow" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 18 )]
-transform = Transform( -4.37114e-008, 0, 1, 0, 1.78605, 0, -1, 0, -4.37114e-008, -3.01704, -1.2, -20.4 )
+[node name="WallWithWindow" parent="Navigation/Navigation Mesh/SmallerRoom/SmallerRoomWalls" instance=ExtResource( 18 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1.78605, 0, -1, 0, -4.37114e-08, -3.01704, -1.2, -20.4 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DoorBlocker" parent="SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
@@ -624,13 +731,11 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, -3.5, 0, -9.8 )
 [node name="CeilingForSmallRoomAndTutorial" parent="SmallerRoom" instance=ExtResource( 3 )]
 transform = Transform( -2.40428e-007, 5.58006, -6.96894e-008, 0, -7.64949e-008, -0.5, -1.02659, -4.55238e-008, 5.68545e-016, -14.1, 7.2, -20.2 )
 
-[node name="Lights" type="Spatial" parent="SmallerRoom"]
+[node name="Lights" type="Spatial" parent="Navigation/Navigation Mesh/SmallerRoom"]
 
-[node name="Ceiling Light" parent="SmallerRoom/Lights" instance=ExtResource( 10 )]
+[node name="Ceiling Light" parent="Navigation/Navigation Mesh/SmallerRoom/Lights" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.9, 6.2577, -19.1 )
 
-[node name="TutorialRoom" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="SmallerFloor3" parent="TutorialRoom" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -25 )
