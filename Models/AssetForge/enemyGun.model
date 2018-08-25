@@ -1,0 +1,13 @@
+# Made using Asset Forge (1.3)
+
+:models
+Primitives/slope_default[(0, 2.5, 0);(0.0, 180.0, 180.0);(1.0, 2.5, 1.0);slope_default_9;_defaultMat]
+Primitives/slope_cornerInner[(-0.25, 2.5, -1.4);(0.0, 180.0, 0.0);(0.5, 1.0, 3.8);slope_cornerInner_12;_defaultMat]
+Primitives/slope_cornerInner[(0.25, 2.5, -1.4);(0.0, 0.0, 0.0);(0.5, 1.0, 3.8);slope_cornerInner_14;_defaultMat]
+
+:materials
+_defaultMat[RGBA(0.144, 0.283, 0.700, 1.000);]
+
+:textures
+
+:extra
