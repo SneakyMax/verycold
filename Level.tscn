@@ -209,7 +209,9 @@ func _ready():
 
 func _on_TutorialEndArea_body_entered(body):
 	if triggered: return
+	
 	if body.get_filename() != \"res://Flying Gun.tscn\": return
+	triggered = true
 	
 	var door = get_tree().root.find_node(\"DoorBlocker\", true, false)
 	
@@ -217,32 +219,32 @@ func _on_TutorialEndArea_body_entered(body):
 	t.set_wait_time(0.5)
 	t.set_one_shot(true)
 	self.add_child(t)
-	TutorialEndText.text = (\"RIGHT\")
+	TutorialEndText.text = \"RIGHT\"
 	t.start()
 	yield(t, \"timeout\")
 	TutorialEndText.text = (\"CLICK\")
 	t.start()
 	yield(t, \"timeout\")
-	TutorialEndText.text = (\"PULLS\")
+	TutorialEndText.text = \"RETRIEVE\"
 	t.start()
 	yield(t, \"timeout\")
-	TutorialEndText.text = (\"RIGHT,\")
+	TutorialEndText.text = \"RIGHT\"
 	t.start()
 	yield(t, \"timeout\")
-	TutorialEndText.text = (\"LEFT\")
+	TutorialEndText.text = \"LEFT\"
 	t.start()
 	yield(t, \"timeout\")
-	TutorialEndText.text = (\"CLICK\")
+	TutorialEndText.text = \"CLICK:\"
 	t.start()
 	yield(t, \"timeout\")
-	TutorialEndText.text = (\"PULLS\")
+	TutorialEndText.text = \"RETRIEVE\"
 	t.start()
 	yield(t, \"timeout\")
-	TutorialEndText.text = (\"LEFT\")
+	TutorialEndText.text = \"LEFT\"
 	t.start()
 	yield(t, \"timeout\")
 	t.queue_free()
-	TutorialEndText.text = (\"\")
+	TutorialEndText.text = \"\"
 	TutorialEndText.percent_visible = 0;
 	
 	if(door):
