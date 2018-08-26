@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/bullet.obj-4b2ceec1168c16afe1565783d21ad811.scn"
+path="res://.import/enemy_gun.escn-18b64fd2cd17fe85697200082a4e4d05.scn"
 
 [deps]
 
-source_file="res://Models/AssetForge/objs/bullet/bullet.obj"
-dest_files=[ "res://.import/bullet.obj-4b2ceec1168c16afe1565783d21ad811.scn" ]
+source_file="res://Models/enemy_gun.escn"
+dest_files=[ "res://.import/enemy_gun.escn-18b64fd2cd17fe85697200082a4e4d05.scn" ]
 
 [params]
 

@@ -1,7 +1,9 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
-[ext_resource path="res://Models/enemy.escn" type="PackedScene" id=1]
-[ext_resource path="res://enemy_material.tres" type="Material" id=2]
+[ext_resource path="res://object scenes/Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Models/enemy.escn" type="PackedScene" id=2]
+[ext_resource path="res://enemy_material.tres" type="Material" id=3]
+[ext_resource path="res://object scenes/Enemy Gun.tscn" type="PackedScene" id=4]
 
 [sub_resource type="GDScript" id=1]
 
@@ -18,6 +20,8 @@ export(float, 0, 100) var view_range = 1000
 
 export(float, 0, 10) var shoot_rate
 
+export(PackedScene) var bullet_scene
+
 export(bool) var debug
 
 var close_plane = 0.5
@@ -31,6 +35,7 @@ var head : Spatial
 var headView : RayCast
 var rotator : Spatial
 var anim : AnimationTree
+var muzzle : Position3D
 
 var frustum_planes = []
 
@@ -41,6 +46,9 @@ var player_raycast_success = false
 var can_see_player = false
 var geo
 var path = []
+var last_shot_time : int
+var lastFrameState : String
+var stop_moving = false
 
 var target_facing
 var move_towards
@@ -59,8 +67,17 @@ func _ready():
 	rotator = find_node(\"Rotation\")
 	geo = get_tree().root.find_node(\"geo\", true, false)
 	anim = find_node(\"AnimationTree\")
+	muzzle = find_node(\"Muzzle\")
 	
-	anim.tree_root.set_start_node(\"Idle\")	
+	anim.tree_root.set_start_node(\"Idle\")
+	
+	var animPlayer = get_node(\"Rotation/Model/Root_Motion/AnimationPlayer\")
+	animPlayer.get_animation(\"Idle\").loop = true
+	animPlayer.get_animation(\"LookLeft\").loop = true
+	animPlayer.get_animation(\"LookRight\").loop = true
+	animPlayer.get_animation(\"Run\").loop = true
+	animPlayer.get_animation(\"Walk\").loop = true
+	animPlayer.get_animation(\"PointGun\").loop = true
 	
 func world_frustum():
 	var planes = []
@@ -82,17 +99,25 @@ func is_inside_frustum(point : Vector3):
 	return true
 	
 func _process(_delta):
+	if not is_inside_tree(): return
+	var isInitial = lastFrameState != state
+	lastFrameState = state
 	match state:
 		\"idle\":
-			process_idle()
+			process_idle(isInitial)
 		\"shooting\":
-			process_shooting()
+			process_shooting(isInitial)
 		\"moving_into_range\":
-			process_moving_into_range()
+			process_moving_into_range(isInitial)
 		\"chasing\":
-			process_chasing()
+			process_chasing(isInitial)
+		\"dead\":
+			process_dead(isInitial)
 			
 func _physics_process(delta):
+	if not is_inside_tree(): return
+	if state == \"dead\": return
+	
 	can_see_player = get_can_see_player()
 	if path and path.size() > 0:
 		move_along_path()
@@ -108,12 +133,13 @@ func get_can_see_player():
 		headView.cast_to = relativeToRotation
 		if headView.is_colliding():
 			var collider = headView.get_collider()
-			if collider.get_filename() == \"res://Player.tscn\":
+			if collider.filename == \"res://Player.tscn\":
 				return true
 	return false
 	
-func process_idle():
+func process_idle(_isInitial):
 	target_facing = null
+	stop_moving = true
 
 	anim.set_dual(\"shooting\", false)
 	anim.set_dual(\"moving\", false)
@@ -121,7 +147,7 @@ func process_idle():
 	if can_see_player:
 		state = \"shooting\"
 	
-func process_shooting():
+func process_shooting(isInitial):
 	anim.set_dual(\"shooting\", can_see_player)
 	
 	if not can_see_player:
@@ -132,11 +158,53 @@ func process_shooting():
 	target_facing = playerCam.global_transform.origin
 	last_player_pos = playerCam.global_transform.origin
 	
-func process_moving_into_range():
+	stop_moving = true
+	if isInitial:
+		last_shot_time = OS.get_ticks_msec();
+	
+	var now = OS.get_ticks_msec()
+	if now > last_shot_time + ( shoot_rate * 1000 ):
+		shoot()	
+
+func shoot():
+	last_shot_time = OS.get_ticks_msec()
+	var bullet = bullet_scene.instance()
+	get_node(\"/root/Game\").level_add(bullet);
+	
+	var basis = muzzle.global_transform.basis;
+	var position = muzzle.global_transform.origin;
+	
+	bullet.global_transform.origin = muzzle.global_transform.origin
+	
+	var playerCamPos = playerCam.global_transform.origin
+	var horizSpread = 0.5
+	var vertSpread = 2
+	
+	var toPlayer = (playerCamPos - position).normalized()
+	var gunPoint = -basis.z.normalized()
+	
+	var targetPoint = Vector3(
+		playerCamPos.x + rand_range(-horizSpread, horizSpread),
+		playerCamPos.y - rand_range(0, vertSpread),
+		playerCamPos.z + rand_range(-horizSpread, horizSpread))
+	
+	if gunPoint.dot(toPlayer) > 0.7:
+		var look = muzzle.global_transform.looking_at(targetPoint, Vector3.UP)
+		bullet.global_transform.basis = Basis(
+			-look.basis.x.normalized(), look.basis.y.normalized(), -look.basis.z.normalized())
+	else:
+		bullet.global_transform.basis = Basis(
+			-basis.x.normalized(), basis.y.normalized(), -basis.z.normalized())
+	
+	anim.set(\"parameters/Shooting/OneShot/active\", true)
+	bullet.start()
+	
+func process_moving_into_range(_isInitial):
 	anim.set_dual(\"moving\", !can_see_player)
 	
-func process_chasing():
+func process_chasing(_isInitial):
 	isRunning = true
+	stop_moving = false
 	anim.set_dual(\"moving\", !can_see_player)
 	anim.set(\"parameters/Moving/WalkRun/blend_amount\", 1 if isRunning else 0)
 	
@@ -148,6 +216,12 @@ func process_chasing():
 	if not path or path.size() == 0:
 		state = \"idle\"
 		return
+
+func process_dead(isInitial):
+	if isInitial:
+		mode = RigidBody.MODE_RIGID
+		set_collision_layer_bit(0, false)
+		# TODO ragdoll
 	
 func set_path_to_point(point: Vector3):
 	var nav : Navigation = get_tree().root.find_node(\"Navigation\", true, false)
@@ -191,6 +265,7 @@ func move_along_path():
 	
 func _integrate_forces(state):
 	if not move_towards: return
+	if self.state == \"dead\": return
 	
 	var toPoint = move_towards - global_transform.origin
 	var flatToPoint = Vector3(toPoint.x, 0, toPoint.z)
@@ -202,6 +277,14 @@ func _integrate_forces(state):
 	if Vector2(state.linear_velocity.x, state.linear_velocity.z).length_squared() > maxSpeed * maxSpeed:
 		var new = Vector2(state.linear_velocity.x, state.linear_velocity.z).normalized() * maxSpeed
 		state.linear_velocity = Vector3(new.x, state.linear_velocity.y, new.y)
+		
+	var max_stop_speed = 0.5 * state.step
+	if stop_moving:
+		state.linear_velocity = Vector3(
+			state.linear_velocity.x - min(state.linear_velocity.x, max_stop_speed),
+			state.linear_velocity.y,
+			state.linear_velocity.x - min(state.linear_velocity.x, max_stop_speed))
+			
 	
 func generate_frustum():
 	var camUp = Vector3.UP
@@ -232,7 +315,12 @@ func generate_frustum():
 	var front = [nearTopLeft, nearTopRight, nearBottomRight, nearBottomLeft]
 	var back = [farTopRight, farTopLeft, farBottomLeft, farBottomRight]
 	
-	frustum_planes = [left, right, top, bottom, front, back]"
+	frustum_planes = [left, right, top, bottom, front, back]
+
+func _on_Enemy_body_entered(body):
+	if body.filename == \"res://Flying Gun.tscn\":
+		state = \"dead\"
+"
 
 [sub_resource type="CapsuleShape" id=2]
 
@@ -295,7 +383,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 8 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "output", 0, "PointGun", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2" ]
+node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=10]
@@ -321,24 +409,19 @@ autorestart_delay = 1.0
 autorestart_random_delay = 0.0
 sync = false
 
-[sub_resource type="AnimationNodeTimeScale" id=13]
+[sub_resource type="AnimationNodeBlendTree" id=13]
 
-
-[sub_resource type="AnimationNodeBlendTree" id=14]
-
-graph_offset = Vector2( -394, 64 )
+graph_offset = Vector2( -294, 94 )
 nodes/Animation/node = SubResource( 11 )
 nodes/Animation/position = Vector2( -20, 60 )
 "nodes/Animation 2/node" = SubResource( 10 )
-"nodes/Animation 2/position" = Vector2( -200, 220 )
+"nodes/Animation 2/position" = Vector2( 0, 220 )
 nodes/OneShot/node = SubResource( 12 )
 nodes/OneShot/position = Vector2( 280, 120 )
-nodes/TimeScale/node = SubResource( 13 )
-nodes/TimeScale/position = Vector2( 80, 200 )
 nodes/output/position = Vector2( 560, 120 )
-node_connections = [ "output", 0, "OneShot", "TimeScale", 0, "Animation 2", "OneShot", 0, "Animation", "OneShot", 1, "TimeScale" ]
+node_connections = [ "OneShot", 0, "Animation", "OneShot", 1, "Animation 2", "output", 0, "OneShot" ]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 
 switch_mode = 0
 auto_advance = false
@@ -347,7 +430,7 @@ xfade_time = 0.5
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
 switch_mode = 0
 auto_advance = false
@@ -356,7 +439,7 @@ xfade_time = 0.2
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
 
 switch_mode = 0
 auto_advance = false
@@ -365,7 +448,7 @@ xfade_time = 0.5
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
 switch_mode = 0
 auto_advance = false
@@ -374,7 +457,7 @@ xfade_time = 0.2
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
 
 switch_mode = 0
 auto_advance = false
@@ -383,7 +466,7 @@ xfade_time = 0.5
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
 
 switch_mode = 0
 auto_advance = false
@@ -392,26 +475,26 @@ xfade_time = 0.2
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachine" id=21]
+[sub_resource type="AnimationNodeStateMachine" id=20]
 
 resource_local_to_scene = true
 states/Idle/node = SubResource( 3 )
 states/Idle/position = Vector2( 422, 157 )
 states/Moving/node = SubResource( 9 )
 states/Moving/position = Vector2( 184, 191 )
-states/Shooting/node = SubResource( 14 )
+states/Shooting/node = SubResource( 13 )
 states/Shooting/position = Vector2( 312, 326 )
-transitions = [ "Idle", "Moving", SubResource( 15 ), "Moving", "Idle", SubResource( 16 ), "Shooting", "Idle", SubResource( 17 ), "Idle", "Shooting", SubResource( 18 ), "Shooting", "Moving", SubResource( 19 ), "Moving", "Shooting", SubResource( 20 ) ]
+transitions = [ "Idle", "Moving", SubResource( 14 ), "Moving", "Idle", SubResource( 15 ), "Shooting", "Idle", SubResource( 16 ), "Idle", "Shooting", SubResource( 17 ), "Shooting", "Moving", SubResource( 18 ), "Moving", "Shooting", SubResource( 19 ) ]
 start_node = ""
 end_node = ""
 graph_offset = Vector2( -200, 115 )
 _sections_unfolded = [ "Script" ]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
 
 resource_local_to_scene = true
 
-[sub_resource type="GDScript" id=23]
+[sub_resource type="GDScript" id=22]
 
 script/source = "extends AnimationTree
 
@@ -452,8 +535,8 @@ physics_material_override = null
 gravity_scale = 1.0
 custom_integrator = false
 continuous_cd = false
-contacts_reported = 0
-contact_monitor = false
+contacts_reported = 5
+contact_monitor = true
 sleeping = false
 can_sleep = true
 axis_lock_linear_x = false
@@ -467,19 +550,21 @@ linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 script = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Matrix", "Transform", "Visibility", "bullet_scene", "physics_material_override" ]
 walk_speed = 2.0
-run_speed = 5.0
-accel = 15.0
-fov = 90.0
+run_speed = 10.0
+accel = 30.0
+fov = 120.0
 view_range = 50.0
-shoot_rate = 3.0
+shoot_rate = 1.1
+bullet_scene = ExtResource( 1 )
 debug = null
 
 [node name="Main Collider" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.66946, 0 )
 shape = SubResource( 2 )
 disabled = false
+_sections_unfolded = [ "Transform", "shape" ]
 
 [node name="Rotation" type="Spatial" parent="."]
 _sections_unfolded = [ "Transform" ]
@@ -489,33 +574,34 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.96192, 0 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Head View" type="RayCast" parent="Rotation/Head Position"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.420604 )
 enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, 0, 100 )
-collision_mask = 1
+collision_mask = 5
 collide_with_areas = false
 collide_with_bodies = true
 _sections_unfolded = [ "Collide With" ]
 
-[node name="Model" parent="Rotation" instance=ExtResource( 1 )]
+[node name="Model" parent="Rotation" instance=ExtResource( 2 )]
+_sections_unfolded = [ "Transform" ]
 
 [node name="AnimationTree" type="AnimationTree" parent="Rotation/Model/Root_Motion" index="0"]
-tree_root = SubResource( 21 )
+tree_root = SubResource( 20 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 process_mode = 1
 root_motion_track = NodePath("")
-parameters/playback = SubResource( 22 )
+parameters/playback = SubResource( 21 )
 parameters/conditions/moving = false
 parameters/conditions/not_moving = false
 parameters/conditions/not_shooting = false
 parameters/conditions/shooting = false
 parameters/Moving/PointGun/blend_amount = 0
-parameters/Moving/WalkRun/blend_amount = 0
+parameters/Moving/WalkRun/blend_amount = 1.0
 parameters/Shooting/OneShot/active = false
-parameters/Shooting/TimeScale/scale = 1.5
-script = SubResource( 23 )
-_sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move", "parameters/Move/PointGun", "parameters/Move/WalkRun", "parameters/Moving", "parameters/Moving/PointGun", "parameters/Shooting", "parameters/Shooting/OneShot", "parameters/conditions", "tree_root" ]
+script = SubResource( 22 )
+_sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move", "parameters/Move/PointGun", "parameters/Move/WalkRun", "parameters/Moving", "parameters/Moving/PointGun", "parameters/Moving/WalkRun", "parameters/Shooting", "parameters/Shooting/OneShot", "parameters/conditions", "tree_root" ]
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]
 transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
@@ -525,19 +611,27 @@ bones/43/bound_children = [ NodePath("Right Hand") ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="Model" parent="Rotation/Model/Root_Motion/Skeleton" index="0"]
-material/0 = ExtResource( 2 )
+material/0 = ExtResource( 3 )
 _sections_unfolded = [ "material" ]
 
 [node name="Right Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="1"]
-transform = Transform( -0.989679, -0.143287, 0.0014354, 0.00528549, -0.0465112, -0.998899, 0.143196, -0.988586, 0.0467894, -0.464057, 6.19833, -15.9437 )
+transform = Transform( -0.437532, 0.357181, -0.825217, 0.878078, -0.0280324, -0.477691, -0.193756, -0.933614, -0.301368, -0.300029, 2.48399, -10.5325 )
 bone_name = "enemy_r_finger1_01"
+_sections_unfolded = [ "Transform" ]
+
+[node name="Enemy Gun" parent="Rotation/Model/Root_Motion/Skeleton/Right Hand" instance=ExtResource( 4 )]
+transform = Transform( 0.87625, -2.9392e-07, 8.84756e-09, 4.84433e-08, 0.876252, 7.45058e-09, 6.0536e-09, -6.33299e-08, 0.876257, -0.419496, -1.05176, 0.000445843 )
+
+[node name="Muzzle" type="Position3D" parent="Rotation/Model/Root_Motion/Skeleton/Right Hand/Enemy Gun"]
+transform = Transform( 1, -7.3429e-08, 8.84756e-09, 5.44242e-09, 1, -7.45058e-09, 6.0536e-09, -3.35276e-08, 1, -0.0872133, 1.60302, -2.02155 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Left Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="2"]
-transform = Transform( -0.990603, 0.135327, -0.019733, 0.00319907, -0.121324, -0.992604, -0.136721, -0.983342, 0.119751, 0.331226, 5.55991, -15.5126 )
+transform = Transform( -0.978427, 0.115149, -0.171519, 0.141334, 0.978651, -0.14922, 0.150675, -0.170241, -0.973815, 3.3289, 0.334967, -7.83525 )
 bone_name = "enemy_l_finger1_01"
 
 [node name="Head" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="3"]
-transform = Transform( -8.48294e-08, -1, -3.40626e-07, 0.995799, -5.32927e-08, -0.0915603, 0.0915603, -3.47636e-07, 0.995799, 8.97799e-07, -0.271965, -15.9156 )
+transform = Transform( -4.40286e-08, -1, 2.62124e-09, 0.995799, -4.40915e-08, -0.0915603, 0.0915606, -2.0949e-09, 0.9958, -0.302853, -0.271964, -16.0392 )
 bone_name = "enemy_head_jnt"
 _sections_unfolded = [ "Transform" ]
 
@@ -556,5 +650,6 @@ size = 1.0
 near = 0.05
 far = 100.0
 
+[connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
 
 [editable path="Rotation/Model"]
