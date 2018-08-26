@@ -37,6 +37,7 @@ var lvl1Text: Label
 var lvl2Text: Label
 var lvl1TutorialText: Label
 var lvl3Text: Label
+var lvl4Text: Label
 
 var hasGun : bool = true
 
@@ -52,6 +53,7 @@ func _ready():
 	lvl2Text = get_tree().root.find_node(\"Lvl2TextLabel\", true, false)
 	lvl1TutorialText = get_tree().root.find_node(\"TutorialStartTextLabel\", true, false)
 	lvl3Text = get_tree().root.find_node(\"Lvl3TextLabel\", true, false)
+	lvl4Text = get_tree().root.find_node(\"Lvl4TextLabel\", true, false)
 	
 func _input(event):
 	var mouseMode = Input.get_mouse_mode()
@@ -226,12 +228,46 @@ func _on_Lvl3TextArea_body_entered(body):
 	lvl3Text.text = (\"KUNG\")
 	t.start()
 	yield(t, \"timeout\")
-	lvl3Text.text = (\"FU\")
+	lvl3Text.text = (\"FU?\")
 	t.start()
 	yield(t, \"timeout\")
 	t.queue_free()
 	lvl3Text.text = (\"\")
 	lvl3Text.percent_visible = 0;
+
+
+func _on_Lvl4TextArea_body_entered(body):
+	var t = Timer.new()
+	t.set_wait_time(0.5)
+	t.set_one_shot(true)
+	self.add_child(t)
+	lvl4Text.text = (\"MOST\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"YOU\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"EVER\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"LOST\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"IN\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"A\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"GUN\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl4Text.text = (\"TOSS\")
+	t.start()
+	yield(t, \"timeout\")
+	t.queue_free()
+	lvl4Text.text = (\"\")
+	lvl4Text.percent_visible = 0;
 "
 
 [sub_resource type="CapsuleShape" id=3]

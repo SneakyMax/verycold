@@ -1,0 +1,201 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://object scenes/building5.tscn" type="PackedScene" id=2]
+[ext_resource path="res://object scenes/building3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://object scenes/building1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://object scenes/doorway.tscn" type="PackedScene" id=5]
+[ext_resource path="res://object scenes/wall20x1x4.tscn" type="PackedScene" id=6]
+[ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=7]
+[ext_resource path="res://object scenes/car.tscn" type="PackedScene" id=8]
+[ext_resource path="res://object scenes/truck.tscn" type="PackedScene" id=9]
+[ext_resource path="res://object scenes/counter.tscn" type="PackedScene" id=10]
+[ext_resource path="res://object scenes/desk2.tscn" type="PackedScene" id=11]
+[ext_resource path="res://object scenes/desk3.tscn" type="PackedScene" id=12]
+[ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=13]
+[ext_resource path="res://object scenes/window.tscn" type="PackedScene" id=14]
+[ext_resource path="res://object scenes/decorativeShelf.tscn" type="PackedScene" id=15]
+[ext_resource path="res://object scenes/bossDesk.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=17]
+
+[sub_resource type="BoxShape" id=1]
+
+extents = Vector3( 1, 1, 1 )
+
+[node name="Spatial" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1, 1.4, -7.2 )
+
+[node name="Buildings" type="Spatial" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.9, 0, -5.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Building1" parent="Buildings" instance=ExtResource( 2 )]
+transform = Transform( -2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, -37.6, 0, 8.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Building7" parent="Buildings" instance=ExtResource( 2 )]
+transform = Transform( -2.18557e-07, 0, -5, 0, 5, 0, 5, 0, -2.18557e-07, 34.2, 0, 22.6 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Building" parent="Buildings" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -7.6, 0, -7.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Building3" parent="Buildings" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -2, 0, -7.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Building6" parent="Buildings" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 3.6, 0, -7.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Scene Root" parent="Buildings" instance=ExtResource( 4 )]
+transform = Transform( 0.819152, 0, -0.573576, 0, 3.7, 0, 0.430182, 0, 0.614364, 21.433, 0.2, 71.4627 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Walls" type="Spatial" parent="."]
+
+[node name="Doorway" parent="Walls" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.7, 0, 30.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Wall 20x1x4" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 1.75, 0, 0, 0, 1, -30.2, 0, 30.5 )
+
+[node name="Wall 20x1x6" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( -1.31134e-08, 0, 1, 0, 1.75, 0, -2.295, 0, -3.34392e-07, -30.2, 0, 53.7 )
+
+[node name="Wall 20x1x10" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( 2.295, 0, 0, 0, 1.75, 0, 0, 0, 1, -7.1, 0, 70.5 )
+
+[node name="Wall 20x1x7" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( -1.31134e-08, 0, 1, 0, 1.75, 0, -0.9, 0, -1.31134e-07, -10.9, 0, 40 )
+
+[node name="Wall 20x1x8" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( -1.31134e-08, 0, 1, 0, 1.75, 0, -1.94805, 0, -2.8384e-07, 10.5, 0, 50.5 )
+
+[node name="Wall 20x1x9" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( 1.94805, 0, 0, 0, 1.75, 0, 0, 0, 1, 9, 0, 30.6 )
+
+[node name="Wall 20x1x5" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 1.75, 0, 0, 0, 1, -13.2, 0, 30.5 )
+
+[node name="Wall 20x1x11" parent="Walls" instance=ExtResource( 6 )]
+transform = Transform( 2.67525, 0, 0, 0, -7.64949e-08, -1, 0, 20.4488, -5.10768e-07, -13.2, 7.3, 28.9 )
+
+[node name="Floors" type="Spatial" parent="."]
+editor/display_folded = true
+
+[node name="Floor 40x40" parent="Floors" instance=ExtResource( 7 )]
+_sections_unfolded = [ "Transform" ]
+
+[node name="Floor 40x41" parent="Floors" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Cars" type="Spatial" parent="."]
+editor/display_folded = true
+
+[node name="Car" parent="Cars" instance=ExtResource( 8 )]
+transform = Transform( -1.22392e-07, 0, 2.8, 0, 2.8, 0, -2.8, 0, -1.22392e-07, -18.9, 0.1, 8.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Truck" parent="Cars" instance=ExtResource( 9 )]
+transform = Transform( -1.22392e-07, 0, -2.8, 0, 2.8, 0, 2.8, 0, -1.22392e-07, -22.3, 1, 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Scene Root" parent="Cars" instance=ExtResource( 9 )]
+transform = Transform( 1.28418, 0, 1.16, 0, 3.0305, 0, -0.696, 0, 1.64051, -18.3, 1.2, 51.3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Car2" parent="Cars" instance=ExtResource( 8 )]
+transform = Transform( 3.78389, 0, 0, 0, 1.75, 0, 0, 0, 5.93097, 7.3, 0, 50.4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Desks" parent="." instance=ExtResource( 10 )]
+editor/display_folded = true
+transform = Transform( 2.295, 0, 0, 0, 1.75, 0, 0, 0, 1, -20, 0, 37.3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Desk 2" parent="Desks" instance=ExtResource( 11 )]
+transform = Transform( 0.573576, 0, 0.64616, 0, 1, 0, -1.87995, 0, 0.197144, 1.52505, 0, 6.8 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Desk 3" parent="Desks" instance=ExtResource( 11 )]
+transform = Transform( -0.258819, 0, 0.481148, 0, 1, 0, -2.2168, 0, -1.00927, -1.35076, 0, 7.9 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Desk 4" parent="Desks" instance=ExtResource( 12 )]
+transform = Transform( 3.29751, 0, 0, 0, 1, 0, 0, 0, 1.2104, -2.2658, 0, 21 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Chair" parent="." instance=ExtResource( 13 )]
+transform = Transform( 3.3643, 0, -1.76678, 0, 1.35, 0, 0.464942, 0, 0.885341, -5.3, 0, 48.7 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Window" parent="." instance=ExtResource( 14 )]
+transform = Transform( 7.56778, 0, 0, 0, 1.75, 0, 0, 0, 5.93097, -3.2, 0, 48 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Decorative Shelf" parent="." instance=ExtResource( 15 )]
+transform = Transform( 7.35, 0, 0, 0, 0.55, 0, 0, 0, 1, -14.5, 1.4, 69.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Boss Desk" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1.23319, 0, -1.76118, 0, 3.375, 0, 1.76118, 0, 1.23319, -16.3, 0, 65.6 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Lvl4TextArea" type="Area" parent="."]
+transform = Transform( 2.67525, 0, 0, 0, -7.64949e-08, -1, 0, 20.4488, -5.10768e-07, -20.7, 2, -4.1 )
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 1
+collision_mask = 1
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Lvl4TextArea"]
+transform = Transform( -2.98986e-08, -5.22828, 1.30592e-07, 0.0235489, -7.86805e-09, 7.52523e-08, -1.80137e-09, 2.3046e-07, 3.01275, 0, 4.47035e-08, 1.8 )
+shape = SubResource( 1 )
+disabled = false
+
+[node name="Lvl4TextLabel" type="Label" parent="Lvl4TextArea"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1025.0
+margin_bottom = 604.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 17 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[connection signal="body_entered" from="Lvl4TextArea" to="Player" method="_on_Lvl4TextArea_body_entered"]
