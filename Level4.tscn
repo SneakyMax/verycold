@@ -103,6 +103,7 @@ _sections_unfolded = [ "custom_fonts" ]
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+editor/display_folded = true
 navmesh = SubResource( 2 )
 enabled = true
 
