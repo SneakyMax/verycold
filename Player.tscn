@@ -36,6 +36,7 @@ var camera : Camera
 var lvl1Text: Label
 var lvl2Text: Label
 var lvl1TutorialText: Label
+var lvl3Text: Label
 
 var hasGun : bool = true
 
@@ -50,6 +51,7 @@ func _ready():
 	lvl1Text = get_tree().root.find_node(\"Lvl1TextLabel\", true, false)
 	lvl2Text = get_tree().root.find_node(\"Lvl2TextLabel\", true, false)
 	lvl1TutorialText = get_tree().root.find_node(\"TutorialStartTextLabel\", true, false)
+	lvl3Text = get_tree().root.find_node(\"Lvl3TextLabel\", true, false)
 	
 func _input(event):
 	var mouseMode = Input.get_mouse_mode()
@@ -208,11 +210,32 @@ func _on_TutorialStartTextArea_body_entered(body):
 	t.queue_free()
 	lvl1TutorialText.text = (\"\")
 	lvl1TutorialText.percent_visible = 0;
+
+
+func _on_Lvl3TextArea_body_entered(body):
+	var t = Timer.new()
+	t.set_wait_time(0.5)
+	t.set_one_shot(true)
+	self.add_child(t)
+	lvl3Text.text = (\"YOU\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl3Text.text = (\"KNOW\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl3Text.text = (\"KUNG\")
+	t.start()
+	yield(t, \"timeout\")
+	lvl3Text.text = (\"FU\")
+	t.start()
+	yield(t, \"timeout\")
+	t.queue_free()
+	lvl3Text.text = (\"\")
+	lvl3Text.percent_visible = 0;
 "
 
 [sub_resource type="CapsuleShape" id=3]
 
-margin = 0.04
 radius = 0.426508
 height = 2.86018
 
