@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=2]
@@ -10,6 +10,39 @@
 [ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=9]
 [ext_resource path="res://main_environment.tres" type="Environment" id=10]
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Spatial
+
+var enemies = []
+var is_level_completed = false
+
+func _ready():
+	find_enemies(self)
+	
+func _process(_delta):
+	var allDead = true
+	for enemy in enemies:
+		if enemy.state != \"dead\":
+			allDead = false
+			break
+	if allDead:
+		level_completed()
+	
+func level_completed():
+	if is_level_completed: return
+	is_level_completed = true
+	get_node(\"/root/Game\").playGameName( 5 )
+	yield(get_node(\"/root/Game\").delay( 5 * 2 * 0.65 ), \"timeout\")
+	get_node(\"/root/Game\").next_level()
+	
+func find_enemies(node : Node):
+	if node.filename == \"res://Enemy_Final.tscn\":
+		enemies.append(node)
+	else:
+		for child in node.get_children():
+			find_enemies(child)"
 
 [sub_resource type="BoxShape" id=1]
 
@@ -52,6 +85,7 @@ interior = false
 compress = false
 
 [node name="Level" type="Spatial"]
+script = SubResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]

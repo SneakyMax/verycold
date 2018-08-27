@@ -158,13 +158,13 @@ func process_idle(_isInitial):
 func process_shooting(isInitial):
 	anim.set_dual(\"shooting\", can_see_player)
 	
+	target_facing = playerCam.global_transform.origin
+	last_player_pos = playerCam.global_transform.origin
+	
 	if not can_see_player:
 		set_path_to_point(last_player_pos)
 		state = \"chasing\"
 		return
-	
-	target_facing = playerCam.global_transform.origin
-	last_player_pos = playerCam.global_transform.origin
 	
 	stop_moving = true
 	if isInitial:

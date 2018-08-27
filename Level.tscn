@@ -25,6 +25,35 @@
 
 script/source = "extends Spatial
 
+var enemies = []
+var is_level_completed = false
+
+func _ready():
+	find_enemies(self)
+	
+func _process(_delta):
+	var allDead = true
+	for enemy in enemies:
+		if enemy.state != \"dead\":
+			allDead = false
+			break
+	if allDead:
+		level_completed()
+	
+func level_completed():
+	if is_level_completed: return
+	is_level_completed = true
+	get_node(\"/root/Game\").playGameName( 5 )
+	yield(get_node(\"/root/Game\").delay( 5 * 2 * 0.65 ), \"timeout\")
+	get_node(\"/root/Game\").next_level()
+	
+func find_enemies(node : Node):
+	if node.filename == \"res://Enemy_Final.tscn\":
+		enemies.append(node)
+	else:
+		for child in node.get_children():
+			find_enemies(child)
+
 func _on_Tutorial_End_Trigger_triggered():
 	yield(get_node(\"/root/Game\").delay(2), \"timeout\")
 	find_node(\"DoorBlocker\", true, false).queue_free()
@@ -552,6 +581,7 @@ transform = Transform( -0.186174, 0, 0.982517, 0, 1, 0, -0.982517, 0, -0.186174,
 [node name="Triggers" type="Node" parent="."]
 
 [node name="Tutorial End Trigger" parent="Triggers" instance=ExtResource( 20 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.22499, 0, -20.8078 )
 text = "RIGHT CLICK: RETRIEVE RIGHT, LEFT CLICK: RETRIEVE LEFT"
 total_text_time = 4.0
@@ -562,6 +592,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.258971, 2.33413, 0 )
 shape = SubResource( 5 )
 
 [node name="Level 1 Text Trigger" parent="Triggers" instance=ExtResource( 20 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.81133, 0, -9.52032 )
 text = "A LITTLE LESS CONVER SATION"
 
@@ -570,6 +601,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.34856, 0.723663 )
 shape = SubResource( 6 )
 
 [node name="Tutorial Start Trigger" parent="Triggers" instance=ExtResource( 20 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4433, 2.17615, -22.805 )
 text = "CLICK TO USE YOUR GUN"
 

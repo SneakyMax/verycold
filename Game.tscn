@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://StartMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Audio/CameraShutter_2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Uber.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Cold.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/CameraShutter_2.wav" type="AudioStream" id=5]
 
 [sub_resource type="GDScript" id=1]
 
@@ -10,11 +12,14 @@ script/source = "extends Node
 
 export(PackedScene) var start_level
 
+export(Array, String) var game_levels
+
 var levelHolder : Node
 var bigText : Label
 
 var current_level : Node
 var currentBigTextTimer : Timer
+var currentLevelIndex : int
 
 var allow_input = true
 
@@ -29,7 +34,7 @@ func _ready():
 	levelHolder = get_node(\"Current Level\")
 	text_sound = get_node(\"TextSound\")
 	bigText = get_node(\"Overlay UI/Big Text\")
-	set_level(start_level)
+	start_over()
 	
 func slomo(secondsFixed : float, amount: float):
 	Engine.time_scale = amount
@@ -49,6 +54,18 @@ func _process(delta):
 			Engine.time_scale = timeScale
 			if timeScale == 1:
 				isSlomo = false
+				
+func start_over():
+	currentLevelIndex = -1
+	set_level(start_level)
+				
+func next_level():
+	currentLevelIndex += 1
+	if currentLevelIndex >= game_levels.size():
+		start_over()
+		return
+	var newLevel = load(game_levels[currentLevelIndex])
+	set_level(newLevel)
 	
 func set_level(level : PackedScene):
 	Engine.time_scale = 1
@@ -71,7 +88,7 @@ func player_died():
 	
 	yield(delay(2, true, false), \"timeout\")
 	
-	set_level(start_level)
+	start_over()
 	dead.modulate.a = 0
 	dead.visible = false
 	
@@ -106,6 +123,16 @@ func showBigText(text : String, totalTime : float = 2):
 	
 	clearBigText()
 	
+func playGameName(times : int):
+	var timer = delay(0.65, true, false)
+	timer.one_shot = false
+	for time in range(0, times):
+		showBigText(\"UBER COLD\", 0.65 * 2)
+		get_node(\"Audio/Uber\").play()
+		yield(timer, \"timeout\")
+		get_node(\"Audio/Cold\").play()
+		yield(timer, \"timeout\")
+	
 func level_add(obj):
 	current_level.add_child(obj)
 	
@@ -130,8 +157,9 @@ _sections_unfolded = [ "gradient" ]
 [node name="Game" type="Node"]
 pause_mode = 2
 script = SubResource( 1 )
-_sections_unfolded = [ "Pause", "start_level" ]
+_sections_unfolded = [ "Pause", "game_levels", "start_level" ]
 start_level = ExtResource( 1 )
+game_levels = [ "res://Level.tscn", "res://Level2.tscn", "res://Level3.tscn", "res://Level4.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
 editor/display_folded = true
@@ -193,9 +221,26 @@ pause_mode = 1
 _sections_unfolded = [ "Pause", "Script" ]
 
 [node name="TextSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource( 5 )
 volume_db = -3.391
 pitch_scale = 0.8
+
+[node name="Audio" type="Node" parent="."]
+_sections_unfolded = [ "Pause" ]
+
+[node name="Uber" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 3 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
+
+[node name="Cold" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 4 )
+volume_db = 0.0
+pitch_scale = 1.0
 autoplay = false
 stream_paused = false
 mix_target = 0
