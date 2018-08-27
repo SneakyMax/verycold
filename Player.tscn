@@ -96,8 +96,7 @@ func fire_or_return(alt):
 	hasGun = false
 	anim.play(\"ThrowGun\")
 	get_node(\"throwGun\").pitch_scale = Engine.time_scale
-	throwGun_sound.play()
-	yield(delay(0.33), \"timeout\")	
+	yield(delay(0.33), \"timeout\")
 	
 	var projectile : RigidBody = gun_projectile.instance()
 	var pos = find_node(\"Gun\").global_transform;
@@ -107,6 +106,7 @@ func fire_or_return(alt):
 	projectile.apply_central_impulse(direction * gun_speed)
 	projectile.player = self
 	
+	throwGun_sound.play()	
 	find_node(\"Gun\").visible = false
 	shotGun = projectile
 	
