@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://main_environment.tres" type="Environment" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -95,13 +95,6 @@ filter/low_hanging_obstacles = false
 filter/ledge_spans = false
 filter/filter_walkable_low_height_spans = false
 
-[sub_resource type="PhysicsMaterial" id=4]
-
-friction = 0.59
-rough = false
-bounce = 0.0
-absorbent = false
-
 [sub_resource type="BoxShape" id=5]
 
 extents = Vector3( 1.3556, 3.61657, 9.57107 )
@@ -143,7 +136,6 @@ data = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Navigation" type="Navigation" parent="."]
-editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMesh" type="NavigationMeshInstance" parent="Navigation"]
@@ -152,7 +144,6 @@ enabled = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="LargerRoom" type="Spatial" parent="Navigation/NavigationMesh"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.23403, 0, -30.5248 )
 _sections_unfolded = [ "Transform" ]
 
@@ -397,28 +388,31 @@ editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Bookshelf5" parent="Navigation/NavigationMesh/LargerRoom/Bookshelves" instance=ExtResource( 11 )]
-transform = Transform( -0.375, 0, -1.13247e-07, 0, 0.75, 0, 5.66234e-08, 0, -0.75, 2.25, 0, 0.9 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.25, 0, 37.1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Bookshelf6" parent="Navigation/NavigationMesh/LargerRoom/Bookshelves" instance=ExtResource( 11 )]
-transform = Transform( 0.375, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -1.39999, 0, 40.1 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14.8, 0, 40.1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Windows" type="Spatial" parent="Navigation/NavigationMesh/LargerRoom"]
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Window" parent="Navigation/NavigationMesh/LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, -7.3, 1.5, 39.9955 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.1, 2.8, 20.6955 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Window2" parent="Navigation/NavigationMesh/LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, 5.55, 1.5, 39.9955 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.35, 2.7, 25.3955 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Window3" parent="Navigation/NavigationMesh/LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, 5.55001, 1.5, 0.00589371 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.15, 2.6, 53.3059 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Window4" parent="Navigation/NavigationMesh/LargerRoom/Windows" instance=ExtResource( 12 )]
-transform = Transform( -2.18557e-08, 0, -0.65, 0, 1.3, 0, 1, 0, -5.68248e-08, -5.14999, 1.5, 0.00588989 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11.05, 3, 59.9059 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="BossOffice" type="Spatial" parent="Navigation/NavigationMesh/LargerRoom"]
 editor/display_folded = true
@@ -469,6 +463,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 6.1, 6.2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="SmallerRoom" type="Spatial" parent="Navigation/NavigationMesh"]
+editor/display_folded = true
 
 [node name="SmallerFloor" parent="Navigation/NavigationMesh/SmallerRoom" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -15 )
@@ -479,6 +474,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -25 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="SmallerRoomWalls" type="Spatial" parent="Navigation/NavigationMesh/SmallerRoom"]
+editor/display_folded = true
 
 [node name="Wall3" parent="Navigation/NavigationMesh/SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, -8.5, 0, -30.5 )
@@ -551,20 +547,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 6.26717, -16.9577 )
 light_cull_mask = -1
 shadow_enabled = false
 
-[node name="Enemy" parent="." instance=ExtResource( 19 )]
-editor/display_folded = true
-transform = Transform( 0.486192, 0, -0.873852, 0, 1, 0, 0.873852, 0, 0.486192, -3.71933e-05, 1.8729, 1.2614 )
-friction = 0.59
-physics_material_override = SubResource( 4 )
-
 [node name="Enemy3" parent="." instance=ExtResource( 19 )]
-transform = Transform( -0.873852, 0, -0.486192, 0, 1, 0, 0.486192, 0, -0.873852, 4.8, 1.8729, -0.33221 )
+transform = Transform( -0.356891, 0, -0.934146, 0, 1, 0, 0.934146, 0, -0.356891, 7.5, 1.8729, 5.76779 )
 
 [node name="Enemy4" parent="." instance=ExtResource( 19 )]
-transform = Transform( -0.486192, 0, 0.873852, 0, 1, 0, -0.873852, 0, -0.486192, -21.5, 1.8729, 9.26779 )
+transform = Transform( 0.0158714, 0, 0.999874, 0, 1, 0, -0.999874, 0, 0.0158714, -25.7, 1.8729, 9.26779 )
 
 [node name="Enemy5" parent="." instance=ExtResource( 19 )]
-transform = Transform( -0.102956, 0, -0.994686, 0, 1, 0, 0.994686, 0, -0.102956, 2.1, 1.8729, 14.5678 )
+transform = Transform( 0.327063, 0, -0.945003, 0, 1, 0, 0.945003, 0, 0.327063, 5.1, 1.8729, 14.5678 )
 
 [node name="Enemy6" parent="." instance=ExtResource( 19 )]
 transform = Transform( 0.327063, 0, -0.945003, 0, 1, 0, 0.945003, 0, 0.327063, 7.9, 1.8729, 21.7678 )
@@ -622,8 +612,6 @@ shape = SubResource( 7 )
 [editable path="Navigation/NavigationMesh/TutorialRoom/Lights/Ceiling Light"]
 
 [editable path="Navigation/NavigationMesh/TutorialRoom/Lights/Ceiling Light2"]
-
-[editable path="Enemy"]
 
 [editable path="Triggers/Tutorial End Trigger"]
 
