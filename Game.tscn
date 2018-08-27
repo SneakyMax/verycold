@@ -67,9 +67,6 @@ func next_level():
 	var newLevel = load(game_levels[currentLevelIndex])
 	set_level(newLevel)
 	
-func restart_level():
-	set_level(load(game_levels[currentLevelIndex]))
-	
 func set_level(level : PackedScene):
 	Engine.time_scale = 1
 	get_tree().paused = false
@@ -91,7 +88,7 @@ func player_died():
 	
 	yield(delay(2, true, false), \"timeout\")
 	
-	restart_level()
+	start_over()
 	dead.modulate.a = 0
 	dead.visible = false
 	
@@ -131,10 +128,8 @@ func playGameName(times : int):
 	timer.one_shot = false
 	for time in range(0, times):
 		showBigText(\"UBER COLD\", 0.65 * 2)
-		get_node(\"Audio/Uber\").pitch_scale = Engine.time_scale
 		get_node(\"Audio/Uber\").play()
 		yield(timer, \"timeout\")
-		get_node(\"Audio/Cold\").pitch_scale = Engine.time_scale
 		get_node(\"Audio/Cold\").play()
 		yield(timer, \"timeout\")
 	
@@ -167,6 +162,7 @@ start_level = ExtResource( 1 )
 game_levels = [ "res://Level.tscn", "res://Level2.tscn", "res://Level3.tscn", "res://Level4.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -177,7 +173,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-_sections_unfolded = [ "Anchor", "Mouse", "Pause" ]
+_sections_unfolded = [ "Mouse", "Pause" ]
 
 [node name="Dead" type="TextureRect" parent="Overlay UI"]
 visible = false
@@ -200,11 +196,12 @@ _sections_unfolded = [ "Material", "Mouse", "Theme", "Visibility", "texture" ]
 [node name="Big Text" type="Label" parent="Overlay UI"]
 anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = -1.0
 margin_top = -1.0
-margin_right = 1.0
+margin_right = 1025.0
+margin_bottom = 600.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -217,7 +214,7 @@ valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Anchor", "Custom Fonts", "custom_fonts", "custom_fonts/font" ]
+_sections_unfolded = [ "Custom Fonts", "custom_fonts", "custom_fonts/font" ]
 
 [node name="Current Level" type="Node" parent="."]
 pause_mode = 1
