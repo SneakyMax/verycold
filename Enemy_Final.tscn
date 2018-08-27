@@ -622,9 +622,6 @@ _sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move",
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]
 transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
-bones/9/bound_children = [ NodePath("Head") ]
-bones/19/bound_children = [ NodePath("Left Hand") ]
-bones/43/bound_children = [ NodePath("Right Hand") ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="Model" parent="Rotation/Model/Root_Motion/Skeleton" index="0"]
