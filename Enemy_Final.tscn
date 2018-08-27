@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://object scenes/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Models/enemy.escn" type="PackedScene" id=2]
 [ext_resource path="res://enemy_material.tres" type="Material" id=3]
 [ext_resource path="res://object scenes/Enemy Gun.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Audio/Gunshot_Shotgun_PSEF.151.wav" type="AudioStream" id=5]
 
 [sub_resource type="GDScript" id=1]
 
@@ -37,6 +38,7 @@ var rotator : Spatial
 var anim : AnimationTree
 var muzzle : Position3D
 var collider : CollisionShape
+var gun_sound
 
 var frustum_planes = []
 
@@ -80,6 +82,8 @@ func _ready():
 	animPlayer.get_animation(\"Run\").loop = true
 	animPlayer.get_animation(\"Walk\").loop = true
 	animPlayer.get_animation(\"PointGun\").loop = true
+	
+	gun_sound = get_node(\"GunSound\")
 	
 func world_frustum():
 	var planes = []
@@ -168,6 +172,8 @@ func process_shooting(isInitial):
 	
 	var now = OS.get_ticks_msec()
 	if now > last_shot_time + ( shoot_rate * 1000 ):
+		get_node(\"GunSound\").pitch_scale = Engine.time_scale
+		gun_sound.play()
 		shoot()	
 
 func shoot():
@@ -612,9 +618,6 @@ _sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move",
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]
 transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
-bones/9/bound_children = [ NodePath("Head") ]
-bones/19/bound_children = [ NodePath("Left Hand") ]
-bones/43/bound_children = [ NodePath("Right Hand") ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="Model" parent="Rotation/Model/Root_Motion/Skeleton" index="0"]
@@ -622,7 +625,7 @@ material/0 = ExtResource( 3 )
 _sections_unfolded = [ "material" ]
 
 [node name="Right Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="1"]
-transform = Transform( -0.437532, 0.357181, -0.825217, 0.878078, -0.0280324, -0.477691, -0.193756, -0.933614, -0.301367, -0.30003, 2.48399, -10.5325 )
+transform = Transform( 0.0912149, -3.42727e-07, 0.995832, 7.09668e-07, 1, -5.69969e-07, -0.995831, 1.76835e-07, 0.0912147, -8.40339, 0.131256, -14.0743 )
 bone_name = "enemy_r_finger1_01"
 _sections_unfolded = [ "Transform" ]
 
@@ -634,13 +637,22 @@ transform = Transform( 1, -7.3429e-08, 8.84756e-09, 5.44242e-09, 1, -7.45058e-09
 _sections_unfolded = [ "Transform" ]
 
 [node name="Left Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="2"]
-transform = Transform( -0.978427, 0.115149, -0.171519, 0.141334, 0.978651, -0.14922, 0.150675, -0.170241, -0.973815, 3.3289, 0.334967, -7.83525 )
+transform = Transform( 0.0912159, 2.57045e-07, -0.995831, -5.69504e-07, 1, -5.88596e-07, 0.995831, 1.12923e-06, 0.0912166, 8.40338, 0.131256, -14.0743 )
 bone_name = "enemy_l_finger1_01"
 
 [node name="Head" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="3"]
-transform = Transform( -4.40286e-08, -1, 2.62124e-09, 0.995799, -4.40915e-08, -0.0915603, 0.0915606, -2.0949e-09, 0.9958, -0.302853, -0.271964, -16.0392 )
+transform = Transform( -4.42011e-08, -1, 7.19446e-14, 0.9958, -4.40232e-08, -0.0915605, 0.0915605, -4.72084e-09, 0.9958, -4.64378e-14, -0.271964, -15.9156 )
 bone_name = "enemy_head_jnt"
 _sections_unfolded = [ "Transform" ]
+
+[node name="GunSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
 

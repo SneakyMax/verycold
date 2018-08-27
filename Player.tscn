@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Flying Gun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Models/humanoid.dae" type="PackedScene" id=2]
 [ext_resource path="res://Player Hand.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/xhairs/crosshair012.png" type="Texture" id=4]
+[ext_resource path="res://Audio/AirSwish1.wav" type="AudioStream" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
@@ -35,6 +36,8 @@ var camera : Camera
 var try_jump = false
 var anim : AnimationPlayer
 
+var throwGun_sound
+
 var hasGun : bool = true
 
 func _ready():
@@ -43,6 +46,7 @@ func _ready():
 	pitch = get_node(\"Yaw/Pitch\")
 	look = find_node(\"Look\")
 	targetGun = find_node(\"Target Gun\")
+	throwGun_sound = get_node(\"throwGun\")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	anim = get_node(\"Yaw/Pitch/Player Hand/Armature/AnimationPlayer\")
 	startAnimation()
@@ -91,7 +95,8 @@ func fire_or_return(alt):
 	
 	hasGun = false
 	anim.play(\"ThrowGun\")
-	
+	get_node(\"throwGun\").pitch_scale = Engine.time_scale
+	throwGun_sound.play()
 	yield(delay(0.33), \"timeout\")	
 	
 	var projectile : RigidBody = gun_projectile.instance()
@@ -300,5 +305,14 @@ size_flags_vertical = 1
 texture = ExtResource( 4 )
 stretch_mode = 5
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Mouse", "Rect", "texture" ]
+
+[node name="throwGun" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
