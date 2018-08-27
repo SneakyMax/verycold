@@ -383,7 +383,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 8 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
+node_connections = [ "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=10]
@@ -605,9 +605,6 @@ _sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move",
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]
 transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
-bones/9/bound_children = [ NodePath("Head") ]
-bones/19/bound_children = [ NodePath("Left Hand") ]
-bones/43/bound_children = [ NodePath("Right Hand") ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="Model" parent="Rotation/Model/Root_Motion/Skeleton" index="0"]
@@ -615,7 +612,7 @@ material/0 = ExtResource( 3 )
 _sections_unfolded = [ "material" ]
 
 [node name="Right Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="1"]
-transform = Transform( -0.437532, 0.357181, -0.825217, 0.878078, -0.0280324, -0.477691, -0.193756, -0.933614, -0.301368, -0.300029, 2.48399, -10.5325 )
+transform = Transform( 0.0912149, -3.42727e-07, 0.995832, 7.09668e-07, 1, -5.69969e-07, -0.995831, 1.76835e-07, 0.0912147, -8.40339, 0.131256, -14.0743 )
 bone_name = "enemy_r_finger1_01"
 _sections_unfolded = [ "Transform" ]
 
@@ -627,11 +624,11 @@ transform = Transform( 1, -7.3429e-08, 8.84756e-09, 5.44242e-09, 1, -7.45058e-09
 _sections_unfolded = [ "Transform" ]
 
 [node name="Left Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="2"]
-transform = Transform( -0.978427, 0.115149, -0.171519, 0.141334, 0.978651, -0.14922, 0.150675, -0.170241, -0.973815, 3.3289, 0.334967, -7.83525 )
+transform = Transform( 0.0912159, 2.57045e-07, -0.995831, -5.69504e-07, 1, -5.88596e-07, 0.995831, 1.12923e-06, 0.0912166, 8.40338, 0.131256, -14.0743 )
 bone_name = "enemy_l_finger1_01"
 
 [node name="Head" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton" index="3"]
-transform = Transform( -4.40286e-08, -1, 2.62124e-09, 0.995799, -4.40915e-08, -0.0915603, 0.0915606, -2.0949e-09, 0.9958, -0.302853, -0.271964, -16.0392 )
+transform = Transform( -4.42011e-08, -1, 7.19446e-14, 0.9958, -4.40232e-08, -0.0915605, 0.0915605, -4.72084e-09, 0.9958, -4.64378e-14, -0.271964, -15.9156 )
 bone_name = "enemy_head_jnt"
 _sections_unfolded = [ "Transform" ]
 

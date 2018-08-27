@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/AirSwish1.wav-7659d5420e19f53f66f213c886da7098.sample"
+
+[deps]
+
+source_file="res://Audio/AirSwish1.wav"
+dest_files=[ "res://.import/AirSwish1.wav-7659d5420e19f53f66f213c886da7098.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

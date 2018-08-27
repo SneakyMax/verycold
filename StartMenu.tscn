@@ -1,0 +1,125 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/robotomediumfont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Audio/Uber.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Cold.wav" type="AudioStream" id=4]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Control
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+# Called when the node enters the scene tree for the first time.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+var last_changed_time : int
+var change_rate = 0.65
+var uber_sound
+var cold_sound
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	last_changed_time = OS.get_ticks_msec();
+	uber_sound = get_node(\"Uber\")
+	cold_sound = get_node(\"Cold\")
+	set_process_input(true)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+
+func _process(delta):	
+	var now = OS.get_ticks_msec()
+	if now > last_changed_time + ( change_rate * 1000 ):
+		_changeTitle()
+		
+func _changeTitle():
+	last_changed_time = OS.get_ticks_msec()
+	if(get_node(\"TitleLbl\").text == \"UBER\"):
+		cold_sound.play()
+		get_node(\"TitleLbl\").text = \"COLD\"
+	elif(get_node(\"TitleLbl\").text == \"COLD\"):
+		uber_sound.play()
+		get_node(\"TitleLbl\").text = \"UBER\""
+
+[node name="Control" type="Control"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = SubResource( 1 )
+_sections_unfolded = [ "Script" ]
+
+[node name="TitleLbl" type="Label" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 1 )
+text = "COLD"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Script", "custom_fonts" ]
+
+[node name="PressAnyKey" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -315.0
+margin_top = -121.0
+margin_right = 315.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+text = "Press Any Key"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "custom_fonts" ]
+
+[node name="Uber" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
+
+[node name="Cold" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
+

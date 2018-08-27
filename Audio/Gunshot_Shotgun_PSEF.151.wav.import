@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Gunshot_Shotgun_PSEF.151.wav-a61e8cf5bff2406c2e0bd88fb7fbf530.sample"
+
+[deps]
+
+source_file="res://Audio/Gunshot_Shotgun_PSEF.151.wav"
+dest_files=[ "res://.import/Gunshot_Shotgun_PSEF.151.wav-a61e8cf5bff2406c2e0bd88fb7fbf530.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

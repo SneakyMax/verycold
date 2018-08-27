@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Gun_44_Mag_PSEF.148.wav-a1cdaf89bb4fc0449a30ceb3e2dd265e.sample"
+
+[deps]
+
+source_file="res://Audio/Gun_44_Mag_PSEF.148.wav"
+dest_files=[ "res://.import/Gun_44_Mag_PSEF.148.wav-a1cdaf89bb4fc0449a30ceb3e2dd265e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
