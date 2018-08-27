@@ -17,13 +17,34 @@ var currentBigTextTimer : Timer
 
 var allow_input = true
 
+var isSlomo
+var startSlomoTime
+var slomoSecondsFixed : float
+var slomoAmount
+
 func _ready():
 	levelHolder = get_node(\"Current Level\")
 	bigText = get_node(\"Overlay UI/Big Text\")
-	start_over()
-	
-func start_over():
 	set_level(start_level)
+	
+func slomo(secondsFixed : float, amount: float):
+	Engine.time_scale = amount
+	isSlomo = true
+	startSlomoTime = OS.get_ticks_msec()
+	slomoSecondsFixed = secondsFixed
+	slomoAmount = amount
+
+func _process(delta):
+	var now = OS.get_ticks_msec()
+	var slomoChangeTime = 2.0
+	if isSlomo:
+		var after = now - (startSlomoTime + (slomoSecondsFixed * 1000))
+		if after >= 0:
+			var slomoFactor = after / (slomoChangeTime * 1000)
+			var timeScale = clamp(lerp(slomoAmount, 1, slomoFactor), 0.1, 1)
+			Engine.time_scale = timeScale
+			if timeScale == 1:
+				isSlomo = false
 	
 func set_level(level : PackedScene):
 	Engine.time_scale = 1
@@ -46,7 +67,7 @@ func player_died():
 	
 	yield(delay(2, true, false), \"timeout\")
 	
-	start_over()
+	set_level(start_level)
 	dead.modulate.a = 0
 	dead.visible = false
 	

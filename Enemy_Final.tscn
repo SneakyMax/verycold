@@ -223,6 +223,7 @@ func process_chasing(_isInitial):
 
 func process_dead(isInitial):
 	if isInitial:
+		get_node(\"/root/Game\").slomo(2, 0.5)
 		mode = RigidBody.MODE_RIGID
 		set_collision_layer_bit(0, false)
 		# TODO ragdoll
