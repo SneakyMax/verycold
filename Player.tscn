@@ -23,6 +23,7 @@ export(float, 0, 2) var mouse_sensitivity_x = 1
 export(float, 0, 2) var mouse_sensitivity_y = 1
 export(float, 0, 100) var gun_speed = 1
 export(float, 0, 100) var jump_force = 1
+export(bool) var is_level_1
 
 export(PackedScene) var gun_projectile
 
@@ -40,6 +41,9 @@ var throwGun_sound
 
 var hasGun : bool = true
 
+var level1PickedUpGun = false
+var level1AnimationShown = false
+
 func _ready():
 	camera = find_node(\"Camera\")
 	yaw = get_node(\"Yaw\")
@@ -52,9 +56,15 @@ func _ready():
 	startAnimation()
 	
 func startAnimation():
-	anim.play(\"PickUpGun\")
-	yield(delay(0.5), \"timeout\")
-	anim.play(\"HoldingGun\")
+	if is_level_1:
+		hasGun = false
+		find_node(\"Gun\").visible = false
+		get_node(\"/root/Game\").showBigText(\"GET YOUR GUN\")
+		anim.play(\"HandOut\")
+	else:
+		anim.play(\"PickUpGun\")
+		yield(delay(0.5), \"timeout\")
+		anim.play(\"TossGunHoldTop\", -1, 1.5)
 	
 func _input(event):
 	var mouseMode = Input.get_mouse_mode()
@@ -90,8 +100,14 @@ func fire_or_return(alt):
 		return
 	
 	hasGun = false
-	anim.play(\"ThrowGun\")
 	get_node(\"throwGun\").pitch_scale = Engine.time_scale
+	
+	if level1PickedUpGun and not level1AnimationShown:
+		anim.play(\"TossGunHoldTop\")
+		level1AnimationShown = true
+		yield(delay(1.3), \"timeout\")
+	
+	anim.play(\"ThrowGun\")
 	yield(delay(0.33), \"timeout\")
 	
 	var projectile : RigidBody = gun_projectile.instance()
@@ -153,6 +169,14 @@ func pickupGun():
 	hasGun = true
 	find_node(\"Gun\").visible = true
 	anim.play(\"PickUpGun\")
+	yield(delay(0.54), \"timeout\")
+	
+	if is_level_1 and not level1PickedUpGun:
+		level1PickedUpGun = true
+		get_node(\"/root/Game\").showBigText(\"TAKE HIM OUT\")
+		
+	if not is_level_1 or level1AnimationShown:
+		anim.play(\"TossGunHoldTop\", -1, 1.5)
 
 func _on_Player_body_entered(body):
 	if body.get_filename() == \"res://object scenes/Bullet.tscn\":
@@ -208,6 +232,7 @@ mouse_sensitivity_x = 0.169
 mouse_sensitivity_y = 0.169
 gun_speed = 20.0
 jump_force = 4.0
+is_level_1 = null
 gun_projectile = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -280,7 +305,6 @@ collide_with_bodies = true
 
 [node name="Player Hand" parent="Yaw/Pitch" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, -0.39, 0.73 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Crosshair" type="TextureRect" parent="."]
 anchor_left = 0.5
