@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://StartMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Audio/Uber.wav" type="AudioStream" id=3]
-[ext_resource path="res://Audio/Cold.wav" type="AudioStream" id=4]
-[ext_resource path="res://Audio/CameraShutter_2.wav" type="AudioStream" id=5]
+[ext_resource path="res://Audio/CameraShutter_2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/Uber.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/Cold.wav" type="AudioStream" id=5]
 
 [sub_resource type="GDScript" id=1]
 
@@ -28,11 +28,8 @@ var startSlomoTime
 var slomoSecondsFixed : float
 var slomoAmount
 
-var text_sound
-
 func _ready():
 	levelHolder = get_node(\"Current Level\")
-	text_sound = get_node(\"TextSound\")
 	bigText = get_node(\"Overlay UI/Big Text\")
 	start_over()
 	
@@ -117,7 +114,6 @@ func showBigText(text : String, totalTime : float = 2):
 	currentBigTextTimer = timer
 	
 	for word in words:
-		text_sound.play()
 		bigText.text = word
 		yield(timer, \"timeout\")
 	
@@ -221,15 +217,19 @@ pause_mode = 1
 _sections_unfolded = [ "Pause", "Script" ]
 
 [node name="TextSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource( 3 )
 volume_db = -3.391
 pitch_scale = 0.8
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
 
 [node name="Audio" type="Node" parent="."]
 _sections_unfolded = [ "Pause" ]
 
 [node name="Uber" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource( 3 )
+stream = ExtResource( 4 )
 volume_db = 0.0
 pitch_scale = 1.0
 autoplay = false
@@ -238,7 +238,7 @@ mix_target = 0
 bus = "Master"
 
 [node name="Cold" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource( 4 )
+stream = ExtResource( 5 )
 volume_db = 0.0
 pitch_scale = 1.0
 autoplay = false
