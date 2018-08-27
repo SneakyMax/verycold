@@ -73,25 +73,25 @@ constant_angular_velocity = Vector3( 0, 0, 0 )
 shape = SubResource( 2 )
 disabled = false
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.776122, -1.26644, 0 )
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0 )
 layers = 1
 light_color = Color( 1, 1, 1, 1 )
-light_energy = 1.1
-light_indirect_energy = 1.0
+light_energy = 1.0
+light_indirect_energy = 2.0
 light_negative = false
-light_specular = 0.7
+light_specular = 0.5
 light_bake_mode = 1
 light_cull_mask = -1
 shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
+shadow_bias = 0.5
 shadow_contact = 0.0
 shadow_reverse_cull_face = false
 editor_only = false
-omni_range = 20.0
-omni_attenuation = 1.0
-omni_shadow_mode = 0
-omni_shadow_detail = 1
-_sections_unfolded = [ "Editor", "Light", "Omni", "Shadow" ]
+spot_range = 30.0
+spot_attenuation = 0.183011
+spot_angle = 60.0
+spot_angle_attenuation = 1.0
+_sections_unfolded = [ "Light", "Shadow", "Spot" ]
 

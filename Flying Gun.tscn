@@ -10,7 +10,7 @@ script/source = "extends RigidBody
 
 export(float, 0, 100) var recall_accel
 export(float, 0, 100) var recall_max_speed
-export(float, 0, 100) var spin_speed
+export(float, -5, 5) var spin_speed
 export(float, 0, 100) var side_movement_force
 export(float, 0, 2) var side_movement_time = 1
 
@@ -25,7 +25,14 @@ var pickupArea : Area
 
 func _ready():
 	pickupArea = get_node(\"Pickup Area\")
-	apply_torque_impulse(get_transform().basis.x * spin_speed)
+	pickupArea.monitoring = false
+	start()
+	
+func start():
+	yield(delay(0.05), \"timeout\")
+	apply_torque_impulse(get_transform().basis.x * spin_speed)	
+	yield(delay(0.5), \"timeout\")
+	pickupArea.monitoring = true
 
 func glow():
 	get_node(\"Highlighted Gun\").visible = true
@@ -68,6 +75,15 @@ func _on_Pickup_Area_body_entered(body):
 	queue_free()
 	player.pickupGun()
 	set_collision_layer_bit(0, false)
+
+func delay(seconds : float = 1, start : bool = true):
+	var timer = Timer.new()
+	add_child(timer)
+	timer.one_shot = true
+	timer.wait_time = seconds
+	if start:
+		timer.start()
+	return timer
 "
 
 [sub_resource type="SpatialMaterial" id=2]
@@ -370,7 +386,7 @@ script = SubResource( 1 )
 _sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear" ]
 recall_accel = 10.0
 recall_max_speed = 10.0
-spin_speed = 0.5
+spin_speed = -0.8
 side_movement_force = 50.0
 side_movement_time = 0.4
 
@@ -470,7 +486,7 @@ gravity = 9.8
 linear_damp = 0.1
 angular_damp = 1.0
 priority = 0.0
-monitoring = true
+monitoring = false
 monitorable = true
 collision_layer = 4
 collision_mask = 4

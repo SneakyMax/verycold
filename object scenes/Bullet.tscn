@@ -2,22 +2,53 @@
 
 [ext_resource path="res://Models/AssetForge/objs/bullet/_defaultMat (Instance).material" type="Material" id=1]
 [ext_resource path="res://Models/AssetForge/objs/bullet/customMaterial1.material" type="Material" id=2]
-[ext_resource path="res://Bullet Particles.tscn" type="PackedScene" id=3]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends RigidBody
 
 export(float, 0, 100) var speed
 
+export(float, 0, 100) var trail_thickness = 1
+
+var startPos : Vector3
+var geo : ImmediateGeometry
+
+func _ready():
+	geo = get_node(\"ImmediateGeometry\")
+
 func start():
+	startPos = global_transform.origin	
 	apply_central_impulse(speed * global_transform.basis.z)
+	
+func _process(delta):
+	var up = Vector3.UP * (trail_thickness / 2.0)
+	var down = Vector3.DOWN * (trail_thickness / 2.0)
+	var left = Vector3.LEFT * (trail_thickness / 2.0)
+	var right = Vector3.RIGHT * (trail_thickness / 2.0)
+	geo.clear()
+	quad(up, left)
+	quad(down, right)
+	quad(left, up)
+	quad(right, down)
+	
+func quad(axis_a, axis_b):
+	geo.begin(Mesh.PRIMITIVE_TRIANGLE_STRIP)
+	geo.add_vertex(to_local(startPos + axis_a + axis_b))
+	geo.add_vertex(to_local(global_transform.origin + axis_a + axis_b))
+	geo.add_vertex(to_local(startPos - axis_a + axis_b))
+	geo.add_vertex(to_local(global_transform.origin - axis_a + axis_b))
+	geo.end()
 
 func _on_Bullet_body_entered(body):
+	var pos = global_transform
 	get_node(\"MeshInstance\").queue_free()
 	get_node(\"CollisionShape\").disabled = true
 	mode = RigidBody.MODE_KINEMATIC
-	get_node(\"Particles\").emitting = false
+	global_transform = pos; #dunno why
+	
+	get_node(\"Tween\").interpolate_property(
+		self, \"startPos\", startPos, pos.origin, 5, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	
 	var timer = Timer.new()
 	add_child(timer)
@@ -28,7 +59,7 @@ func _on_Bullet_body_entered(body):
 	yield(timer, \"timeout\")
 	queue_free()"
 
-[sub_resource type="ArrayMesh" id=1]
+[sub_resource type="ArrayMesh" id=2]
 
 blend_shape_mode = 1
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
@@ -85,10 +116,66 @@ surfaces/3 = {
 "vertex_count": 338
 }
 
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=3]
 
 radius = 0.0360097
 height = 0.0620427
+
+[sub_resource type="SpatialMaterial" id=4]
+
+render_priority = 0
+flags_transparent = true
+flags_unshaded = true
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+flags_do_not_receive_shadows = false
+flags_disable_ambient_light = false
+flags_ensure_correct_normals = true
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 2
+params_depth_draw_mode = 1
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_billboard_keep_scale = false
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 1, 0, 0, 0.572549 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 1.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_mode = 0
+_sections_unfolded = [ "Albedo", "Flags", "Parameters", "Resource", "Vertex Color" ]
 
 [node name="Bullet" type="RigidBody"]
 input_ray_pickable = true
@@ -117,9 +204,10 @@ linear_velocity = Vector3( 0, 0, 0 )
 linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
-script = SubResource( 3 )
+script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 speed = 10.0
+trail_thickness = 0.05
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.07, 0, 0, 0, -3.0598e-09, -0.07, 0, 0.07, -3.0598e-09, 0, -0.00414755, -0.0606634 )
@@ -132,7 +220,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = null
 material/1 = null
@@ -141,12 +229,27 @@ material/3 = null
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 disabled = false
 
-[node name="Particles" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000205889, -0.583882 )
-amount = 3000
-visibility_aabb = AABB( -20.5351, -6.8576, -17.3786, 41.1707, 13.7152, 34.2719 )
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
+layers = 1
+material_override = SubResource( 4 )
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+_sections_unfolded = [ "Geometry", "LOD" ]
+
+[node name="Tween" type="Tween" parent="."]
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
 
 [connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]
