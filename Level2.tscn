@@ -279,26 +279,20 @@ editor/display_folded = true
 
 [node name="Ground" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.8 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Ground2" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -34.2 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Ground3" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -34.2 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Ground4" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 5.8 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Ground5" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 45.8 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Ground6" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 45.8 )
-_sections_unfolded = [ "Transform" ]
 
 [connection signal="body_entered" from="Lvl2TextArea" to="Player" method="_on_Lvl2TextArea_body_entered"]
