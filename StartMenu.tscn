@@ -29,8 +29,12 @@ func _ready():
 	uber_sound = get_node(\"Uber\")
 	cold_sound = get_node(\"Cold\")
 	set_process_input(true)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _input(event):
+	if (event.is_action_pressed(\"escape\")):
+		get_tree().quit()
+
 	if event is InputEventKey:
 		if event.pressed:
 			get_node(\"/root/Game\").next_level()

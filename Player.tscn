@@ -59,12 +59,8 @@ func startAnimation():
 func _input(event):
 	var mouseMode = Input.get_mouse_mode()
 	if (event.is_action_pressed(\"escape\")):
-		if (mouseMode == Input.MOUSE_MODE_CAPTURED):
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			get_tree().quit()
+		get_node(\"/root/Game\").start_over()
 		get_tree().set_input_as_handled()
-		
 	
 func _unhandled_input(event):
 	var mouseMode = Input.get_mouse_mode()
@@ -96,8 +92,7 @@ func fire_or_return(alt):
 	hasGun = false
 	anim.play(\"ThrowGun\")
 	get_node(\"throwGun\").pitch_scale = Engine.time_scale
-	throwGun_sound.play()
-	yield(delay(0.33), \"timeout\")	
+	yield(delay(0.33), \"timeout\")
 	
 	var projectile : RigidBody = gun_projectile.instance()
 	var pos = find_node(\"Gun\").global_transform;
@@ -107,6 +102,7 @@ func fire_or_return(alt):
 	projectile.apply_central_impulse(direction * gun_speed)
 	projectile.player = self
 	
+	throwGun_sound.play()	
 	find_node(\"Gun\").visible = false
 	shotGun = projectile
 	
