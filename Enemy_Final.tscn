@@ -399,7 +399,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 8 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "output", 0, "PointGun", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2" ]
+node_connections = [ "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=10]
@@ -435,7 +435,7 @@ nodes/Animation/position = Vector2( -20, 60 )
 nodes/OneShot/node = SubResource( 12 )
 nodes/OneShot/position = Vector2( 280, 120 )
 nodes/output/position = Vector2( 560, 120 )
-node_connections = [ "output", 0, "OneShot", "OneShot", 0, "Animation", "OneShot", 1, "Animation 2" ]
+node_connections = [ "OneShot", 0, "Animation", "OneShot", 1, "Animation 2", "output", 0, "OneShot" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=14]
 
@@ -568,7 +568,7 @@ angular_damp = -1.0
 script = SubResource( 1 )
 _sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Matrix", "Transform", "Visibility", "bullet_scene", "physics_material_override" ]
 walk_speed = 2.0
-run_speed = 10.0
+run_speed = 5.0
 accel = 30.0
 fov = 120.0
 view_range = 50.0

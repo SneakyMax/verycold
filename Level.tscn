@@ -556,6 +556,9 @@ shadow_enabled = false
 [node name="Enemy3" parent="." instance=ExtResource( 21 )]
 transform = Transform( -0.356891, 0, -0.934146, 0, 1, 0, 0.934146, 0, -0.356891, 7.5, 1.8729, 5.76779 )
 
+[node name="Enemy7" parent="." instance=ExtResource( 21 )]
+transform = Transform( -0.356891, 0, -0.934146, 0, 1, 0, 0.934146, 0, -0.356891, -12.2, 1.8729, 20.8678 )
+
 [node name="Enemy4" parent="." instance=ExtResource( 21 )]
 transform = Transform( 0.0158714, 0, 0.999874, 0, 1, 0, -0.999874, 0, 0.0158714, -25.7, 1.8729, 9.26779 )
 
@@ -564,9 +567,6 @@ transform = Transform( 0.327063, 0, -0.945003, 0, 1, 0, 0.945003, 0, 0.327063, 5
 
 [node name="Enemy6" parent="." instance=ExtResource( 21 )]
 transform = Transform( 0.327063, 0, -0.945003, 0, 1, 0, 0.945003, 0, 0.327063, 7.9, 1.8729, 21.7678 )
-
-[node name="Enemy7" parent="." instance=ExtResource( 21 )]
-transform = Transform( -0.857981, 0, 0.513682, 0, 1, 0, -0.513682, 0, -0.857981, -14.8, 1.8729, 25.3678 )
 
 [node name="Enemy8" parent="." instance=ExtResource( 21 )]
 transform = Transform( -0.857981, 0, 0.513682, 0, 1, 0, -0.513682, 0, -0.857981, -27.9, 1.8729, 25.3678 )
@@ -598,7 +598,6 @@ shape = SubResource( 5 )
 
 [node name="Flying Gun" parent="." instance=ExtResource( 23 )]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -8.3418, 2.06713, -19.8892 )
-friction = 0.28
 
 [connection signal="triggered" from="Triggers/Tutorial End Trigger" to="." method="_on_Tutorial_End_Trigger_triggered"]
 
