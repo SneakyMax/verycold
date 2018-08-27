@@ -39,6 +39,7 @@ var anim : AnimationTree
 var muzzle : Position3D
 var collider : CollisionShape
 var gun_sound
+var hit_sound
 
 var frustum_planes = []
 
@@ -84,6 +85,7 @@ func _ready():
 	animPlayer.get_animation(\"PointGun\").loop = true
 	
 	gun_sound = get_node(\"GunSound\")
+	hit_sound = get_node(\"HitSound\")
 	
 func world_frustum():
 	var planes = []
@@ -331,6 +333,8 @@ func generate_frustum():
 
 func _on_Enemy_body_entered(body):
 	if body.filename == \"res://Flying Gun.tscn\":
+		if(state != \"dead\"):
+			hit_sound.play()
 		state = \"dead\"
 "
 
@@ -618,6 +622,9 @@ _sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move",
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]
 transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
+bones/9/bound_children = [ NodePath("Head") ]
+bones/19/bound_children = [ NodePath("Left Hand") ]
+bones/43/bound_children = [ NodePath("Right Hand") ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="Model" parent="Rotation/Model/Root_Motion/Skeleton" index="0"]
@@ -649,6 +656,15 @@ _sections_unfolded = [ "Transform" ]
 stream = ExtResource( 5 )
 volume_db = 0.0
 pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 0.2
 autoplay = false
 stream_paused = false
 mix_target = 0
