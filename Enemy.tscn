@@ -4,7 +4,7 @@
 
 [sub_resource type="PhysicsMaterial" id=1]
 
-friction = 1.0
+friction = 0.8
 rough = false
 bounce = 0.0
 absorbent = false
@@ -39,7 +39,7 @@ collision_layer = 1
 collision_mask = 1
 mode = 0
 mass = 1.0
-friction = 1.0
+friction = 0.8
 bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.0

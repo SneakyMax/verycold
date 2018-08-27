@@ -124,7 +124,7 @@ _sections_unfolded = [ "Albedo", "Parameters", "Refraction", "Vertex Color" ]
 
 [node name="Gun" parent="Armature" index="1"]
 material/0 = SubResource( 1 )
-_sections_unfolded = [ "material" ]
+_sections_unfolded = [ "Transform", "material" ]
 
 [node name="pCube1" parent="Armature" index="2"]
 material/0 = SubResource( 2 )

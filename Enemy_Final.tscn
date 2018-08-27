@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://object scenes/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Models/enemy.escn" type="PackedScene" id=2]
@@ -6,7 +6,14 @@
 [ext_resource path="res://object scenes/Enemy Gun.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Audio/Gunshot_Shotgun_PSEF.151.wav" type="AudioStream" id=5]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="PhysicsMaterial" id=1]
+
+friction = 0.8
+rough = false
+bounce = 0.0
+absorbent = false
+
+[sub_resource type="GDScript" id=2]
 
 script/source = "extends RigidBody
 
@@ -338,83 +345,83 @@ func _on_Enemy_body_entered(body):
 		state = \"dead\"
 "
 
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=3]
 
 radius = 0.383281
 height = 2.58835
 
-[sub_resource type="AnimationNodeAnimation" id=3]
+[sub_resource type="AnimationNodeAnimation" id=4]
 
 filter_enabled = false
 filters = [  ]
 animation = "Idle"
-
-[sub_resource type="AnimationNodeAnimation" id=4]
-
-resource_local_to_scene = true
-filter_enabled = false
-filters = [  ]
-animation = "Run"
 
 [sub_resource type="AnimationNodeAnimation" id=5]
 
 resource_local_to_scene = true
 filter_enabled = false
 filters = [  ]
-animation = "PointGun"
+animation = "Run"
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 
 resource_local_to_scene = true
 filter_enabled = false
 filters = [  ]
+animation = "PointGun"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+
+resource_local_to_scene = true
+filter_enabled = false
+filters = [  ]
 animation = "Walk"
 
-[sub_resource type="AnimationNodeBlend2" id=7]
+[sub_resource type="AnimationNodeBlend2" id=8]
 
 resource_local_to_scene = true
 filter_enabled = true
 filters = [ "Skeleton:enemy_l_clavicle_jnt", "Skeleton:enemy_l_elbow_jnt", "Skeleton:enemy_l_finger0_01", "Skeleton:enemy_l_finger0_02", "Skeleton:enemy_l_finger0_03", "Skeleton:enemy_l_finger1_01", "Skeleton:enemy_l_finger1_02", "Skeleton:enemy_l_finger1_03", "Skeleton:enemy_l_finger2_01", "Skeleton:enemy_l_finger2_02", "Skeleton:enemy_l_shoulder_jnt", "Skeleton:enemy_l_wrist_jnt", "Skeleton:enemy_r_clavicle_jnt", "Skeleton:enemy_r_elbow_jnt", "Skeleton:enemy_r_finger0_01", "Skeleton:enemy_r_finger0_02", "Skeleton:enemy_r_finger0_03", "Skeleton:enemy_r_finger1_01", "Skeleton:enemy_r_finger1_02", "Skeleton:enemy_r_finger1_03", "Skeleton:enemy_r_finger2_01", "Skeleton:enemy_r_finger2_02", "Skeleton:enemy_r_shoulder_jnt", "Skeleton:enemy_r_wrist_jnt" ]
 sync = true
 
-[sub_resource type="AnimationNodeBlend2" id=8]
+[sub_resource type="AnimationNodeBlend2" id=9]
 
 resource_local_to_scene = true
 filter_enabled = false
 filters = [  ]
 sync = true
 
-[sub_resource type="AnimationNodeBlendTree" id=9]
+[sub_resource type="AnimationNodeBlendTree" id=10]
 
 resource_local_to_scene = true
 graph_offset = Vector2( -380, 34 )
-nodes/Animation/node = SubResource( 6 )
+nodes/Animation/node = SubResource( 7 )
 nodes/Animation/position = Vector2( -200, 0 )
-"nodes/Animation 2/node" = SubResource( 4 )
+"nodes/Animation 2/node" = SubResource( 5 )
 "nodes/Animation 2/position" = Vector2( -200, 180 )
-"nodes/Animation 3/node" = SubResource( 5 )
+"nodes/Animation 3/node" = SubResource( 6 )
 "nodes/Animation 3/position" = Vector2( 120, 300 )
-nodes/PointGun/node = SubResource( 7 )
+nodes/PointGun/node = SubResource( 8 )
 nodes/PointGun/position = Vector2( 380, 140 )
-nodes/WalkRun/node = SubResource( 8 )
+nodes/WalkRun/node = SubResource( 9 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "output", 0, "PointGun", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2" ]
+node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
-
-[sub_resource type="AnimationNodeAnimation" id=10]
-
-filter_enabled = false
-filters = [  ]
-animation = "Fire"
 
 [sub_resource type="AnimationNodeAnimation" id=11]
 
 filter_enabled = false
 filters = [  ]
+animation = "Fire"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+
+filter_enabled = false
+filters = [  ]
 animation = "PointGun"
 
-[sub_resource type="AnimationNodeOneShot" id=12]
+[sub_resource type="AnimationNodeOneShot" id=13]
 
 filter_enabled = false
 filters = [  ]
@@ -425,19 +432,19 @@ autorestart_delay = 1.0
 autorestart_random_delay = 0.0
 sync = false
 
-[sub_resource type="AnimationNodeBlendTree" id=13]
+[sub_resource type="AnimationNodeBlendTree" id=14]
 
 graph_offset = Vector2( -294, 94 )
-nodes/Animation/node = SubResource( 11 )
+nodes/Animation/node = SubResource( 12 )
 nodes/Animation/position = Vector2( -20, 60 )
-"nodes/Animation 2/node" = SubResource( 10 )
+"nodes/Animation 2/node" = SubResource( 11 )
 "nodes/Animation 2/position" = Vector2( 0, 220 )
-nodes/OneShot/node = SubResource( 12 )
+nodes/OneShot/node = SubResource( 13 )
 nodes/OneShot/position = Vector2( 280, 120 )
 nodes/output/position = Vector2( 560, 120 )
 node_connections = [ "output", 0, "OneShot", "OneShot", 0, "Animation", "OneShot", 1, "Animation 2" ]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
 switch_mode = 0
 auto_advance = false
@@ -446,7 +453,7 @@ xfade_time = 0.5
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
 
 switch_mode = 0
 auto_advance = false
@@ -455,7 +462,7 @@ xfade_time = 0.2
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
 switch_mode = 0
 auto_advance = false
@@ -464,7 +471,7 @@ xfade_time = 0.5
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
 
 switch_mode = 0
 auto_advance = false
@@ -473,7 +480,7 @@ xfade_time = 0.2
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
 
 switch_mode = 0
 auto_advance = false
@@ -482,7 +489,7 @@ xfade_time = 0.5
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
 
 switch_mode = 0
 auto_advance = false
@@ -491,26 +498,26 @@ xfade_time = 0.2
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachine" id=20]
+[sub_resource type="AnimationNodeStateMachine" id=21]
 
 resource_local_to_scene = true
-states/Idle/node = SubResource( 3 )
+states/Idle/node = SubResource( 4 )
 states/Idle/position = Vector2( 422, 157 )
-states/Moving/node = SubResource( 9 )
+states/Moving/node = SubResource( 10 )
 states/Moving/position = Vector2( 184, 191 )
-states/Shooting/node = SubResource( 13 )
+states/Shooting/node = SubResource( 14 )
 states/Shooting/position = Vector2( 312, 326 )
-transitions = [ "Idle", "Moving", SubResource( 14 ), "Moving", "Idle", SubResource( 15 ), "Shooting", "Idle", SubResource( 16 ), "Idle", "Shooting", SubResource( 17 ), "Shooting", "Moving", SubResource( 18 ), "Moving", "Shooting", SubResource( 19 ) ]
+transitions = [ "Idle", "Moving", SubResource( 15 ), "Moving", "Idle", SubResource( 16 ), "Shooting", "Idle", SubResource( 17 ), "Idle", "Shooting", SubResource( 18 ), "Shooting", "Moving", SubResource( 19 ), "Moving", "Shooting", SubResource( 20 ) ]
 start_node = ""
 end_node = ""
 graph_offset = Vector2( -200, 115 )
 _sections_unfolded = [ "Script" ]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
 
 resource_local_to_scene = true
 
-[sub_resource type="GDScript" id=22]
+[sub_resource type="GDScript" id=23]
 
 script/source = "extends AnimationTree
 
@@ -545,16 +552,16 @@ collision_layer = 1
 collision_mask = 1
 mode = 2
 mass = 1.0
-friction = 1.0
+friction = 0.8
 bounce = 0.0
-physics_material_override = null
+physics_material_override = SubResource( 1 )
 gravity_scale = 1.0
 custom_integrator = false
 continuous_cd = false
 contacts_reported = 5
 contact_monitor = true
 sleeping = false
-can_sleep = true
+can_sleep = false
 axis_lock_linear_x = false
 axis_lock_linear_y = false
 axis_lock_linear_z = false
@@ -565,7 +572,7 @@ linear_velocity = Vector3( 0, 0, 0 )
 linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
-script = SubResource( 1 )
+script = SubResource( 2 )
 _sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Matrix", "Transform", "Visibility", "bullet_scene", "physics_material_override" ]
 walk_speed = 2.0
 run_speed = 3.5
@@ -578,7 +585,7 @@ debug = null
 
 [node name="Main Collider" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 disabled = false
 _sections_unfolded = [ "Transform", "shape" ]
 
@@ -604,12 +611,12 @@ _sections_unfolded = [ "Collide With" ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="AnimationTree" type="AnimationTree" parent="Rotation/Model/Root_Motion" index="0"]
-tree_root = SubResource( 20 )
+tree_root = SubResource( 21 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 process_mode = 1
 root_motion_track = NodePath("")
-parameters/playback = SubResource( 21 )
+parameters/playback = SubResource( 22 )
 parameters/conditions/moving = false
 parameters/conditions/not_moving = false
 parameters/conditions/not_shooting = false
@@ -617,7 +624,7 @@ parameters/conditions/shooting = false
 parameters/Moving/PointGun/blend_amount = 0
 parameters/Moving/WalkRun/blend_amount = 1.0
 parameters/Shooting/OneShot/active = false
-script = SubResource( 22 )
+script = SubResource( 23 )
 _sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move", "parameters/Move/PointGun", "parameters/Move/WalkRun", "parameters/Moving", "parameters/Moving/PointGun", "parameters/Moving/WalkRun", "parameters/Shooting", "parameters/Shooting/OneShot", "parameters/conditions", "tree_root" ]
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]

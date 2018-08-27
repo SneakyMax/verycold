@@ -598,6 +598,7 @@ shape = SubResource( 5 )
 
 [node name="Flying Gun" parent="." instance=ExtResource( 23 )]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -8.3418, 2.06713, -19.8892 )
+mode = 1
 
 [connection signal="triggered" from="Triggers/Tutorial End Trigger" to="." method="_on_Tutorial_End_Trigger_triggered"]
 

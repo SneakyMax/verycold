@@ -111,8 +111,11 @@ func fire_or_return(alt):
 	yield(delay(0.33), \"timeout\")
 	
 	var projectile : RigidBody = gun_projectile.instance()
-	var pos = find_node(\"Gun\").global_transform;
-	projectile.global_transform = pos
+	var pos = find_node(\"Gun\").global_transform
+	projectile.global_transform = Transform(
+		Basis( pos.basis.x.normalized(), pos.basis.y.normalized(), pos.basis.z.normalized()),
+		pos.origin)
+	
 	get_node(\"/root/Game\").level_add(projectile)
 	var direction = (look.get_collision_point() - pos.origin).normalized()
 	projectile.apply_central_impulse(direction * gun_speed)

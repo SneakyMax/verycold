@@ -70,7 +70,7 @@ escape={
 
 [physics]
 
-3d/physics_engine="GodotPhysics - deprecated"
+3d/physics_engine="Bullet"
 3d/default_gravity=14.7
 
 [rendering]
