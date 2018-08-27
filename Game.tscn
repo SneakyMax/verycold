@@ -28,9 +28,12 @@ var startSlomoTime
 var slomoSecondsFixed : float
 var slomoAmount
 
+var textSound
+
 func _ready():
 	levelHolder = get_node(\"Current Level\")
 	bigText = get_node(\"Overlay UI/Big Text\")
+	textSound = get_node(\"TextSound\")
 	start_over()
 	
 func slomo(secondsFixed : float, amount: float):
@@ -114,6 +117,7 @@ func showBigText(text : String, totalTime : float = 2):
 	currentBigTextTimer = timer
 	
 	for word in words:
+		textSound.play()
 		bigText.text = word
 		yield(timer, \"timeout\")
 	
