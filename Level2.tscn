@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=11]
 [ext_resource path="res://object scenes/bench.tscn" type="PackedScene" id=12]
 [ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=14]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -294,5 +295,29 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 45.8 )
 
 [node name="Ground6" parent="Navigation/NavigationMeshInstance/ground" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 45.8 )
+
+[node name="Enemy" parent="." instance=ExtResource( 14 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.6, 2.1, 23 )
+
+[node name="Enemy2" parent="." instance=ExtResource( 14 )]
+transform = Transform( -0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, -0.34202, 6.5, 2.1, 24 )
+
+[node name="Enemy3" parent="." instance=ExtResource( 14 )]
+transform = Transform( -0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, -0.422618, -17.6, 2.1, 43.4 )
+
+[node name="Enemy5" parent="." instance=ExtResource( 14 )]
+transform = Transform( 0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, -19.7, 2.1, 31.2 )
+
+[node name="Enemy6" parent="." instance=ExtResource( 14 )]
+transform = Transform( -0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, -0.984808, 7.1, 2.1, 51 )
+
+[node name="Enemy7" parent="." instance=ExtResource( 14 )]
+transform = Transform( -0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, -0.422618, 3.2, 2.1, 46.6 )
+
+[node name="Enemy8" parent="." instance=ExtResource( 14 )]
+transform = Transform( 0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, 0.906308, -17.1, 2.1, 29.5 )
+
+[node name="Enemy4" parent="." instance=ExtResource( 14 )]
+transform = Transform( -0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, -0.173648, 15.3, 2.1, 39.8 )
 
 [connection signal="body_entered" from="Lvl2TextArea" to="Player" method="_on_Lvl2TextArea_body_entered"]

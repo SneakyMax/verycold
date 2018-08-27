@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=3]
-[ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=4]
-[ext_resource path="res://object scenes/wall20x1x4.tscn" type="PackedScene" id=5]
-[ext_resource path="res://object scenes/pillar.tscn" type="PackedScene" id=6]
-[ext_resource path="res://object scenes/bench.tscn" type="PackedScene" id=7]
-[ext_resource path="res://object scenes/counter.tscn" type="PackedScene" id=8]
-[ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://object scenes/floortiled40x40.tscn" type="PackedScene" id=3]
+[ext_resource path="res://object scenes/wall20x1x4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://object scenes/pillar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://object scenes/bench.tscn" type="PackedScene" id=6]
+[ext_resource path="res://object scenes/counter.tscn" type="PackedScene" id=7]
+[ext_resource path="res://object scenes/chair.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=9]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -41,9 +41,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 2.4, -7.1 )
-
-[node name="Enemy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.8, 2.3, 7.4 )
 
 [node name="Lvl3TextArea" type="Area" parent="."]
 transform = Transform( -1.61275e-07, -10.5, 1.31134e-07, 0, -1.5299e-07, -1, 1.22984, -1.5299e-07, 1.91069e-15, 5.5, 3.5, 0.3 )
@@ -87,7 +84,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
 align = 1
 valign = 1
 percent_visible = 1.0
@@ -96,6 +93,7 @@ max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
 [node name="Navigation" type="Navigation" parent="."]
+editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
@@ -105,84 +103,103 @@ enabled = true
 [node name="Floors" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 editor/display_folded = true
 
-[node name="Floor 40x40" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 4 )]
-_sections_unfolded = [ "Transform" ]
+[node name="Floor 40x40" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 
-[node name="Floor 40x41" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 4 )]
+[node name="Floor 40x41" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Walls" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 editor/display_folded = true
 
-[node name="Wall 20x1x4" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x4" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.952875, 0, -4.16515e-08, 10.5, 0, -0.500002 )
 
-[node name="Wall 20x1x6" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x6" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.7854, 0, -3.4331e-08, 1.5, 0, -7 )
 
-[node name="Wall 20x1x8" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x8" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 1.22984, 0, -5.37582e-08, -28.9, 0, -3.3 )
 
-[node name="Wall 20x1x11" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x11" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( -1.61275e-07, -10.5, 1.31134e-07, 0, -1.5299e-07, -1, 1.22984, -1.5299e-07, 1.91069e-15, 11, 14.5, -3 )
 
-[node name="Wall 20x1x5" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x5" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 0.8085, 0, 0, 0, 3.5, 0, 0, 0, 1, -13.5, 0, -10.5 )
 
-[node name="Wall 20x1x10" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x10" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 0.8085, 0, 0, 0, 3.5, 0, 0, 0, 1, 10, 0, -10.5 )
 
-[node name="Wall 20x1x9" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x9" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 1.49572, 0, 0, 0, 3.5, 0, 0, 0, 1, -13.5, 0, -15.3 )
 
-[node name="Wall 20x1x7" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 5 )]
+[node name="Wall 20x1x7" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 2.31, 0, 0, 0, 3.5, 0, 0, 0, 1, -12.1, 0, 9.5 )
 
 [node name="Pillars" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 editor/display_folded = true
 
-[node name="Pillar" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 6 )]
+[node name="Pillar" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -6.5, 0, 4.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Pillar4" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 6 )]
+[node name="Pillar4" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -14.1, 0, 4.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Pillar6" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 6 )]
+[node name="Pillar6" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -22.3, 0, 4.3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Pillar2" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 6 )]
+[node name="Pillar2" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -6.5, 0, -6.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Pillar3" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 6 )]
+[node name="Pillar3" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -14.1, 0, -6.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Pillar5" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 6 )]
+[node name="Pillar5" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -22.3, 0, -6.1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Clutter" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 editor/display_folded = true
 
-[node name="Bench" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 7 )]
+[node name="Bench" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 6 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -9.6, 0, 7.7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Bench2" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 7 )]
+[node name="Bench2" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 6 )]
 transform = Transform( -6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -1, 0, -6.8 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Counter" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 8 )]
+[node name="Counter" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 7 )]
 transform = Transform( -5.24537e-08, 0, 1.2, 0, 1.2, 0, -1.2, 0, -5.24537e-08, -24.7, 0, -2.1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Chair" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 9 )]
+[node name="Chair" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1, -26.4, 0, -1.6 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Enemy2" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 2.1, -13.4 )
+
+[node name="Enemy3" parent="." instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.6, 2.1, -12.9 )
+
+[node name="Enemy4" parent="." instance=ExtResource( 9 )]
+transform = Transform( -0.0871558, 0, -0.996195, 0, 1, 0, 0.996195, 0, -0.0871558, -12.9, 2.1, -12.9 )
+
+[node name="Enemy5" parent="." instance=ExtResource( 9 )]
+transform = Transform( -0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, -26.6, 2.1, 5.2 )
+
+[node name="Enemy8" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 2.1, -11.8 )
+
+[node name="Enemy6" parent="." instance=ExtResource( 9 )]
+transform = Transform( -0.939692, 0, 0.34202, 0, 1, 0, -0.34202, 0, -0.939692, -16.8, 2.1, 4.5 )
+
+[node name="Enemy7" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, -8.8, 2.1, -7.2 )
 
 [connection signal="body_entered" from="Lvl3TextArea" to="Player" method="_on_Lvl3TextArea_body_entered"]
