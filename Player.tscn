@@ -126,7 +126,7 @@ func fire_or_return(alt):
 	shotGun = projectile
 	
 func returnGun(alt):
-	if (targetGun.is_colliding()):
+	if (shotGun and targetGun.is_colliding()):
 		shotGun.recall(alt);
 	
 func _process(delta):
