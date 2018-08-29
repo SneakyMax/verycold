@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://main_environment.tres" type="Environment" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -18,11 +18,10 @@
 [ext_resource path="res://object scenes/ceilingFan.tscn" type="PackedScene" id=16]
 [ext_resource path="res://object scenes/floortiled10x10.tscn" type="PackedScene" id=17]
 [ext_resource path="res://object scenes/wallWithOpening.tscn" type="PackedScene" id=18]
-[ext_resource path="res://object scenes/counter.tscn" type="PackedScene" id=19]
-[ext_resource path="res://object scenes/pillar.tscn" type="PackedScene" id=20]
-[ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Text Trigger.tscn" type="PackedScene" id=22]
-[ext_resource path="res://Flying Gun.tscn" type="PackedScene" id=23]
+[ext_resource path="res://object scenes/pillar.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Text Trigger.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Flying Gun.tscn" type="PackedScene" id=22]
 
 [sub_resource type="GDScript" id=1]
 
@@ -134,7 +133,6 @@ data = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Navigation" type="Navigation" parent="."]
-editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMesh" type="NavigationMeshInstance" parent="Navigation"]
@@ -335,6 +333,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25, 0, 30.5 )
 transform = Transform( 2.45242, 0, 0, 0, -4.63518e-07, -1, 0, 10.5215, -4.33711e-08, -5.93367, 7.4967, 19.8132 )
 
 [node name="Lights" type="Spatial" parent="Navigation/NavigationMesh/LargerRoom"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09054, 0.0294925, 22.6964 )
 _sections_unfolded = [ "Transform" ]
 
@@ -508,14 +507,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59309, 6.21569, -16.8485 )
 light_cull_mask = -1
 shadow_enabled = false
 
-[node name="Scene Root" parent="Navigation/NavigationMesh/SmallerRoom" instance=ExtResource( 19 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.9355 )
-
-[node name="Scene Root2" parent="Navigation/NavigationMesh/SmallerRoom" instance=ExtResource( 20 )]
+[node name="Scene Root2" parent="Navigation/NavigationMesh/SmallerRoom" instance=ExtResource( 19 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.27584, 0, -19.8846 )
 
 [node name="TutorialRoom" type="Spatial" parent="Navigation/NavigationMesh"]
-editor/display_folded = true
 
 [node name="SmallerFloor3" parent="Navigation/NavigationMesh/TutorialRoom" instance=ExtResource( 17 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -25 )
@@ -538,6 +533,7 @@ transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -27.6 )
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -13 )
 
 [node name="Lights" type="Spatial" parent="Navigation/NavigationMesh/TutorialRoom"]
+editor/display_folded = true
 
 [node name="Ceiling Light" parent="Navigation/NavigationMesh/TutorialRoom/Lights" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 6.26717, -23.3557 )
@@ -553,30 +549,30 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 6.26717, -16.9577 )
 light_cull_mask = -1
 shadow_enabled = false
 
-[node name="Enemy3" parent="." instance=ExtResource( 21 )]
+[node name="Enemy3" parent="." instance=ExtResource( 20 )]
 transform = Transform( -0.356891, 0, -0.934146, 0, 1, 0, 0.934146, 0, -0.356891, 7.5, 1.8729, 5.76779 )
 
-[node name="Enemy7" parent="." instance=ExtResource( 21 )]
+[node name="Enemy7" parent="." instance=ExtResource( 20 )]
 transform = Transform( -0.356891, 0, -0.934146, 0, 1, 0, 0.934146, 0, -0.356891, -12.2, 1.8729, 20.8678 )
 
-[node name="Enemy4" parent="." instance=ExtResource( 21 )]
+[node name="Enemy4" parent="." instance=ExtResource( 20 )]
 transform = Transform( 0.0158714, 0, 0.999874, 0, 1, 0, -0.999874, 0, 0.0158714, -25.7, 1.8729, 9.26779 )
 
-[node name="Enemy5" parent="." instance=ExtResource( 21 )]
+[node name="Enemy5" parent="." instance=ExtResource( 20 )]
 transform = Transform( 0.327063, 0, -0.945003, 0, 1, 0, 0.945003, 0, 0.327063, 5.1, 1.8729, 14.5678 )
 
-[node name="Enemy6" parent="." instance=ExtResource( 21 )]
+[node name="Enemy6" parent="." instance=ExtResource( 20 )]
 transform = Transform( 0.327063, 0, -0.945003, 0, 1, 0, 0.945003, 0, 0.327063, 7.9, 1.8729, 21.7678 )
 
-[node name="Enemy8" parent="." instance=ExtResource( 21 )]
+[node name="Enemy8" parent="." instance=ExtResource( 20 )]
 transform = Transform( -0.857981, 0, 0.513682, 0, 1, 0, -0.513682, 0, -0.857981, -27.9, 1.8729, 25.3678 )
 
-[node name="Enemy2" parent="." instance=ExtResource( 21 )]
+[node name="Enemy2" parent="." instance=ExtResource( 20 )]
 transform = Transform( -0.186174, 0, 0.982517, 0, 1, 0, -0.982517, 0, -0.186174, 2.82564, 1.8546, -20.3512 )
 
 [node name="Triggers" type="Node" parent="."]
 
-[node name="Tutorial End Trigger" parent="Triggers" instance=ExtResource( 22 )]
+[node name="Tutorial End Trigger" parent="Triggers" instance=ExtResource( 21 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.22499, 0, -20.8078 )
 text = "RIGHT CLICK: RETRIEVE RIGHT, LEFT CLICK: RETRIEVE LEFT"
@@ -587,7 +583,7 @@ triggerer = "res://Flying Gun.tscn"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.258971, 2.33413, 0 )
 shape = SubResource( 4 )
 
-[node name="Level 1 Text Trigger" parent="Triggers" instance=ExtResource( 22 )]
+[node name="Level 1 Text Trigger" parent="Triggers" instance=ExtResource( 21 )]
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.81133, 0, -9.52032 )
 text = "A LITTLE LESS CONVER SATION"
@@ -596,7 +592,7 @@ text = "A LITTLE LESS CONVER SATION"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.34856, 0.723663 )
 shape = SubResource( 5 )
 
-[node name="Flying Gun" parent="." instance=ExtResource( 23 )]
+[node name="Flying Gun" parent="." instance=ExtResource( 22 )]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -8.3418, 2.06713, -19.8892 )
 mode = 1
 
