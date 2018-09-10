@@ -97,7 +97,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 2.4, -7.1 )
-friction = 0.97
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.14323, 0.251927, -7.5942 )

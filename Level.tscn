@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://main_environment.tres" type="Environment" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Enemy_Final.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Text Trigger.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Flying Gun.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Audio/Music/Egmont Overture Finale.wav" type="AudioStream" id=22]
 
 [sub_resource type="GDScript" id=1]
 
@@ -58,6 +59,10 @@ func find_enemies(node : Node):
 func _on_Tutorial_End_Trigger_triggered():
 	yield(get_node(\"/root/Game\").delay(2), \"timeout\")
 	find_node(\"DoorBlocker\", true, false).queue_free()
+
+
+func _on_Tutorial_End_Trigger_ready():
+	pass # Replace with function body.
 "
 
 [sub_resource type="GIProbeData" id=2]
@@ -114,7 +119,6 @@ _sections_unfolded = [ "environment" ]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8, 2.1, -27.9 )
-friction = 0.97
 is_level_1 = true
 
 [node name="GIProbe" type="GIProbe" parent="."]
@@ -133,6 +137,7 @@ data = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Navigation" type="Navigation" parent="."]
+editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMesh" type="NavigationMeshInstance" parent="Navigation"]
@@ -499,7 +504,6 @@ _sections_unfolded = [ "Transform" ]
 [node name="SmallerRoom" type="Spatial" parent="Navigation/NavigationMesh"]
 
 [node name="SmallerRoomWalls" type="Spatial" parent="Navigation/NavigationMesh/SmallerRoom"]
-editor/display_folded = true
 
 [node name="Wall3" parent="Navigation/NavigationMesh/SmallerRoom/SmallerRoomWalls" instance=ExtResource( 3 )]
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, -8.5, 0, -30.5 )
@@ -519,6 +523,7 @@ transform = Transform( 1, 0, 0, 0, 1.1, 0, 0, 0, 1, -3.5, 0, -9.8 )
 transform = Transform( -2.40428e-07, 5.58006, -6.96894e-08, 0, -7.64949e-08, -0.5, -1.02659, -4.55238e-08, 5.68545e-16, -14.1, 7.2, -20.2 )
 
 [node name="Lights" type="Spatial" parent="Navigation/NavigationMesh/SmallerRoom"]
+editor/display_folded = true
 
 [node name="Ceiling Light2" parent="Navigation/NavigationMesh/SmallerRoom/Lights" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.59309, 6.21569, -20.1485 )
@@ -553,6 +558,7 @@ transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -27.6 )
 transform = Transform( 0.504562, 0, 0, 0, 1.75, 0, 0, 0, 1, 2.6, 0, -13 )
 
 [node name="Lights" type="Spatial" parent="Navigation/NavigationMesh/TutorialRoom"]
+editor/display_folded = true
 
 [node name="Ceiling Light2" parent="Navigation/NavigationMesh/TutorialRoom/Lights" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 6.26717, -20.8577 )
@@ -585,7 +591,6 @@ transform = Transform( -0.186174, 0, 0.982517, 0, 1, 0, -0.982517, 0, -0.186174,
 [node name="Triggers" type="Node" parent="."]
 
 [node name="Tutorial End Trigger" parent="Triggers" instance=ExtResource( 20 )]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.22499, 0, -20.8078 )
 text = "RIGHT CLICK: RETRIEVE RIGHT, LEFT CLICK: RETRIEVE LEFT"
 total_text_time = 4.0
@@ -596,7 +601,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.258971, 2.33413, 0 )
 shape = SubResource( 4 )
 
 [node name="Level 1 Text Trigger" parent="Triggers" instance=ExtResource( 20 )]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.81133, 0, -9.52032 )
 text = "A LITTLE LESS CONVER SATION"
 
@@ -607,6 +611,15 @@ shape = SubResource( 5 )
 [node name="Flying Gun" parent="." instance=ExtResource( 21 )]
 transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -8.3418, 2.06713, -19.8892 )
 mode = 1
+
+[node name="Lvl1Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 22 )
+volume_db = -2.311
+pitch_scale = 1.0
+autoplay = false
+stream_paused = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="triggered" from="Triggers/Tutorial End Trigger" to="." method="_on_Tutorial_End_Trigger_triggered"]
 

@@ -10,12 +10,20 @@ export(String) var text = \"\"
 export(float, 0, 10) var total_text_time = 2
 export(String) var triggerer = \"res://Player.tscn\"
 
+var level1Music
+
+
 func _on_Player_Text_Trigger_body_entered(body):
 	if body.filename == triggerer:
+		level1Music = get_node(\"Lvl1Music\")
+		level1Music.play()
 		queue_free()
 		if text != \"\":
 			get_node(\"/root/Game\").showBigText(text, total_text_time)
 		emit_signal(\"triggered\")
+
+func _on_Tutorial_End_Trigger_ready():
+	pass # Replace with function body.
 "
 
 [sub_resource type="BoxShape" id=2]

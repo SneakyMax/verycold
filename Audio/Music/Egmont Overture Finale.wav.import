@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Egmont Overture Finale.wav-036a49e495ab77f0f1c8c7cf2fd26183.sample"
+
+[deps]
+
+source_file="res://Audio/Music/Egmont Overture Finale.wav"
+dest_files=[ "res://.import/Egmont Overture Finale.wav-036a49e495ab77f0f1c8c7cf2fd26183.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
