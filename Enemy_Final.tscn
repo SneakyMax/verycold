@@ -406,7 +406,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 9 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
+node_connections = [ "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=11]
@@ -442,7 +442,7 @@ nodes/Animation/position = Vector2( -20, 60 )
 nodes/OneShot/node = SubResource( 13 )
 nodes/OneShot/position = Vector2( 280, 120 )
 nodes/output/position = Vector2( 560, 120 )
-node_connections = [ "output", 0, "OneShot", "OneShot", 0, "Animation", "OneShot", 1, "Animation 2" ]
+node_connections = [ "OneShot", 0, "Animation", "OneShot", 1, "Animation 2", "output", 0, "OneShot" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
@@ -578,7 +578,7 @@ walk_speed = 2.0
 run_speed = 3.5
 accel = 30.0
 fov = 120.0
-view_range = 50.0
+view_range = 22.0
 shoot_rate = 1.1
 bullet_scene = ExtResource( 1 )
 debug = null
@@ -629,9 +629,6 @@ _sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move",
 
 [node name="Skeleton" parent="Rotation/Model/Root_Motion" index="2"]
 transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
-bones/9/bound_children = [ NodePath("Head") ]
-bones/19/bound_children = [ NodePath("Left Hand") ]
-bones/43/bound_children = [ NodePath("Right Hand") ]
 _sections_unfolded = [ "Transform" ]
 
 [node name="Model" parent="Rotation/Model/Root_Motion/Skeleton" index="0"]
