@@ -1,0 +1,11 @@
+# Made using Asset Forge (1.3)
+
+:models
+Castles/debris_wood[(0, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);debris_wood_59;wood]
+
+:materials
+wood[RGBA(0.667, 0.663, 0.733, 1.000);]
+
+:textures
+
+:extra

@@ -1,0 +1,34 @@
+# Made using Asset Forge (1.3)
+
+:models
+Aircraft/plane_body[(0, 0.5, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);_defaultMat+_defaultMat]
+Aircraft/plane_end[(0, 0.5, 3.5);(0.0, 0.0, 0.0);(1.0, 1.0, 2.0);(0.0, 0.0, 0.0);_defaultMat+_defaultMat]
+Aircraft/wing_straight[(-1, 0.7, 1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);_defaultMat+_defaultMat]
+Aircraft/wing_straight[(1, 0.7, 1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);(0.0, 0.0, 0.0);_defaultMat+_defaultMat]
+Aircraft/plane_rudder[(0, 1.2, 4.3);(0.0, 0.0, 0.0);(1.0, 2.2, 2.4);(0.0, 0.0, 0.0);_defaultMat]
+Aircraft/plane_elevator[(1.2, 1.3, 4);(0.0, 0.0, 0.0);(1.4, 1.0, 1.0);(0.0, 0.0, 0.0);_defaultMat]
+Aircraft/plane_elevator[(-1.2, 1.3, 4);(0.0, 0.0, 0.0);(-1.4, 1.0, 1.0);(0.0, 0.0, 0.0);_defaultMat]
+Aircraft/wind_endLow[(2, 0.7, 1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);wind_endLow_19;_defaultMat+_defaultMat]
+Aircraft/wind_endLow[(-2, 0.7, 1);(0.0, 0.0, 0.0);(-1.0, 1.0, 1.0);wind_endLow_20;_defaultMat+_defaultMat]
+Aircraft/plane_body[(0, 0.5, -1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);plane_body_21;_defaultMat+_defaultMat]
+Aircraft/plane_body[(0, 0.5, 1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);plane_body_26;_defaultMat+_defaultMat]
+Aircraft/plane_body[(0, 0.5, 2);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);plane_body_27;_defaultMat+_defaultMat]
+Aircraft/engine_airplane%[(0.9, 0.1, 0.7);(0.0, 0.0, 0.0);(1.0, 1.0, 1.2);engine_airplane%_32;black+blueSteel+blueSteel]
+Aircraft/engine_airplane%[(-0.9, 0.1, 0.7);(0.0, 0.0, 0.0);(1.0, 1.0, 1.2);engine_airplane%_33;black+blueSteel+blueSteel]
+Aircraft/plane_cockpitModern[(0, 0.5, -2.1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.2);plane_cockpitModern_34;_defaultMat+_defaultMat+blueSteel]
+Aircraft/gear_strut%[(0, 0, -1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);gear_strut%_36;_defaultMat]
+Aircraft/gear_strut%[(0, 0, 1.5);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);gear_strut%_37;_defaultMat]
+Aircraft/gear_strut%[(0, 0, 0.2);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);gear_strut%_38;_defaultMat]
+Aircraft/detail_windowDoor[(1, 0.6, 1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);detail_windowDoor_40;blueSteel+blueSteel+_defaultMat]
+Aircraft/detail_windowLarge[(1, 0.5, -1);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);detail_windowLarge_42;_defaultMat+blueSteel]
+
+:materials
+_defaultMat[RGBA(0.812, 0.808, 0.855, 1.000);]
+blueSteel[RGBA(0.667, 0.663, 0.733, 1.000);]
+black[RGBA(0.267, 0.267, 0.267, 1.000);]
+glass[RGBA(0.298, 0.314, 0.365, 1.000);]
+satellite[RGBA(0.027, 0.400, 0.694, 1.000);hexagon]
+
+:textures
+
+:extra

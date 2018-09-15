@@ -1,0 +1,11 @@
+# Made using Asset Forge (1.3)
+
+:models
+Castles/planks_floorHalf[(0, 0, 0);(0.0, 0.0, 0.0);(1.0, 1.0, 1.0);planks_floorHalf_54;wood]
+
+:materials
+wood[RGBA(0.667, 0.663, 0.733, 1.000);]
+
+:textures
+
+:extra
