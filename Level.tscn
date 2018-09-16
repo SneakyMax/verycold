@@ -141,11 +141,13 @@ editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMesh" type="NavigationMeshInstance" parent="Navigation"]
+editor/display_folded = true
 navmesh = SubResource( 3 )
 enabled = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="LargerRoom" type="Spatial" parent="Navigation/NavigationMesh"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.23403, 0, -30.5248 )
 _sections_unfolded = [ "Transform" ]
 
@@ -340,6 +342,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09054, 0.0294925, 22.6964 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Ceiling Light" parent="Navigation/NavigationMesh/LargerRoom/Lights" instance=ExtResource( 9 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8, 6.2577, 21.6 )
 
 [node name="SpotLight" parent="Navigation/NavigationMesh/LargerRoom/Lights/Ceiling Light" index="1"]
@@ -350,7 +353,11 @@ _sections_unfolded = [ "Light", "Matrix", "Shadow", "Spot", "Transform" ]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.789435, 6.25266, 28.5299 )
 
 [node name="Ceiling Light 11" parent="Navigation/NavigationMesh/LargerRoom/Lights" instance=ExtResource( 9 )]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.28293, 6.25266, 30.5256 )
+
+[node name="SpotLight" parent="Navigation/NavigationMesh/LargerRoom/Lights/Ceiling Light 11" index="1"]
+light_cull_mask = -1
 
 [node name="Ceiling Light 12" parent="Navigation/NavigationMesh/LargerRoom/Lights" instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0726, 6.25266, 31.6484 )
@@ -464,6 +471,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2, 6.1, 56.2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Floors" type="Spatial" parent="Navigation/NavigationMesh/LargerRoom"]
+editor/display_folded = true
 
 [node name="FloorTiled20x22" parent="Navigation/NavigationMesh/LargerRoom/Floors" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.434, -0.653, 30.4248 )
@@ -624,6 +632,8 @@ bus = "Master"
 [connection signal="triggered" from="Triggers/Tutorial End Trigger" to="." method="_on_Tutorial_End_Trigger_triggered"]
 
 [editable path="Navigation/NavigationMesh/LargerRoom/Lights/Ceiling Light"]
+
+[editable path="Navigation/NavigationMesh/LargerRoom/Lights/Ceiling Light 11"]
 
 [editable path="Navigation/NavigationMesh/SmallerRoom/SmallerRoomWalls/DoorBlocker"]
 

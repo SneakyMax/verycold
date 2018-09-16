@@ -217,13 +217,15 @@ proximity_fade_enable = false
 distance_fade_mode = 0
 _sections_unfolded = [ "Albedo", "Emission", "Rim", "Transmission" ]
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="CapsuleShape" id=16]
 
-extents = Vector3( 0.0632877, 0.285868, 0.111728 )
+radius = 0.1571
+height = 0.383166
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="CapsuleShape" id=17]
 
-extents = Vector3( 0.0632877, 0.0869424, 0.352172 )
+radius = 0.103633
+height = 0.678108
 
 [sub_resource type="Gradient" id=7]
 
@@ -420,13 +422,14 @@ transform = Transform( 1.3573, 0, -2.13163e-14, 0, 1.3573, 0, 2.13163e-14, 0, 1.
 material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0990103, -0.208082 )
-shape = SubResource( 5 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0990103, -0.208082 )
+shape = SubResource( 16 )
 disabled = false
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.310561, 0.0495731 )
-shape = SubResource( 6 )
+shape = SubResource( 17 )
 disabled = false
 
 [node name="Particles" type="Particles" parent="."]
