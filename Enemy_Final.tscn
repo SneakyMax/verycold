@@ -406,7 +406,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 9 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "output", 0, "PointGun" ]
+node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=11]
@@ -577,7 +577,7 @@ _sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Matrix", 
 walk_speed = 2.0
 run_speed = 3.5
 accel = 30.0
-fov = 120.0
+fov = 110.0
 view_range = 22.0
 shoot_rate = 1.1
 bullet_scene = ExtResource( 1 )
