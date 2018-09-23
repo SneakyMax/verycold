@@ -22,6 +22,7 @@ var last_changed_time : int
 var change_rate = 0.65
 var uber_sound
 var cold_sound
+var canInput = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,21 +31,27 @@ func _ready():
 	cold_sound = get_node(\"Cold\")
 	set_process_input(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	canInput = true
 
 func _input(event):
+	if not canInput:
+		return
+
 	if (event.is_action_pressed(\"escape\")):
 		get_tree().quit()
+		return
 
 	if event is InputEventKey:
 		if event.pressed:
 			get_node(\"/root/Game\").next_level()
+			canInput = false
 
 func _process(delta):	
 	var now = OS.get_ticks_msec()
 	if now > last_changed_time + ( change_rate * 1000 ):
-		_changeTitle()
+		changeTitle()
 		
-func _changeTitle():
+func changeTitle():
 	last_changed_time = OS.get_ticks_msec()
 	if(get_node(\"TitleLbl\").text == \"UBER\"):
 		cold_sound.play()
