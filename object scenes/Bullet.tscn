@@ -18,8 +18,7 @@ func _ready():
 	geo = get_node(\"ImmediateGeometry\")
 
 func start():
-	startPos = global_transform.origin	
-	apply_central_impulse(speed * global_transform.basis.z)
+	startPos = global_transform.origin
 	
 func _process(delta):
 	var up = Vector3.UP * (trail_thickness / 2.0)
@@ -31,6 +30,9 @@ func _process(delta):
 	quad(down, right)
 	quad(left, up)
 	quad(right, down)
+	
+func _physics_process(delta):
+	global_transform.origin = speed * global_transform.basis.z * delta;
 	
 func quad(axis_a, axis_b):
 	geo.begin(Mesh.PRIMITIVE_TRIANGLE_STRIP)
@@ -118,6 +120,7 @@ surfaces/3 = {
 
 [sub_resource type="CapsuleShape" id=3]
 
+margin = 0.04
 radius = 0.0360097
 height = 0.0620427
 
@@ -177,33 +180,27 @@ proximity_fade_enable = false
 distance_fade_mode = 0
 _sections_unfolded = [ "Albedo", "Flags", "Parameters", "Resource", "Vertex Color" ]
 
-[node name="Bullet" type="RigidBody"]
-input_ray_pickable = true
+[node name="Bullet" type="Area"]
+input_ray_pickable = false
 input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
 collision_layer = 1
 collision_mask = 1
-mode = 0
-mass = 1.0
-friction = 1.0
-bounce = 0.0
-physics_material_override = null
-gravity_scale = 0.0
-custom_integrator = false
-continuous_cd = true
-contacts_reported = 2
-contact_monitor = true
-sleeping = false
-can_sleep = true
-axis_lock_linear_x = false
-axis_lock_linear_y = false
-axis_lock_linear_z = false
-axis_lock_angular_x = false
-axis_lock_angular_y = false
-axis_lock_angular_z = false
-linear_velocity = Vector3( 0, 0, 0 )
-linear_damp = -1.0
-angular_velocity = Vector3( 0, 0, 0 )
-angular_damp = -1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
 script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 speed = 10.0

@@ -197,6 +197,7 @@ func delay(seconds : float = 1, start : bool = true):
 
 [sub_resource type="CapsuleShape" id=3]
 
+margin = 0.04
 radius = 0.55387
 height = 2.50823
 
@@ -207,8 +208,6 @@ collision_layer = 4
 collision_mask = 1
 mode = 2
 mass = 1.0
-friction = 0.97
-bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.0
 custom_integrator = false

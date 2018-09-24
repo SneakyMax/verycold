@@ -67,11 +67,13 @@ escape={
 3d_physics/layer_1="main"
 3d_physics/layer_2="ray"
 3d_physics/layer_3="player"
+3d_physics/layer_4="enemy"
 
 [physics]
 
 common/physics_fps=120
 3d/physics_engine="Bullet"
+3d/active_soft_world=false
 3d/default_gravity=14.7
 
 [rendering]

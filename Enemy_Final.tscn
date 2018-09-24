@@ -63,6 +63,7 @@ var stop_moving = false
 var target_facing
 var move_towards
 var last_player_pos
+var deadTime
 
 func _ready():
 	state = \"idle\"
@@ -112,7 +113,7 @@ func is_inside_frustum(point : Vector3):
 			return false
 	return true
 	
-func _process(_delta):
+func _process(delta):
 	if not is_inside_tree(): return
 	var isInitial = lastFrameState != state
 	lastFrameState = state
@@ -126,7 +127,7 @@ func _process(_delta):
 		\"chasing\":
 			process_chasing(isInitial)
 		\"dead\":
-			process_dead(isInitial)
+			process_dead(isInitial, delta)
 			
 func _physics_process(delta):
 	if not is_inside_tree(): return
@@ -235,7 +236,7 @@ func process_chasing(_isInitial):
 		state = \"idle\"
 		return
 
-func process_dead(isInitial):
+func process_dead(isInitial, delta):
 	if isInitial:
 		get_node(\"/root/Game\").slomo(2, 0.5)
 		# mode = RigidBody.MODE_RIGID
@@ -243,6 +244,13 @@ func process_dead(isInitial):
 		get_node(\"Rotation/Model/Root_Motion/Skeleton\").physical_bones_start_simulation()
 		get_node(\"Rotation/Model/Root_Motion/AnimationTree\").queue_free()
 		get_node(\"Rotation/Model/Root_Motion/AnimationPlayer\").queue_free();
+		for child in get_node(\"Rotation/Model/Root_Motion/Skeleton\").get_children():
+			if child is PhysicalBone:
+				child.set_collision_layer_bit(0, false)
+				
+	deadTime += delta
+	if deadTime > 5000:
+		get_node(\"Rotation/Model/Root_Motion/Skeleton\").physical_bones_stop_simulation()
 	
 func set_path_to_point(point: Vector3):
 	var nav : Navigation = get_tree().root.find_node(\"Navigation\", true, false)
@@ -348,6 +356,7 @@ func _on_Enemy_body_entered(body):
 
 [sub_resource type="CapsuleShape" id=3]
 
+margin = 0.04
 radius = 0.383281
 height = 2.58835
 
@@ -2793,76 +2802,91 @@ surfaces/0 = {
 
 [sub_resource type="CapsuleShape" id=15]
 
+margin = 0.04
 radius = 1.5
 height = 0.1
 
 [sub_resource type="CapsuleShape" id=16]
 
+margin = 0.04
 radius = 1.5
 height = 1.5
 
 [sub_resource type="CapsuleShape" id=17]
 
+margin = 0.04
 radius = 0.5
 height = 1.0
 
 [sub_resource type="CapsuleShape" id=18]
 
+margin = 0.04
 radius = 0.6
 height = 2.3552
 
 [sub_resource type="CapsuleShape" id=19]
 
+margin = 0.04
 radius = 0.5
 height = 2.61142
 
 [sub_resource type="CapsuleShape" id=20]
 
+margin = 0.04
 radius = 0.6
 height = 0.8
 
 [sub_resource type="CapsuleShape" id=21]
 
+margin = 0.04
 radius = 1.0
 height = 2.99057
 
 [sub_resource type="CapsuleShape" id=22]
 
+margin = 0.04
 radius = 0.6
 height = 3.55743
 
 [sub_resource type="CapsuleShape" id=23]
 
+margin = 0.04
 radius = 0.5
 height = 1.5
 
 [sub_resource type="CapsuleShape" id=24]
 
+margin = 0.04
 radius = 1.0
 height = 2.99057
 
 [sub_resource type="CapsuleShape" id=25]
 
+margin = 0.04
 radius = 0.6
 height = 3.55742
 
 [sub_resource type="CapsuleShape" id=26]
 
+margin = 0.04
 radius = 0.5
 height = 1.5
 
 [sub_resource type="CapsuleShape" id=27]
 
+margin = 0.04
 radius = 0.6
 height = 2.35522
 
 [sub_resource type="CapsuleShape" id=28]
 
+margin = 0.04
 radius = 0.5
 height = 2.61143
 
 [sub_resource type="CapsuleShape" id=29]
 
+margin = 0.04
 radius = 0.5
 height = 0.650385
 
@@ -3136,12 +3160,10 @@ surfaces/0 = {
 [node name="Enemy" type="RigidBody"]
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
+collision_layer = 0
+collision_mask = 5
 mode = 2
 mass = 1.0
-friction = 0.8
-bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.0
 custom_integrator = false
@@ -3167,7 +3189,7 @@ run_speed = 3.5
 accel = 30.0
 fov = 110.0
 view_range = 22.0
-shoot_rate = 1.1
+shoot_rate = 10.0
 bullet_scene = ExtResource( 1 )
 debug = null
 
@@ -3283,7 +3305,7 @@ bones/9/name = "enemy_head_jnt"
 bones/9/parent = 8
 bones/9/rest = Transform( 0.96327, 6.85624e-09, -0.268536, -3.417e-09, 1, 1.32747e-08, 0.268536, -1.18696e-08, 0.96327, -5.60284e-06, 2.8702e-13, -0.791363 )
 bones/9/enabled = true
-bones/9/bound_children = [ NodePath("Head") ]
+bones/9/bound_children = [  ]
 bones/10/name = "enemy_l_clavicle_jnt"
 bones/10/parent = 7
 bones/10/rest = Transform( 0.980798, 0.120693, 0.153193, -0.116389, -0.268055, 0.956347, 0.156489, -0.955814, -0.24886, 0.0927726, -0.280274, -0.541737 )
@@ -3333,7 +3355,7 @@ bones/19/name = "enemy_l_finger1_01"
 bones/19/parent = 13
 bones/19/rest = Transform( -0.00438591, 0.99946, 0.0325636, -0.991051, 3.24231e-08, -0.133483, -0.133411, -0.0328577, 0.990516, 0.194162, 0.157765, -0.646708 )
 bones/19/enabled = true
-bones/19/bound_children = [ NodePath("Left Hand") ]
+bones/19/bound_children = [  ]
 bones/20/name = "enemy_l_finger1_02"
 bones/20/parent = 19
 bones/20/rest = Transform( 0.99583, -1.98675e-08, -0.0912261, 1.6422e-08, 1, -3.85199e-08, 0.0912261, 3.68611e-08, 0.99583, 1.12284e-06, 1.16681e-08, -0.436866 )
@@ -3453,7 +3475,7 @@ bones/43/name = "enemy_r_finger1_01"
 bones/43/parent = 37
 bones/43/rest = Transform( -0.0043858, -0.99946, -0.0325636, 0.991042, 2.31718e-06, -0.133549, 0.133477, -0.0328577, 0.990507, -0.194162, 0.157853, -0.646685 )
 bones/43/enabled = true
-bones/43/bound_children = [ NodePath("Right Hand") ]
+bones/43/bound_children = [  ]
 bones/44/name = "enemy_r_finger1_02"
 bones/44/parent = 43
 bones/44/rest = Transform( 0.995831, 7.51536e-08, 0.0912144, -7.40187e-08, 1, -1.58258e-08, -0.0912144, 9.00823e-09, 0.995831, -5.04157e-05, 1.85099e-08, -0.436864 )
@@ -3505,14 +3527,14 @@ transform = Transform( 1, -7.3429e-08, 8.84756e-09, 5.44242e-09, 1, -7.45058e-09
 _sections_unfolded = [ "Transform" ]
 
 [node name="Physical Bone enemy_hips_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.37114e-08, -1, 3.32993e-17, 0.999881, -4.3714e-08, 0.0154137, -0.0154137, -4.71536e-15, 0.999881, -1.8652e-15, 0.0714691, -10.1352 )
+transform = Transform( -4.37113e-08, -1, 1.03594e-16, 0.999881, -4.3714e-08, 0.0154137, -0.0154137, -3.9938e-15, 0.999881, -2.96064e-15, 0.0714691, -10.1352 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 2
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.67813e-08, -6.68158e-16, 0.79271 )
-body_offset = Transform( 1, 7.10543e-15, 5.58794e-09, -3.19744e-14, 1, -2.77556e-16, -5.58794e-09, 3.88578e-16, 1, 2.23517e-08, 8.88178e-16, -0.79271 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.34948e-08, -5.40198e-16, 0.79271 )
+body_offset = Transform( 1, 7.10543e-15, 2.04891e-08, -1.13687e-13, 1, -9.99201e-16, -2.04891e-08, 1.11022e-15, 1, 3.72529e-08, 1.33227e-15, -0.79271 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3532,14 +3554,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_spine0_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.37112e-08, -1, -9.28906e-16, 0.999881, -4.37138e-08, 0.0154137, -0.0154137, -8.12189e-15, 0.999881, 3.16634e-16, 0.0354637, -12.4709 )
+transform = Transform( -4.37112e-08, -1, -1.65055e-15, 0.999881, -4.37138e-08, 0.0154137, -0.0154137, -8.84345e-15, 0.999881, 1.09376e-16, 0.0354637, -12.4709 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 2
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.87447e-09, -4.2833e-16, 1.54322 )
-body_offset = Transform( 1, -7.10543e-15, -1.86265e-09, -7.10543e-15, 1, 2.77556e-16, 1.86265e-09, -3.33067e-16, 1, 0, 0, -1.54322 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.20267e-08, -1.0979e-15, 1.54322 )
+body_offset = Transform( 1, -7.10543e-15, -1.86265e-09, -7.10543e-15, 1, 9.99201e-16, 1.86265e-09, -1.05471e-15, 1, 1.49012e-08, -4.44089e-16, -1.54322 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3560,14 +3582,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_neck1_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.94338e-08, -1, 1.24274e-14, 0.983811, -4.86413e-08, 0.17921, -0.17921, 8.18531e-09, 0.983811, 7.51365e-15, -0.201049, -15.5263 )
+transform = Transform( -4.94338e-08, -1, 8.81034e-16, 0.983811, -4.86414e-08, 0.17921, -0.17921, 8.18533e-09, 0.983811, 1.0128e-13, -0.201051, -15.5263 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 2
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22673e-07, -4.25559e-15, 0.39568 )
-body_offset = Transform( 1, -1.42109e-14, 2.98023e-08, 7.10543e-15, 1, 1.77636e-15, -2.98023e-08, 5.32907e-15, 1, -8.34465e-07, 3.55271e-15, -0.39568 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.432e-06, 5.3866e-15, 0.39568 )
+body_offset = Transform( 1, -6.03961e-14, 2.98023e-08, 7.10543e-15, 1, 1.33227e-14, -2.98023e-08, 1.59872e-14, 1, -2.44379e-06, -1.06581e-14, -0.39568 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3588,14 +3610,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_l_shoulder_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 0.022353, 0.0425263, -0.998845, 0.99975, 6.57095e-07, 0.0223726, 0.00095257, -0.999095, -0.0425148, 3.0274, -0.158375, -14.1452 )
+transform = Transform( 0.022353, 0.0425263, -0.998845, 0.99975, 6.56006e-07, 0.0223726, 0.00095257, -0.999095, -0.0425148, 3.0274, -0.158375, -14.1452 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03848e-08, 5.0351e-09, 1.472 )
-body_offset = Transform( 1, -4.36273e-10, 3.72529e-09, 8.2764e-11, 1, -3.42058e-09, 3.72529e-09, 7.79197e-10, 1, 1.49012e-08, 0, -1.472 )
+body_offset = Transform( 1, -1.52494e-09, 3.72529e-09, 8.2764e-11, 1, -3.42058e-09, 3.72529e-09, 7.54834e-10, 1, 1.49012e-08, 0, -1.472 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3612,14 +3634,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_l_elbow_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328273, 0.0425292, -0.998556, 0.999461, 4.23758e-07, -0.0328577, -0.00139645, -0.999095, -0.0425054, 6.12749, -0.137679, -14.0132 )
+transform = Transform( -0.0328272, 0.0425292, -0.998556, 0.999461, 4.20297e-07, -0.0328576, -0.00139645, -0.999095, -0.0425054, 6.12748, -0.137679, -14.0132 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88392e-08, -3.97801e-09, 1.63214 )
-body_offset = Transform( 1, -4.29509e-10, 2.98023e-08, -5.76392e-11, 1, 2.4373e-09, -2.98023e-08, 2.18858e-08, 1, -2.98023e-08, 0, -1.63214 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.92766e-08, -3.97813e-09, 1.63214 )
+body_offset = Transform( 1, -3.88931e-09, 1.15484e-07, -7.56131e-10, 1, 2.43737e-09, -1.08033e-07, 2.19996e-08, 1, -1.19209e-07, 0, -1.63214 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3636,14 +3658,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_l_wrist_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328277, 0.042527, -0.998556, 0.999461, 6.71917e-07, -0.0328582, -0.00139615, -0.999095, -0.0425033, 8.16318, -0.070694, -13.9266 )
+transform = Transform( -0.0328278, 0.042527, -0.998558, 0.999462, 6.71591e-07, -0.0328583, -0.00139616, -0.999095, -0.0425034, 8.16319, -0.0706936, -13.9266 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.57159e-09, 1.42374e-06, 0.406496 )
-body_offset = Transform( 1, 2.04068e-10, -1.86265e-08, -2.09411e-10, 1, 1.66645e-08, 1.86265e-08, 6.28913e-09, 1, 0, -1.43051e-06, -0.406497 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.92913e-08, 9.33271e-07, 0.40651 )
+body_offset = Transform( 1, -1.21247e-10, -4.84288e-08, -5.56952e-10, 1, 5.0192e-08, 3.72529e-08, 6.29983e-09, 1, -5.96046e-08, -9.53674e-07, -0.406511 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3661,14 +3683,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_l_thigh_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.3753e-08, -1, -1.76586e-09, -0.999521, 4.36946e-08, 0.0249922, -0.0249948, 2.18521e-09, -0.999688, 1.13014, 0.33744, -7.16268 )
+transform = Transform( -4.3753e-08, -1, -1.76585e-09, -0.999521, 4.36946e-08, 0.0249922, -0.0249948, 2.18521e-09, -0.999688, 1.13014, 0.33744, -7.16268 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42049e-07, 2.69765e-15, 1.8691 )
-body_offset = Transform( 1, 0, -3.72529e-09, -7.10543e-15, 1, -1.44329e-15, 7.45058e-09, 1.77636e-15, 1, 1.49012e-07, 0, -1.8691 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.20863e-07, 1.01681e-14, 1.8691 )
+body_offset = Transform( 1, 0, -3.72529e-09, -7.10543e-15, 1, -5.44009e-15, 1.30385e-08, 6.88338e-15, 1, 3.27826e-07, 0, -1.8691 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3685,14 +3707,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_l_knee_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 4.6557e-07, -1, -4.45016e-08, -0.994299, -4.67584e-07, 0.105049, -0.105065, -5.33361e-09, -0.994466, 1.13014, 0.057161, -3.08306 )
+transform = Transform( 4.6557e-07, -1, -4.45016e-08, -0.994298, -4.67583e-07, 0.105049, -0.105065, -5.33351e-09, -0.994466, 1.13014, 0.0571611, -3.08306 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33157e-08, -3.15964e-14, 2.2234 )
-body_offset = Transform( 1, -2.55795e-13, 5.96046e-08, 0, 1, 1.42109e-14, -2.23517e-08, -1.06581e-14, 1, -1.19209e-07, 0, -2.2234 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.93282e-08, -3.94955e-14, 2.2234 )
+body_offset = Transform( 0.999998, -8.52651e-13, 6.70552e-08, -2.84217e-14, 1, 1.77636e-14, -8.19564e-08, -4.61853e-14, 1, -2.38419e-07, 0, -2.2234 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3702,6 +3724,7 @@ bone_name = "enemy_l_knee_jnt"
 joint_constraints/bias = 0.3
 joint_constraints/damping = 1.0
 joint_constraints/impulse_clamp = 0.0
+_sections_unfolded = [ "Collision", "Joint", "joint_constraints" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_knee_jnt"]
 transform = Transform( 1, -5.68434e-14, 7.45058e-09, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
@@ -3710,14 +3733,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_l_ankle_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -2.68287e-07, 1, 1.3201e-07, 0.64638, 2.74104e-07, -0.762797, -0.762926, -1.18666e-07, -0.646487, 1.13014, 0.172671, -0.576121 )
+transform = Transform( -2.68287e-07, 1, 1.3201e-07, 0.64638, 2.74104e-07, -0.762796, -0.762925, -1.18666e-07, -0.646486, 1.13014, 0.172671, -0.576121 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.08646e-07, 8.34465e-07, 0.457626 )
-body_offset = Transform( 1, -1.42109e-14, -1.49012e-07, -1.56319e-13, 1, -1.42109e-14, 1.78814e-07, 1.42109e-14, 1, 4.76837e-07, -8.34465e-07, -0.457626 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17709e-07, 3.45707e-06, 0.457627 )
+body_offset = Transform( 0.999999, -1.42109e-14, -5.66244e-07, -5.25802e-13, 1, 1.42109e-14, 6.25849e-07, 1.42109e-14, 0.999998, 4.76837e-07, -3.45707e-06, -0.457626 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3735,14 +3758,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_r_thigh_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -1.31115e-07, 1, -1.76586e-09, 0.999812, 1.31109e-07, 0.0249922, 0.0250004, 2.18489e-09, -0.999688, -1.13014, 0.33744, -7.16267 )
+transform = Transform( -1.31115e-07, 1, -1.76585e-09, 0.999812, 1.31109e-07, 0.0249922, 0.0250004, 2.18489e-09, -0.99969, -1.13014, 0.33744, -7.16267 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.67653e-08, -3.73523e-15, 1.86911 )
-body_offset = Transform( 1, -1.42109e-14, -3.72529e-09, 0, 1, 1.9984e-15, -3.72529e-09, -1.9984e-15, 1, -2.98023e-08, 0, -1.86911 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63208e-08, -1.78461e-14, 1.86911 )
+body_offset = Transform( 1, -1.42109e-14, 1.86265e-09, 0, 1, 9.54792e-15, -3.72529e-09, -2.22045e-15, 1, -2.98023e-08, 0, -1.86911 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3762,11 +3785,11 @@ _sections_unfolded = [ "shape" ]
 transform = Transform( 4.64427e-07, 1, -1.40192e-09, 0.994592, -4.61793e-07, 0.10505, 0.105048, -4.95089e-08, -0.994468, -1.13014, 0.0571611, -3.08306 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.94853e-08, -5.52935e-14, 2.22339 )
-body_offset = Transform( 1, 0, -6.70552e-08, 1.98952e-13, 1, 2.4869e-14, 0, -7.10543e-15, 1, 5.96046e-08, 0, -2.22339 )
+body_offset = Transform( 1, 0, -6.70552e-08, 7.10543e-13, 1, 2.4869e-14, 0, -7.10543e-15, 1, 5.96046e-08, 0, -2.22339 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3783,14 +3806,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_r_ankle_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -7.17618e-08, -1, -4.74249e-09, -0.646672, 5.00502e-08, -0.762931, 0.762829, -5.2348e-08, -0.646601, -1.13014, 0.172672, -0.576134 )
+transform = Transform( -7.17619e-08, -1, -4.7425e-09, -0.646672, 5.00502e-08, -0.762931, 0.76283, -5.2348e-08, -0.646601, -1.13014, 0.172672, -0.576134 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35929e-07, 4.87659e-15, 0.457546 )
-body_offset = Transform( 1, -1.42109e-14, 8.9407e-08, 7.10543e-15, 1, -1.06581e-14, 5.96046e-08, 2.4869e-14, 1, -4.76837e-07, 0, -0.457546 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95021e-07, 6.50212e-15, 0.457546 )
+body_offset = Transform( 1, -1.42109e-14, 1.78814e-07, 3.55271e-15, 1, -1.42109e-14, 2.98023e-08, 4.9738e-14, 1, -4.76837e-07, 0, -0.457546 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3808,14 +3831,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_r_shoulder_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 0.0223542, -0.0425067, 0.998846, -0.99975, 1.33997e-07, 0.0223737, -0.000950573, -0.999097, -0.0424962, -3.02741, -0.158375, -14.1452 )
+transform = Transform( 0.0223542, -0.0425067, 0.998846, -0.99975, 1.33702e-07, 0.0223737, -0.000950573, -0.999097, -0.0424962, -3.02741, -0.158375, -14.1452 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4837e-09, 3.33619e-06, 1.47202 )
-body_offset = Transform( 1, 1.19101e-10, 3.72529e-09, 1.93751e-10, 1, 1.13466e-09, 0, 2.50453e-10, 1, 0, -3.33786e-06, -1.47202 )
+body_offset = Transform( 1, 4.14019e-10, 3.72529e-09, 1.93751e-10, 1, 1.13466e-09, 0, 2.43852e-10, 1, 0, -3.33786e-06, -1.47202 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3832,14 +3855,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_r_elbow_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328277, -0.0425375, 0.998556, -0.99946, 1.30429e-06, -0.0328582, 0.001397, -0.999095, -0.0425146, -6.1275, -0.13768, -14.0132 )
+transform = Transform( -0.0328278, -0.0425375, 0.998556, -0.999462, 1.30316e-06, -0.0328582, 0.001397, -0.999095, -0.0425146, -6.1275, -0.13768, -14.0132 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.82406e-08, 9.55906e-07, 1.63214 )
-body_offset = Transform( 1, 4.19732e-10, 1.11759e-08, -2.86036e-10, 1, -1.36752e-09, 0, 4.10147e-10, 1, 0, -9.53674e-07, -1.63214 )
+body_offset = Transform( 1, 1.54489e-09, 1.11759e-08, 6.21867e-11, 1, -1.36752e-09, -1.49012e-08, 4.47137e-10, 1, 0, -9.53674e-07, -1.63214 )
 mass = 1.0
 weight = 14.7
 friction = 1.0
@@ -3849,6 +3872,7 @@ bone_name = "enemy_r_elbow_jnt"
 joint_constraints/bias = 0.3
 joint_constraints/damping = 1.0
 joint_constraints/impulse_clamp = 0.0
+_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_elbow_jnt"]
 shape = SubResource( 28 )
@@ -3856,14 +3880,14 @@ disabled = false
 _sections_unfolded = [ "shape" ]
 
 [node name="Physical Bone enemy_r_wrist_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328276, -0.0425946, 0.998553, -0.999459, 3.10616e-06, -0.0328581, 0.00139707, -0.999092, -0.0425718, -8.1632, -0.0706939, -13.9265 )
+transform = Transform( -0.0328276, -0.0425945, 0.998553, -0.999457, 3.10766e-06, -0.032858, 0.00139707, -0.999089, -0.0425718, -8.1632, -0.0706939, -13.9265 )
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 9
 collision_mask = 0
 joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35475e-08, 1.43998e-06, 0.406491 )
-body_offset = Transform( 0.999999, -3.34694e-10, -1.49012e-08, 1.53887e-09, 0.999999, -2.3289e-08, -1.86265e-08, -2.90706e-09, 1, 5.96046e-08, -1.43051e-06, -0.406491 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.38617e-08, 1.4415e-06, 0.406491 )
+body_offset = Transform( 0.999997, -1.22645e-09, -6.33299e-08, 4.4538e-09, 0.999996, -2.70142e-08, -7.82311e-08, -2.15858e-08, 1, 5.96046e-08, -1.43051e-06, -0.406491 )
 mass = 1.0
 weight = 14.7
 friction = 1.0

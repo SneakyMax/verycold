@@ -32,7 +32,7 @@ var slomoAmount
 var textSound
 
 func _ready():
-	OS.window_fullscreen = true
+	#OS.window_fullscreen = true
 	levelHolder = get_node(\"Current Level\")
 	bigText = get_node(\"Overlay UI/Big Text\")
 	textSound = get_node(\"TextSound\")

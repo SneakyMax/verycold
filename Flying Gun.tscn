@@ -30,6 +30,8 @@ var recalling = false
 var originalGravityScale = gravity_scale
 var pickupArea : Area
 
+var collisionPoints;
+
 func _ready():
 	pickupArea = get_node(\"Pickup Area\")
 	pickupArea.monitoring = false
@@ -72,14 +74,15 @@ func _physics_process(delta):
 			add_central_force(side_movement_force * dir)
 	
 func _integrate_forces(state):
-	if (!player || !recalling):
-		return
-		
-	var toPlayer = player.camera.global_transform.origin - global_transform.origin
-	state.add_central_force(toPlayer * recall_accel)
+	if state.get_contact_count() >= 1:
+		collisionPoints = state.get_contact_local_position(0);
 	
-	if (state.linear_velocity.length_squared() > recall_max_speed * recall_max_speed):
-		state.linear_velocity = state.linear_velocity.normalized() * recall_max_speed;
+	if (player && recalling):
+		var toPlayer = player.camera.global_transform.origin - global_transform.origin
+		state.add_central_force(toPlayer * recall_accel)
+		
+		if (state.linear_velocity.length_squared() > recall_max_speed * recall_max_speed):
+			state.linear_velocity = state.linear_velocity.normalized() * recall_max_speed;
 
 func _on_Pickup_Area_body_entered(body):
 	queue_free()
@@ -94,6 +97,10 @@ func delay(seconds : float = 1, start : bool = true):
 	if start:
 		timer.start()
 	return timer
+
+func _on_Flying_Gun_body_entered(body):
+	if body.name.match(\"*enemy*\"):
+		body.find_parent(\"Enemy\").queue_free()
 "
 
 [sub_resource type="SpatialMaterial" id=3]
@@ -217,13 +224,15 @@ proximity_fade_enable = false
 distance_fade_mode = 0
 _sections_unfolded = [ "Albedo", "Emission", "Rim", "Transmission" ]
 
-[sub_resource type="CapsuleShape" id=16]
+[sub_resource type="CapsuleShape" id=5]
 
+margin = 0.04
 radius = 0.1571
 height = 0.383166
 
-[sub_resource type="CapsuleShape" id=17]
+[sub_resource type="CapsuleShape" id=6]
 
+margin = 0.04
 radius = 0.103633
 height = 0.678108
 
@@ -361,27 +370,27 @@ _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="SphereShape" id=14]
 
+margin = 0.04
 radius = 1.4215
 
 [sub_resource type="SphereShape" id=15]
 
+margin = 0.04
 radius = 1.42896
 
 [node name="Flying Gun" type="RigidBody"]
 input_ray_pickable = true
 input_capture_on_drag = false
-collision_layer = 1
+collision_layer = 0
 collision_mask = 1
 mode = 0
 mass = 1.0
-friction = 0.28
-bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.1
 custom_integrator = false
 continuous_cd = true
-contacts_reported = 0
-contact_monitor = false
+contacts_reported = 3
+contact_monitor = true
 sleeping = false
 can_sleep = true
 axis_lock_linear_x = false
@@ -423,13 +432,13 @@ material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0990103, -0.208082 )
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.310561, 0.0495731 )
-shape = SubResource( 17 )
+shape = SubResource( 6 )
 disabled = false
 
 [node name="Particles" type="Particles" parent="."]
@@ -501,7 +510,7 @@ angular_damp = 1.0
 priority = 0.0
 monitoring = false
 monitorable = true
-collision_layer = 4
+collision_layer = 0
 collision_mask = 4
 audio_bus_override = false
 audio_bus_name = "Master"
@@ -515,6 +524,7 @@ _sections_unfolded = [ "Collision" ]
 shape = SubResource( 15 )
 disabled = false
 
+[connection signal="body_entered" from="." to="." method="_on_Flying_Gun_body_entered"]
 [connection signal="body_entered" from="Pickup Area" to="." method="_on_Pickup_Area_body_entered"]
 
 [editable path="Highlighted Gun"]
