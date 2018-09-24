@@ -1,0 +1,13 @@
+# Made using Asset Forge (1.3)
+
+:models
+Primitives/cylinder_full[(-2.15, 0.5, -0.05);(0.0, 0.0, 0.0);(0.1, 6.0, 0.1);cylinder_full_0;_defaultMat]
+Primitives/cylinder_half[(0, 0.5, 0.5);(270.0, 0.0, 0.0);(5.0, 1.0, 1.0);cylinder_half_2;_defaultMat]
+Primitives/cylinder_full[(2.15, 0.5, -0.05);(0.0, 0.0, 0.0);(0.1, 6.0, 0.1);cylinder_full_3;_defaultMat]
+
+:materials
+_defaultMat[RGBA(1.000, 1.000, 1.000, 1.000);]
+
+:textures
+
+:extra
