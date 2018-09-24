@@ -217,13 +217,15 @@ proximity_fade_enable = false
 distance_fade_mode = 0
 _sections_unfolded = [ "Albedo", "Emission", "Rim", "Transmission" ]
 
-[sub_resource type="CapsuleShape" id=16]
+[sub_resource type="CapsuleShape" id=5]
 
+margin = 0.04
 radius = 0.1571
 height = 0.383166
 
-[sub_resource type="CapsuleShape" id=17]
+[sub_resource type="CapsuleShape" id=6]
 
+margin = 0.04
 radius = 0.103633
 height = 0.678108
 
@@ -361,10 +363,12 @@ _sections_unfolded = [ "Resource" ]
 
 [sub_resource type="SphereShape" id=14]
 
+margin = 0.04
 radius = 1.4215
 
 [sub_resource type="SphereShape" id=15]
 
+margin = 0.04
 radius = 1.42896
 
 [node name="Flying Gun" type="RigidBody"]
@@ -374,8 +378,6 @@ collision_layer = 1
 collision_mask = 1
 mode = 0
 mass = 1.0
-friction = 0.28
-bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.1
 custom_integrator = false
@@ -423,13 +425,13 @@ material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.0990103, -0.208082 )
-shape = SubResource( 16 )
+shape = SubResource( 5 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.310561, 0.0495731 )
-shape = SubResource( 17 )
+shape = SubResource( 6 )
 disabled = false
 
 [node name="Particles" type="Particles" parent="."]
