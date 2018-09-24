@@ -1,357 +1,6 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://object scenes/Bullet.tscn" type="PackedScene" id=1]
-[ext_resource path="res://enemy_material.tres" type="Material" id=2]
-[ext_resource path="res://object scenes/Enemy Gun.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Audio/Gunshot_Shotgun_PSEF.151.wav" type="AudioStream" id=4]
-
-[sub_resource type="PhysicsMaterial" id=1]
-
-friction = 0.8
-rough = false
-bounce = 0.0
-absorbent = false
-
-[sub_resource type="GDScript" id=2]
-
-script/source = "extends RigidBody
-
-var state : String
-
-export(float, 0, 100) var walk_speed
-export(float, 0, 100) var run_speed
-export(float, 0, 100) var accel
-
-export(float, 0, 360) var fov
-export(float, 0, 100) var view_range = 1000
-
-export(float, 0, 10) var shoot_rate
-
-export(PackedScene) var bullet_scene
-
-export(bool) var debug
-
-var close_plane = 0.5
-var vertical_fov = 120
-
-var states = [\"idle\", \"shooting\", \"moving_into_range\", \"chasing\"]
-
-var isRunning : bool
-var moveTarget : Transform
-var head : Spatial
-var headView : RayCast
-var rotator : Spatial
-var anim : AnimationTree
-var muzzle : Position3D
-var collider : CollisionShape
-var gun_sound
-var hit_sound
-
-var frustum_planes = []
-
-var playerCam;
-
-var player_in_frustum = false
-var player_raycast_success = false
-var can_see_player = false
-var geo
-var path = []
-var last_shot_time : int
-var lastFrameState : String
-var stop_moving = false
-
-var target_facing
-var move_towards
-var last_player_pos
-
-func _ready():
-	state = \"idle\"
-	generate_frustum()
-	
-	var player = get_tree().root.find_node(\"Player\", true, false)
-	if player:
-		playerCam = player.find_node(\"Camera\")
-	
-	head = find_node(\"Head Position\")
-	headView = find_node(\"Head View\")
-	rotator = find_node(\"Rotation\")
-	geo = get_tree().root.find_node(\"geo\", true, false)
-	anim = find_node(\"AnimationTree\")
-	muzzle = find_node(\"Muzzle\")
-	collider = get_node(\"Main Collider\")
-	
-	anim.tree_root.set_start_node(\"Idle\")
-	
-	var animPlayer = get_node(\"Rotation/Model/Root_Motion/AnimationPlayer\")
-	animPlayer.get_animation(\"Idle\").loop = true
-	animPlayer.get_animation(\"LookLeft\").loop = true
-	animPlayer.get_animation(\"LookRight\").loop = true
-	animPlayer.get_animation(\"Run\").loop = true
-	animPlayer.get_animation(\"Walk\").loop = true
-	animPlayer.get_animation(\"PointGun\").loop = true
-	
-	gun_sound = get_node(\"GunSound\")
-	hit_sound = get_node(\"HitSound\")
-	
-func world_frustum():
-	var planes = []
-	for plane in frustum_planes:
-		var new_plane = []
-		for vertex in plane:
-			new_plane.append(head.to_global(vertex))
-		planes.append(new_plane)
-	return planes
-
-func is_inside_frustum(point : Vector3):
-	var frust = world_frustum()
-	for plane in frust:
-		var a : Vector3 = plane[1] - plane[0]
-		var b : Vector3 = plane[2] - plane[1]
-		var normal = a.cross(b).normalized()
-		if normal.dot(point - plane[0]) > 0:
-			return false
-	return true
-	
-func _process(_delta):
-	if not is_inside_tree(): return
-	var isInitial = lastFrameState != state
-	lastFrameState = state
-	match state:
-		\"idle\":
-			process_idle(isInitial)
-		\"shooting\":
-			process_shooting(isInitial)
-		\"moving_into_range\":
-			process_moving_into_range(isInitial)
-		\"chasing\":
-			process_chasing(isInitial)
-		\"dead\":
-			process_dead(isInitial)
-			
-func _physics_process(delta):
-	if not is_inside_tree(): return
-	if state == \"dead\": return
-	
-	can_see_player = get_can_see_player()
-	if path and path.size() > 0:
-		move_along_path()
-	if target_facing:
-		rotate_towards_point(target_facing, 90, delta)
-		
-func get_can_see_player():
-	if not playerCam: return false
-	var playerPos = playerCam.global_transform.origin
-	if is_inside_frustum(playerPos):
-		var toPlayer = playerCam.global_transform.origin - headView.global_transform.origin
-		var relativeToRotation = headView.global_transform.basis.inverse().xform(toPlayer)
-		headView.cast_to = relativeToRotation
-		if headView.is_colliding():
-			var collider = headView.get_collider()
-			if collider.filename == \"res://Player.tscn\":
-				return true
-	return false
-	
-func process_idle(_isInitial):
-	target_facing = null
-	stop_moving = true
-
-	anim.set_dual(\"shooting\", false)
-	anim.set_dual(\"moving\", false)
-
-	if can_see_player:
-		state = \"shooting\"
-	
-func process_shooting(isInitial):
-	anim.set_dual(\"shooting\", can_see_player)
-	
-	target_facing = playerCam.global_transform.origin
-	last_player_pos = playerCam.global_transform.origin
-	
-	if not can_see_player:
-		set_path_to_point(last_player_pos)
-		state = \"chasing\"
-		return
-	
-	stop_moving = true
-	if isInitial:
-		last_shot_time = OS.get_ticks_msec() \\
-			- (shoot_rate * 1000) \\
-			+ ((shoot_rate * 1000) / 2.0)
-	
-	var now = OS.get_ticks_msec()
-	if now > last_shot_time + ( shoot_rate * 1000 ):
-		get_node(\"GunSound\").pitch_scale = Engine.time_scale
-		gun_sound.play()
-		shoot()	
-
-func shoot():
-	last_shot_time = OS.get_ticks_msec()
-	var bullet = bullet_scene.instance()
-	get_node(\"/root/Game\").level_add(bullet);
-	
-	var basis = muzzle.global_transform.basis;
-	var position = muzzle.global_transform.origin;
-	
-	bullet.global_transform.origin = muzzle.global_transform.origin
-	
-	var playerCamPos = playerCam.global_transform.origin
-	var horizSpread = 0.5
-	var vertSpread = 2
-	
-	var toPlayer = (playerCamPos - position).normalized()
-	var gunPoint = -basis.z.normalized()
-	
-	var targetPoint = Vector3(
-		playerCamPos.x + rand_range(-horizSpread, horizSpread),
-		playerCamPos.y - rand_range(0, vertSpread),
-		playerCamPos.z + rand_range(-horizSpread, horizSpread))
-	
-	if gunPoint.dot(toPlayer) > 0.7:
-		var look = muzzle.global_transform.looking_at(targetPoint, Vector3.UP)
-		bullet.global_transform.basis = Basis(
-			-look.basis.x.normalized(), look.basis.y.normalized(), -look.basis.z.normalized())
-	else:
-		bullet.global_transform.basis = Basis(
-			-basis.x.normalized(), basis.y.normalized(), -basis.z.normalized())
-	
-	anim.set(\"parameters/Shooting/OneShot/active\", true)
-	bullet.start()
-	
-func process_moving_into_range(_isInitial):
-	anim.set_dual(\"moving\", !can_see_player)
-	
-func process_chasing(_isInitial):
-	isRunning = true
-	stop_moving = false
-	anim.set_dual(\"moving\", !can_see_player)
-	anim.set(\"parameters/Moving/WalkRun/blend_amount\", 1 if isRunning else 0)
-	
-	if can_see_player:
-		state = \"shooting\"
-		path = null
-		return
-	
-	if not path or path.size() == 0:
-		state = \"idle\"
-		return
-
-func process_dead(isInitial):
-	if isInitial:
-		get_node(\"/root/Game\").slomo(2, 0.5)
-		# mode = RigidBody.MODE_RIGID
-		set_collision_layer_bit(0, false)
-		get_node(\"Rotation/Model/Root_Motion/Skeleton\").physical_bones_start_simulation()
-		get_node(\"Rotation/Model/Root_Motion/AnimationTree\").queue_free()
-		get_node(\"Rotation/Model/Root_Motion/AnimationPlayer\").queue_free();
-	
-func set_path_to_point(point: Vector3):
-	var nav : Navigation = get_tree().root.find_node(\"Navigation\", true, false)
-	if not nav: return
-	
-	var targetNavPoint = nav.get_closest_point(point)
-	var closestCurrentPoint = nav.get_closest_point(global_transform.origin)
-	
-	path = nav.get_simple_path(closestCurrentPoint, targetNavPoint)
-	
-func signed_angle(a, b, axis):
-	a = a.normalized()
-	b = b.normalized()
-	return acos(a.dot(b)) * sign(axis.dot(a.cross(b)))
-	
-func rotate_towards_point(point : Vector3, degreesPerSecond: float, delta: float):
-	var facing = rotator.global_transform.basis.z
-	var flatVectorToTarget = Vector3(point.x - rotator.global_transform.origin.x, 0, point.z - rotator.global_transform.origin.z).normalized()
-	var toTravel = signed_angle(facing, flatVectorToTarget, Vector3.UP)
-	toTravel = min(abs(toTravel), deg2rad(degreesPerSecond) * delta) * sign(toTravel)
-	var current = Quat(rotator.global_transform.basis)
-	var new = Quat(Vector3.UP, toTravel)
-	rotator.global_transform.basis = Basis(current * new)
-	
-func move_along_path():
-	if not path or path.size() == 0: return
-	
-	var targetPathNode : Vector3 = path[0]
-	var floorPos = global_transform.origin + (Vector3.DOWN * (collider.shape.height / 2))
-	
-	var toPoint = floorPos - targetPathNode
-	
-	if toPoint.length_squared() < 0.5: # Reached a nav point
-		path.remove(0)
-		if path.size() == 0:
-			return # Arrived
-			
-		targetPathNode = path[0]
-	
-	target_facing = targetPathNode
-	move_towards = targetPathNode
-	
-func _integrate_forces(state):
-	if not move_towards: return
-	if self.state == \"dead\": return
-	
-	var toPoint = move_towards - global_transform.origin
-	var flatToPoint = Vector3(toPoint.x, 0, toPoint.z)
-	
-	state.add_central_force(flatToPoint.normalized() * accel)
-	
-	# Cap horizontal linear velocity
-	var maxSpeed = run_speed if isRunning else walk_speed
-	if Vector2(state.linear_velocity.x, state.linear_velocity.z).length_squared() > maxSpeed * maxSpeed:
-		var new = Vector2(state.linear_velocity.x, state.linear_velocity.z).normalized() * maxSpeed
-		state.linear_velocity = Vector3(new.x, state.linear_velocity.y, new.y)
-		
-	var max_stop_speed = 0.5 * state.step
-	if stop_moving:
-		state.linear_velocity = Vector3(
-			state.linear_velocity.x - min(state.linear_velocity.x, max_stop_speed),
-			state.linear_velocity.y,
-			state.linear_velocity.x - min(state.linear_velocity.x, max_stop_speed))
-			
-	
-func generate_frustum():
-	var camUp = Vector3.UP
-	var camRight = Vector3.RIGHT
-	var nearCenter = Vector3.BACK * close_plane
-	var farCenter = Vector3.BACK * view_range
-	
-	var nearHeight = 2 * tan(deg2rad(vertical_fov / 2.0)) * close_plane
-	var farHeight = 2 * tan(deg2rad(vertical_fov / 2.0)) * view_range
-	
-	var nearWidth = 2 * tan(deg2rad(fov / 2.0)) * close_plane
-	var farWidth = 2 * tan(deg2rad(fov / 2.0)) * view_range
-	
-	var farTopLeft = farCenter + camUp * (farHeight*0.5) - camRight * (farWidth*0.5);
-	var farTopRight = farCenter + camUp * (farHeight*0.5) + camRight * (farWidth*0.5);
-	var farBottomLeft = farCenter - camUp * (farHeight*0.5) - camRight * (farWidth*0.5);
-	var farBottomRight = farCenter - camUp * (farHeight*0.5) + camRight * (farWidth*0.5);
-
-	var nearTopLeft = nearCenter + camUp * (nearHeight*0.5) - camRight * (nearWidth*0.5);
-	var nearTopRight = nearCenter + camUp * (nearHeight*0.5) + camRight * (nearWidth*0.5);
-	var nearBottomLeft = nearCenter - camUp * (nearHeight*0.5) - camRight * (nearWidth*0.5);
-	var nearBottomRight = nearCenter - camUp * (nearHeight*0.5) + camRight * (nearWidth*0.5);
-	
-	var left = [farTopLeft, nearTopLeft, nearBottomLeft, farBottomLeft]
-	var right = [farTopRight, farBottomRight, nearBottomRight, nearTopRight]
-	var top = [farTopLeft, farTopRight, nearTopRight, nearTopLeft]
-	var bottom = [farBottomRight, farBottomLeft, nearBottomLeft, nearBottomRight]
-	var front = [nearTopLeft, nearTopRight, nearBottomRight, nearBottomLeft]
-	var back = [farTopRight, farTopLeft, farBottomLeft, farBottomRight]
-	
-	frustum_planes = [left, right, top, bottom, front, back]
-
-func _on_Enemy_body_entered(body):
-	if body.filename == \"res://Flying Gun.tscn\":
-		if(state != \"dead\"):
-			hit_sound.play()
-		state = \"dead\"
-"
-
-[sub_resource type="CapsuleShape" id=3]
-
-radius = 0.383281
-height = 2.58835
-
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=1]
 
 render_priority = 0
 flags_transparent = false
@@ -406,7 +55,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_mode = 0
 
-[sub_resource type="ArrayMesh" id=5]
+[sub_resource type="ArrayMesh" id=2]
 
 blend_shape_mode = 1
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
@@ -417,13 +66,13 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97539,
 "index_count": 2880,
-"material": SubResource( 4 ),
+"material": SubResource( 1 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 482
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 
 length = 1.03333
 loop = false
@@ -751,7 +400,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, 1.19209e-07, -2.86102e-06, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.0333333, 1, 0, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.0666667, 1, 0, 0, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.1, 1, 3.57628e-07, 0, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.133333, 1, -1.78814e-07, 1.90735e-06, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.166667, 1, -2.38419e-07, 1.90735e-06, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.2, 1, 1.19209e-07, 1.90735e-06, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.233333, 1, 1.78814e-07, 0, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.266667, 1, 0, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.3, 1, 0, -9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.333333, 1, 0, 0, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.366667, 1, 0, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.4, 1, -4.76837e-07, -9.53674e-07, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.433333, 1, -1.19209e-07, 0, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.466667, 1, -2.38419e-07, 0, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.5, 1, 2.38419e-07, 9.53674e-07, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.533333, 1, -2.38419e-07, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.566667, 1, 0, 1.90735e-06, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.6, 1, -2.38419e-07, -9.53674e-07, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.633333, 1, -2.38419e-07, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.666667, 1, -2.38419e-07, 9.53674e-07, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.7, 1, -1.19209e-07, 1.90735e-06, -9.53674e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.733333, 1, -1.19209e-07, 0, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.766667, 1, 0, 0, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.8, 1, 0, 1.90735e-06, -4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.833333, 1, -1.19209e-07, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.866667, 1, -1.19209e-07, -9.53674e-07, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.9, 1, 1.19209e-07, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.933333, 1, -1.19209e-07, -1.90735e-06, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 0.966667, 1, 0, 9.53674e-07, 0, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1, 1, 1, 1.19209e-07, -2.86102e-06, 4.76837e-07, -4.68161e-09, 0.103205, 3.74529e-09, 0.99466, 1, 1, 1 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 
 length = 4.03333
 loop = false
@@ -1079,7 +728,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, 4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.0333333, 1, 0, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.0666667, 1, 2.38419e-07, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.1, 1, -2.38419e-07, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.133333, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.166667, 1, -4.76837e-07, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.2, 1, 0, 0, 7.15256e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.233333, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.266667, 1, 0, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.3, 1, 4.76837e-07, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.333333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.366667, 1, 0, 0, 4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.4, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.433333, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.466667, 1, 4.76837e-07, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.5, 1, 0, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.533333, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.6, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.633333, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.666667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.7, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.733333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.766667, 1, 0, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.8, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.833333, 1, 0, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.866667, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.9, 1, 4.76837e-07, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.933333, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 0.966667, 1, 0, 9.53674e-07, -4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.03333, 1, 0, 9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.06667, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.1, 1, 0, 9.53674e-07, 4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.13333, 1, -4.76837e-07, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.16667, 1, 0, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.2, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.23333, 1, 0, 9.53674e-07, 4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.26667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.3, 1, 0, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.33333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.36667, 1, -4.76837e-07, 0, -4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.4, 1, -4.76837e-07, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.43333, 1, 0, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.46667, 1, -4.76837e-07, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.5, 1, 4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.53333, 1, 0, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.56667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.6, 1, 4.76837e-07, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.63333, 1, 4.76837e-07, 9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.66667, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.7, 1, 4.76837e-07, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.73333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.76667, 1, 0, 0, -4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.8, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.83333, 1, 4.76837e-07, 9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.86667, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.9, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.93333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 1.96667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.03333, 1, -4.76837e-07, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.06667, 1, 0, -9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.1, 1, -4.76837e-07, -9.53674e-07, -4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.13333, 1, 0, 9.53674e-07, 7.15256e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.16667, 1, 4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.2, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.23333, 1, 0, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.26667, 1, -4.76837e-07, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.3, 1, 0, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.33333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.36667, 1, 0, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.4, 1, 0, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.43333, 1, 0, 9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.46667, 1, 0, 9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.5, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.53333, 1, 0, 9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.56667, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.6, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.63333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.66667, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.7, 1, 0, -9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.73333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.76667, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.8, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.83333, 1, 0, -9.53674e-07, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.86667, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.9, 1, 0, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.93333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 2.96667, 1, -4.76837e-07, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3, 1, 0, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.03333, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.06667, 1, 0, -9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.1, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.13333, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.16667, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.2, 1, 0, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.23333, 1, -4.76837e-07, -9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.26667, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.3, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.33333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.36667, 1, -4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.4, 1, 4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.43333, 1, 0, 9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.46667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.5, 1, 4.76837e-07, 9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.53333, 1, 0, 0, 4.76837e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.56667, 1, 0, 0, -2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.6, 1, 0, -1.90735e-06, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.63333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.66667, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.7, 1, 0, -9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.73333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.76667, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.8, 1, 0, -9.53674e-07, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.83333, 1, 0, 9.53674e-07, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.86667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.9, 1, 2.38419e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.93333, 1, 0, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 3.96667, 1, 0, 0, 2.38419e-07, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1, 4, 1, 4.76837e-07, 0, 0, 1.30385e-08, -7.45056e-09, -4.65661e-09, 1, 1, 1, 1 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 
 length = 0.0666667
 loop = false
@@ -1407,7 +1056,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, -9.53674e-07, 5.96046e-08, 0, 4.65661e-09, 1.07684e-08, -5.58793e-09, 1, 1, 1, 1 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=6]
 
 length = 0.0666667
 loop = false
@@ -1735,7 +1384,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, 0, 5.96046e-08, 0, 2.79397e-09, 9.29575e-08, 1.33227e-15, 1, 1, 1, 1 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=7]
 
 length = 0.0666667
 loop = false
@@ -2063,7 +1712,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, 1.19209e-07, -9.53674e-07, 0, -2.43444e-08, 0.103205, -2.34081e-09, 0.99466, 1, 1, 1 )
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=8]
 
 length = 0.6
 loop = false
@@ -2391,7 +2040,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, 0, -1.78814e-07, 0, -1.87265e-08, 0.103205, -3.57179e-15, 0.99466, 1, 1, 1, 0.0333333, 1, 1.19209e-07, 5.96046e-08, 9.53674e-07, -1.87265e-08, 0.103205, -3.57179e-15, 0.99466, 1, 1, 1, 0.0666667, 1, 5.96046e-08, 3.57628e-07, 9.53674e-07, -8.33327e-08, 0.103205, -3.57179e-15, 0.99466, 1, 1, 1, 0.1, 1, -5.96046e-08, 1.19209e-07, 0, 5.94564e-08, 0.103205, -3.57179e-15, 0.99466, 1, 1, 1, 0.133333, 1, 0, 0, 0, 5.94564e-08, 0.103205, -3.57179e-15, 0.99466, 1, 1, 1, 0.166667, 1, -2.38419e-07, -4.76837e-07, -4.76837e-07, 5.94564e-08, 0.103205, 4.49434e-08, 0.99466, 1, 1, 1, 0.2, 1, -9.53674e-07, -9.53674e-07, -2.38419e-07, 5.94564e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.233333, 1, -4.76837e-07, 0, 2.98023e-07, 1.23009e-07, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.266667, 1, 0, -9.53674e-07, 0, -2.24717e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.3, 1, 0, 9.53674e-07, -4.76837e-07, -2.24717e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.333333, 1, 0, -9.53674e-07, 4.76837e-07, -2.24717e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.366667, 1, 0, -9.53674e-07, 0, -2.24717e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.4, 1, 0, 0, -1.78814e-07, -2.24717e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.433333, 1, 0, 0, -1.19209e-07, -2.24717e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.466667, 1, 0, 0, 0, 1.07677e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.5, 1, -4.76837e-07, 0, -4.76837e-07, 1.3483e-07, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.533333, 1, 4.76837e-07, 0, 0, -1.49812e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.566667, 1, 0, 2.38419e-07, 9.53674e-07, -1.49812e-08, 0.103205, -8.98869e-08, 0.99466, 1, 1, 1, 0.6, 1, 0, 2.38419e-07, 9.53674e-07, 4.11982e-08, 0.103205, -4.49435e-08, 0.99466, 1, 1, 1 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
 
 length = 1.1
 loop = false
@@ -2719,7 +2368,7 @@ tracks/45/imported = false
 tracks/45/enabled = true
 tracks/45/keys = PoolRealArray( 0, 1, 0, 2.38419e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.0333333, 1, 0, 0, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.0666667, 1, -1.19209e-07, -2.38419e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.1, 1, -5.96046e-08, 0, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.133333, 1, 5.96046e-08, 0, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.166667, 1, 2.68221e-07, 1.19209e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.2, 1, 3.72529e-08, 2.38419e-07, -4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.233333, 1, 3.72529e-08, 2.38419e-07, -4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.266667, 1, 3.72529e-08, -2.38419e-07, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.3, 1, 3.72529e-08, -4.76837e-07, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.333333, 1, 5.96046e-08, -4.76837e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.366667, 1, 2.38419e-07, 0, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.4, 1, 0, -4.76837e-07, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.433333, 1, -1.49012e-07, 2.38419e-07, -4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.466667, 1, -2.98023e-08, 2.38419e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.5, 1, 8.9407e-08, 0, -4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.533333, 1, -2.38419e-07, -3.57628e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.566667, 1, 0, 0, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.6, 1, -2.38419e-07, -1.78814e-07, 0, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.633333, 1, -4.76837e-07, -2.98023e-08, -4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.666667, 1, 0, 5.96046e-08, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.7, 1, -4.76837e-07, -2.38419e-07, -9.53674e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.733333, 1, 0, 1.19209e-07, -4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.766667, 1, 0, 2.38419e-07, 4.76837e-07, -1.89605e-08, 0.103205, 3.74529e-08, 0.99466, 1, 1, 1, 0.8, 1, 0, 2.38419e-07, 0, -1.89605e-08, 0.103205, 8.9887e-08, 0.99466, 1, 1, 1, 0.833333, 1, 0, -2.38419e-07, -4.76837e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 0.866667, 1, 4.76837e-07, -2.38419e-07, 4.76837e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 0.9, 1, 0, 0, 4.76837e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 0.933333, 1, -9.53674e-07, 1.19209e-07, -4.76837e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 0.966667, 1, -9.53674e-07, 2.38419e-07, -9.53674e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 1, 1, -4.76837e-07, -1.78814e-07, 0, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 1.03333, 1, 0, 5.66244e-07, -4.76837e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 1.06667, 1, 2.38419e-07, 5.96046e-08, 4.76837e-07, -1.89605e-08, 0.103205, -2.99623e-08, 0.99466, 1, 1, 1, 1.1, 1, 2.38419e-07, 5.96046e-08, 4.76837e-07, -1.77901e-08, 0.103205, 7.49058e-09, 0.99466, 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=13]
+[sub_resource type="SpatialMaterial" id=10]
 
 render_priority = 0
 flags_transparent = false
@@ -2774,7 +2423,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_mode = 0
 
-[sub_resource type="ArrayMesh" id=14]
+[sub_resource type="ArrayMesh" id=11]
 
 blend_shape_mode = 1
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
@@ -2785,283 +2434,13 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97751,
 "index_count": 2490,
-"material": SubResource( 13 ),
+"material": SubResource( 10 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 2490
 }
 
-[sub_resource type="CapsuleShape" id=15]
-
-radius = 1.5
-height = 0.1
-
-[sub_resource type="CapsuleShape" id=16]
-
-radius = 1.5
-height = 1.5
-
-[sub_resource type="CapsuleShape" id=17]
-
-radius = 0.5
-height = 1.0
-
-[sub_resource type="CapsuleShape" id=18]
-
-radius = 0.6
-height = 2.3552
-
-[sub_resource type="CapsuleShape" id=19]
-
-radius = 0.5
-height = 2.61142
-
-[sub_resource type="CapsuleShape" id=20]
-
-radius = 0.6
-height = 0.8
-
-[sub_resource type="CapsuleShape" id=21]
-
-radius = 1.0
-height = 2.99057
-
-[sub_resource type="CapsuleShape" id=22]
-
-radius = 0.6
-height = 3.55743
-
-[sub_resource type="CapsuleShape" id=23]
-
-radius = 0.5
-height = 1.5
-
-[sub_resource type="CapsuleShape" id=24]
-
-radius = 1.0
-height = 2.99057
-
-[sub_resource type="CapsuleShape" id=25]
-
-radius = 0.6
-height = 3.55742
-
-[sub_resource type="CapsuleShape" id=26]
-
-radius = 0.5
-height = 1.5
-
-[sub_resource type="CapsuleShape" id=27]
-
-radius = 0.6
-height = 2.35522
-
-[sub_resource type="CapsuleShape" id=28]
-
-radius = 0.5
-height = 2.61143
-
-[sub_resource type="CapsuleShape" id=29]
-
-radius = 0.5
-height = 0.650385
-
-[sub_resource type="AnimationNodeAnimation" id=30]
-
-filter_enabled = false
-filters = [  ]
-animation = "Idle"
-
-[sub_resource type="AnimationNodeAnimation" id=31]
-
-resource_local_to_scene = true
-filter_enabled = false
-filters = [  ]
-animation = "Run"
-
-[sub_resource type="AnimationNodeAnimation" id=32]
-
-resource_local_to_scene = true
-filter_enabled = false
-filters = [  ]
-animation = "PointGun"
-
-[sub_resource type="AnimationNodeAnimation" id=33]
-
-resource_local_to_scene = true
-filter_enabled = false
-filters = [  ]
-animation = "Walk"
-
-[sub_resource type="AnimationNodeBlend2" id=34]
-
-resource_local_to_scene = true
-filter_enabled = true
-filters = [ "Skeleton:enemy_l_clavicle_jnt", "Skeleton:enemy_l_elbow_jnt", "Skeleton:enemy_l_finger0_01", "Skeleton:enemy_l_finger0_02", "Skeleton:enemy_l_finger0_03", "Skeleton:enemy_l_finger1_01", "Skeleton:enemy_l_finger1_02", "Skeleton:enemy_l_finger1_03", "Skeleton:enemy_l_finger2_01", "Skeleton:enemy_l_finger2_02", "Skeleton:enemy_l_shoulder_jnt", "Skeleton:enemy_l_wrist_jnt", "Skeleton:enemy_r_clavicle_jnt", "Skeleton:enemy_r_elbow_jnt", "Skeleton:enemy_r_finger0_01", "Skeleton:enemy_r_finger0_02", "Skeleton:enemy_r_finger0_03", "Skeleton:enemy_r_finger1_01", "Skeleton:enemy_r_finger1_02", "Skeleton:enemy_r_finger1_03", "Skeleton:enemy_r_finger2_01", "Skeleton:enemy_r_finger2_02", "Skeleton:enemy_r_shoulder_jnt", "Skeleton:enemy_r_wrist_jnt" ]
-sync = true
-
-[sub_resource type="AnimationNodeBlend2" id=35]
-
-resource_local_to_scene = true
-filter_enabled = false
-filters = [  ]
-sync = true
-
-[sub_resource type="AnimationNodeBlendTree" id=36]
-
-resource_local_to_scene = true
-graph_offset = Vector2( -380, 34 )
-nodes/Animation/node = SubResource( 33 )
-nodes/Animation/position = Vector2( -200, 0 )
-"nodes/Animation 2/node" = SubResource( 31 )
-"nodes/Animation 2/position" = Vector2( -200, 180 )
-"nodes/Animation 3/node" = SubResource( 32 )
-"nodes/Animation 3/position" = Vector2( 120, 300 )
-nodes/PointGun/node = SubResource( 34 )
-nodes/PointGun/position = Vector2( 380, 140 )
-nodes/WalkRun/node = SubResource( 35 )
-nodes/WalkRun/position = Vector2( 160, 60 )
-nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
-_sections_unfolded = [ "Resource", "Script" ]
-
-[sub_resource type="AnimationNodeAnimation" id=37]
-
-filter_enabled = false
-filters = [  ]
-animation = "Fire"
-
-[sub_resource type="AnimationNodeAnimation" id=38]
-
-filter_enabled = false
-filters = [  ]
-animation = "PointGun"
-
-[sub_resource type="AnimationNodeOneShot" id=39]
-
-filter_enabled = false
-filters = [  ]
-fadein_time = 0.1
-fadeout_time = 0.5
-autorestart = false
-autorestart_delay = 1.0
-autorestart_random_delay = 0.0
-sync = false
-
-[sub_resource type="AnimationNodeBlendTree" id=40]
-
-graph_offset = Vector2( -294, 94 )
-nodes/Animation/node = SubResource( 38 )
-nodes/Animation/position = Vector2( -20, 60 )
-"nodes/Animation 2/node" = SubResource( 37 )
-"nodes/Animation 2/position" = Vector2( 0, 220 )
-nodes/OneShot/node = SubResource( 39 )
-nodes/OneShot/position = Vector2( 280, 120 )
-nodes/output/position = Vector2( 560, 120 )
-node_connections = [ "OneShot", 0, "Animation", "OneShot", 1, "Animation 2", "output", 0, "OneShot" ]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=41]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "moving"
-xfade_time = 0.5
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=42]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "not_moving"
-xfade_time = 0.2
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=43]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "not_shooting"
-xfade_time = 0.5
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=44]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "shooting"
-xfade_time = 0.2
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=45]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "moving"
-xfade_time = 0.5
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=46]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "shooting"
-xfade_time = 0.2
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachine" id=47]
-
-resource_local_to_scene = true
-states/Idle/node = SubResource( 30 )
-states/Idle/position = Vector2( 422, 157 )
-states/Moving/node = SubResource( 36 )
-states/Moving/position = Vector2( 184, 191 )
-states/Shooting/node = SubResource( 40 )
-states/Shooting/position = Vector2( 312, 326 )
-transitions = [ "Idle", "Moving", SubResource( 41 ), "Moving", "Idle", SubResource( 42 ), "Shooting", "Idle", SubResource( 43 ), "Idle", "Shooting", SubResource( 44 ), "Shooting", "Moving", SubResource( 45 ), "Moving", "Shooting", SubResource( 46 ) ]
-start_node = ""
-end_node = ""
-graph_offset = Vector2( -200, 115 )
-_sections_unfolded = [ "Script" ]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=48]
-
-resource_local_to_scene = true
-
-[sub_resource type="GDScript" id=49]
-
-script/source = "extends AnimationTree
-
-var triggers = []
-var triggers_del = []
-	
-func _process(_delta):
-	# Triggers expire after one frame
-	for trigger in triggers_del:
-		set(trigger, false)
-	triggers_del.clear()
-	
-	for trigger in triggers:
-		triggers_del.append(trigger)
-	triggers.clear()
-	
-func set_param(name: String, value: bool):
-	set(\"parameters/conditions/\" + name, value)
-	
-func set_dual(name : String, value : bool):
-	set_param(name, value)
-	set_param(\"not_\" + name, !value)
-	
-func set_trigger(name):
-	set_param(name, true)
-	triggers.append(name)"
-
-[sub_resource type="SpatialMaterial" id=50]
+[sub_resource type="SpatialMaterial" id=12]
 
 render_priority = 0
 flags_transparent = false
@@ -3116,7 +2495,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_mode = 0
 
-[sub_resource type="ArrayMesh" id=51]
+[sub_resource type="ArrayMesh" id=13]
 
 blend_shape_mode = 1
 custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
@@ -3127,78 +2506,15 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97539,
 "index_count": 2880,
-"material": SubResource( 50 ),
+"material": SubResource( 12 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 482
 }
 
-[node name="Enemy" type="RigidBody"]
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-mode = 2
-mass = 1.0
-friction = 0.8
-bounce = 0.0
-physics_material_override = SubResource( 1 )
-gravity_scale = 1.0
-custom_integrator = false
-continuous_cd = false
-contacts_reported = 5
-contact_monitor = true
-sleeping = false
-can_sleep = false
-axis_lock_linear_x = false
-axis_lock_linear_y = false
-axis_lock_linear_z = false
-axis_lock_angular_x = false
-axis_lock_angular_y = false
-axis_lock_angular_z = false
-linear_velocity = Vector3( 0, 0, 0 )
-linear_damp = -1.0
-angular_velocity = Vector3( 0, 0, 0 )
-angular_damp = -1.0
-script = SubResource( 2 )
-_sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Matrix", "Transform", "Visibility", "bullet_scene", "physics_material_override" ]
-walk_speed = 2.0
-run_speed = 3.5
-accel = 30.0
-fov = 110.0
-view_range = 22.0
-shoot_rate = 1.1
-bullet_scene = ExtResource( 1 )
-debug = null
+[node name="enemy_cp" type="Spatial"]
 
-[node name="Main Collider" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 3 )
-disabled = false
-_sections_unfolded = [ "Transform", "shape" ]
-
-[node name="Rotation" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.58755, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Head Position" type="Position3D" parent="Rotation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.96192, 0 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Head View" type="RayCast" parent="Rotation/Head Position"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.420604 )
-enabled = true
-exclude_parent = true
-cast_to = Vector3( 0, 0, 100 )
-collision_mask = 5
-collide_with_areas = false
-collide_with_bodies = true
-_sections_unfolded = [ "Collide With" ]
-
-[node name="Model" type="Spatial" parent="Rotation"]
-_sections_unfolded = [ "Transform" ]
-
-[node name="pose_target" type="MeshInstance" parent="Rotation/Model"]
+[node name="pose_target" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113523, 1.35907, -0.00255115 )
 visible = false
 layers = 1
@@ -3210,30 +2526,29 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 5 )
+mesh = SubResource( 2 )
 skeleton = NodePath("..")
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="Root_Motion" type="Spatial" parent="Rotation/Model"]
+[node name="Root_Motion" type="Spatial" parent="."]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Rotation/Model/Root_Motion"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Root_Motion"]
 root_node = NodePath("..")
 autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Fire = SubResource( 6 )
-anims/Idle = SubResource( 7 )
-anims/LookLeft = SubResource( 8 )
-anims/LookRight = SubResource( 9 )
-anims/PointGun = SubResource( 10 )
-anims/Run = SubResource( 11 )
-anims/Walk = SubResource( 12 )
+anims/Fire = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/LookLeft = SubResource( 5 )
+anims/LookRight = SubResource( 6 )
+anims/PointGun = SubResource( 7 )
+anims/Run = SubResource( 8 )
+anims/Walk = SubResource( 9 )
 blend_times = [  ]
 
-[node name="Skeleton" type="Skeleton" parent="Rotation/Model/Root_Motion"]
-transform = Transform( 0.18, 0, 0, 0, -7.86805e-09, -0.18, 0, 0.18, -7.86805e-09, 0, -0.0703342, 0 )
+[node name="Skeleton" type="Skeleton" parent="Root_Motion"]
+transform = Transform( 0.1, 0, 0, 0, -1.62921e-08, -0.1, 0, 0.1, -1.62921e-08, 0, -0.0703342, 0 )
 bones/0/name = "root_bone"
 bones/0/parent = -1
 bones/0/rest = Transform( 1, 0, 0, 0, 1, -1.14251e-07, 0, 1.14251e-07, 1, 0, 0.0754585, -7.57435 )
@@ -3283,7 +2598,7 @@ bones/9/name = "enemy_head_jnt"
 bones/9/parent = 8
 bones/9/rest = Transform( 0.96327, 6.85624e-09, -0.268536, -3.417e-09, 1, 1.32747e-08, 0.268536, -1.18696e-08, 0.96327, -5.60284e-06, 2.8702e-13, -0.791363 )
 bones/9/enabled = true
-bones/9/bound_children = [ NodePath("Head") ]
+bones/9/bound_children = [  ]
 bones/10/name = "enemy_l_clavicle_jnt"
 bones/10/parent = 7
 bones/10/rest = Transform( 0.980798, 0.120693, 0.153193, -0.116389, -0.268055, 0.956347, 0.156489, -0.955814, -0.24886, 0.0927726, -0.280274, -0.541737 )
@@ -3333,7 +2648,7 @@ bones/19/name = "enemy_l_finger1_01"
 bones/19/parent = 13
 bones/19/rest = Transform( -0.00438591, 0.99946, 0.0325636, -0.991051, 3.24231e-08, -0.133483, -0.133411, -0.0328577, 0.990516, 0.194162, 0.157765, -0.646708 )
 bones/19/enabled = true
-bones/19/bound_children = [ NodePath("Left Hand") ]
+bones/19/bound_children = [  ]
 bones/20/name = "enemy_l_finger1_02"
 bones/20/parent = 19
 bones/20/rest = Transform( 0.99583, -1.98675e-08, -0.0912261, 1.6422e-08, 1, -3.85199e-08, 0.0912261, 3.68611e-08, 0.99583, 1.12284e-06, 1.16681e-08, -0.436866 )
@@ -3453,7 +2768,7 @@ bones/43/name = "enemy_r_finger1_01"
 bones/43/parent = 37
 bones/43/rest = Transform( -0.0043858, -0.99946, -0.0325636, 0.991042, 2.31718e-06, -0.133549, 0.133477, -0.0328577, 0.990507, -0.194162, 0.157853, -0.646685 )
 bones/43/enabled = true
-bones/43/bound_children = [ NodePath("Right Hand") ]
+bones/43/bound_children = [  ]
 bones/44/name = "enemy_r_finger1_02"
 bones/44/parent = 43
 bones/44/rest = Transform( 0.995831, 7.51536e-08, 0.0912144, -7.40187e-08, 1, -1.58258e-08, -0.0912144, 9.00823e-09, 0.995831, -5.04157e-05, 1.85099e-08, -0.436864 )
@@ -3464,10 +2779,9 @@ bones/45/parent = 44
 bones/45/rest = Transform( 0.995859, 7.9881e-08, 0.090914, -7.46537e-08, 1, -6.08981e-08, -0.090914, 5.38589e-08, 0.995859, -2.7703e-07, -5.96401e-10, -0.468057 )
 bones/45/enabled = true
 bones/45/bound_children = [  ]
-_sections_unfolded = [ "Transform" ]
 
-[node name="Model" type="MeshInstance" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 1, 1.2725e-14, 1.39636e-15, -1.4859e-15, 1, 7.10543e-15, 1.39636e-15, -7.10543e-15, 1, -4.93071e-07, -6.67899e-09, 0 )
+[node name="Model" type="MeshInstance" parent="Root_Motion/Skeleton"]
+transform = Transform( 1, 1.2725e-14, 1.39636e-15, -1.4859e-15, 1, 0, 1.39636e-15, 0, 1, -4.93071e-07, -6.67897e-09, 1.78814e-07 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -3477,427 +2791,11 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 14 )
+mesh = SubResource( 11 )
 skeleton = NodePath("..")
-material/0 = ExtResource( 2 )
-_sections_unfolded = [ "Transform", "material" ]
+material/0 = null
 
-[node name="Head" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.42011e-08, -1, 7.19446e-14, 0.9958, -4.40232e-08, -0.0915605, 0.0915605, -4.72084e-09, 0.9958, -4.64378e-14, -0.271964, -15.9156 )
-bone_name = "enemy_head_jnt"
-_sections_unfolded = [ "Transform" ]
-
-[node name="Left Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 0.0912159, 2.57045e-07, -0.995831, -5.69504e-07, 1, -5.88596e-07, 0.995831, 1.12923e-06, 0.0912166, 8.40338, 0.131256, -14.0743 )
-bone_name = "enemy_l_finger1_01"
-
-[node name="Right Hand" type="BoneAttachment" parent="Rotation/Model/Root_Motion/Skeleton"]
-editor/display_folded = true
-transform = Transform( 0.0912149, -3.42727e-07, 0.995832, 7.09668e-07, 1, -5.69969e-07, -0.995831, 1.76835e-07, 0.0912147, -8.40339, 0.131256, -14.0743 )
-bone_name = "enemy_r_finger1_01"
-_sections_unfolded = [ "Transform" ]
-
-[node name="Enemy Gun" parent="Rotation/Model/Root_Motion/Skeleton/Right Hand" instance=ExtResource( 3 )]
-transform = Transform( 0.87625, -2.9392e-07, 8.84756e-09, 4.84433e-08, 0.876252, 7.45058e-09, 6.0536e-09, -6.33299e-08, 0.876257, -0.419496, -1.05176, 0.000445843 )
-
-[node name="Muzzle" type="Position3D" parent="Rotation/Model/Root_Motion/Skeleton/Right Hand/Enemy Gun"]
-transform = Transform( 1, -7.3429e-08, 8.84756e-09, 5.44242e-09, 1, -7.45058e-09, 6.0536e-09, -3.35276e-08, 1, -0.0872133, 1.60302, -2.02155 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Physical Bone enemy_hips_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.37114e-08, -1, 3.32993e-17, 0.999881, -4.3714e-08, 0.0154137, -0.0154137, -4.71536e-15, 0.999881, -1.8652e-15, 0.0714691, -10.1352 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 2
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.67813e-08, -6.68158e-16, 0.79271 )
-body_offset = Transform( 1, 7.10543e-15, 5.58794e-09, -3.19744e-14, 1, -2.77556e-16, -5.58794e-09, 3.88578e-16, 1, 2.23517e-08, 8.88178e-16, -0.79271 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_hips_jnt"
-joint_constraints/swing_span = 45.0
-joint_constraints/twist_span = 180.0
-joint_constraints/bias = 0.3
-joint_constraints/softness = 0.8
-joint_constraints/relaxation = 1.0
-_sections_unfolded = [ "Collision", "Joint", "joint_constraints" ]
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_hips_jnt"]
-shape = SubResource( 15 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_spine0_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.37112e-08, -1, -9.28906e-16, 0.999881, -4.37138e-08, 0.0154137, -0.0154137, -8.12189e-15, 0.999881, 3.16634e-16, 0.0354637, -12.4709 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 2
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.87447e-09, -4.2833e-16, 1.54322 )
-body_offset = Transform( 1, -7.10543e-15, -1.86265e-09, -7.10543e-15, 1, 2.77556e-16, 1.86265e-09, -3.33067e-16, 1, 0, 0, -1.54322 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_spine0_jnt"
-joint_constraints/swing_span = 45.0
-joint_constraints/twist_span = 180.0
-joint_constraints/bias = 0.3
-joint_constraints/softness = 0.8
-joint_constraints/relaxation = 1.0
-_sections_unfolded = [ "Collision", "Joint", "joint_constraints" ]
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_spine0_jnt"]
-transform = Transform( 1, -7.10543e-15, 1.95578e-08, 5.32907e-14, 1, 4.44089e-16, -1.95578e-08, -5.55112e-17, 1, 0.00910096, -3.97814e-10, -0.590378 )
-shape = SubResource( 16 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_neck1_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.94338e-08, -1, 1.24274e-14, 0.983811, -4.86413e-08, 0.17921, -0.17921, 8.18531e-09, 0.983811, 7.51365e-15, -0.201049, -15.5263 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 2
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22673e-07, -4.25559e-15, 0.39568 )
-body_offset = Transform( 1, -1.42109e-14, 2.98023e-08, 7.10543e-15, 1, 1.77636e-15, -2.98023e-08, 5.32907e-15, 1, -8.34465e-07, 3.55271e-15, -0.39568 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_neck1_jnt"
-joint_constraints/swing_span = 45.0
-joint_constraints/twist_span = 180.0
-joint_constraints/bias = 0.3
-joint_constraints/softness = 0.8
-joint_constraints/relaxation = 1.0
-_sections_unfolded = [ "Joint" ]
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_neck1_jnt"]
-transform = Transform( 1.7045, 1.41853e-09, -0.29199, 1.22751e-09, 1.72933, 1.44342e-08, 0.29199, -1.43847e-08, 1.7045, 0.311575, -1.54024e-08, -1.32589 )
-shape = SubResource( 17 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_l_shoulder_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 0.022353, 0.0425263, -0.998845, 0.99975, 6.57095e-07, 0.0223726, 0.00095257, -0.999095, -0.0425148, 3.0274, -0.158375, -14.1452 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03848e-08, 5.0351e-09, 1.472 )
-body_offset = Transform( 1, -4.36273e-10, 3.72529e-09, 8.2764e-11, 1, -3.42058e-09, 3.72529e-09, 7.79197e-10, 1, 1.49012e-08, 0, -1.472 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_l_shoulder_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_shoulder_jnt"]
-shape = SubResource( 18 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_l_elbow_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328273, 0.0425292, -0.998556, 0.999461, 4.23758e-07, -0.0328577, -0.00139645, -0.999095, -0.0425054, 6.12749, -0.137679, -14.0132 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88392e-08, -3.97801e-09, 1.63214 )
-body_offset = Transform( 1, -4.29509e-10, 2.98023e-08, -5.76392e-11, 1, 2.4373e-09, -2.98023e-08, 2.18858e-08, 1, -2.98023e-08, 0, -1.63214 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_l_elbow_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_elbow_jnt"]
-shape = SubResource( 19 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_l_wrist_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328277, 0.042527, -0.998556, 0.999461, 6.71917e-07, -0.0328582, -0.00139615, -0.999095, -0.0425033, 8.16318, -0.070694, -13.9266 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.57159e-09, 1.42374e-06, 0.406496 )
-body_offset = Transform( 1, 2.04068e-10, -1.86265e-08, -2.09411e-10, 1, 1.66645e-08, 1.86265e-08, 6.28913e-09, 1, 0, -1.43051e-06, -0.406497 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_l_wrist_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_wrist_jnt"]
-transform = Transform( 1, -1.3813e-11, 0, 1.1903e-10, 1, 1.66461e-08, 0, 2.56717e-09, 1, -0.0267356, -0.112463, -0.813225 )
-shape = SubResource( 20 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_l_thigh_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -4.3753e-08, -1, -1.76586e-09, -0.999521, 4.36946e-08, 0.0249922, -0.0249948, 2.18521e-09, -0.999688, 1.13014, 0.33744, -7.16268 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42049e-07, 2.69765e-15, 1.8691 )
-body_offset = Transform( 1, 0, -3.72529e-09, -7.10543e-15, 1, -1.44329e-15, 7.45058e-09, 1.77636e-15, 1, 1.49012e-07, 0, -1.8691 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_l_thigh_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_thigh_jnt"]
-shape = SubResource( 21 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_l_knee_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 4.6557e-07, -1, -4.45016e-08, -0.994299, -4.67584e-07, 0.105049, -0.105065, -5.33361e-09, -0.994466, 1.13014, 0.057161, -3.08306 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33157e-08, -3.15964e-14, 2.2234 )
-body_offset = Transform( 1, -2.55795e-13, 5.96046e-08, 0, 1, 1.42109e-14, -2.23517e-08, -1.06581e-14, 1, -1.19209e-07, 0, -2.2234 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_l_knee_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_knee_jnt"]
-transform = Transform( 1, -5.68434e-14, 7.45058e-09, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 22 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_l_ankle_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -2.68287e-07, 1, 1.3201e-07, 0.64638, 2.74104e-07, -0.762797, -0.762926, -1.18666e-07, -0.646487, 1.13014, 0.172671, -0.576121 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.08646e-07, 8.34465e-07, 0.457626 )
-body_offset = Transform( 1, -1.42109e-14, -1.49012e-07, -1.56319e-13, 1, -1.42109e-14, 1.78814e-07, 1.42109e-14, 1, 4.76837e-07, -8.34465e-07, -0.457626 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_l_ankle_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_l_ankle_jnt"]
-transform = Transform( 0.744504, 1.9987e-08, -0.667475, -1.56664e-07, 1, -1.45376e-07, 0.667514, 2.12547e-07, 0.744724, -0.0725522, 2.38419e-07, -0.625826 )
-shape = SubResource( 23 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_r_thigh_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -1.31115e-07, 1, -1.76586e-09, 0.999812, 1.31109e-07, 0.0249922, 0.0250004, 2.18489e-09, -0.999688, -1.13014, 0.33744, -7.16267 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.67653e-08, -3.73523e-15, 1.86911 )
-body_offset = Transform( 1, -1.42109e-14, -3.72529e-09, 0, 1, 1.9984e-15, -3.72529e-09, -1.9984e-15, 1, -2.98023e-08, 0, -1.86911 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_r_thigh_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_thigh_jnt"]
-shape = SubResource( 24 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_r_knee_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 4.64427e-07, 1, -1.40192e-09, 0.994592, -4.61793e-07, 0.10505, 0.105048, -4.95089e-08, -0.994468, -1.13014, 0.0571611, -3.08306 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.94853e-08, -5.52935e-14, 2.22339 )
-body_offset = Transform( 1, 0, -6.70552e-08, 1.98952e-13, 1, 2.4869e-14, 0, -7.10543e-15, 1, 5.96046e-08, 0, -2.22339 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_r_knee_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_knee_jnt"]
-shape = SubResource( 25 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_r_ankle_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -7.17618e-08, -1, -4.74249e-09, -0.646672, 5.00502e-08, -0.762931, 0.762829, -5.2348e-08, -0.646601, -1.13014, 0.172672, -0.576134 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35929e-07, 4.87659e-15, 0.457546 )
-body_offset = Transform( 1, -1.42109e-14, 8.9407e-08, 7.10543e-15, 1, -1.06581e-14, 5.96046e-08, 2.4869e-14, 1, -4.76837e-07, 0, -0.457546 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_r_ankle_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_ankle_jnt"]
-transform = Transform( 0.800395, 1.18351e-08, 0.599589, 1.71674e-08, 1, -4.20803e-08, -0.599551, 4.42068e-08, 0.800251, -0.0658164, 0, -0.779994 )
-shape = SubResource( 26 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_r_shoulder_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( 0.0223542, -0.0425067, 0.998846, -0.99975, 1.33997e-07, 0.0223737, -0.000950573, -0.999097, -0.0424962, -3.02741, -0.158375, -14.1452 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4837e-09, 3.33619e-06, 1.47202 )
-body_offset = Transform( 1, 1.19101e-10, 3.72529e-09, 1.93751e-10, 1, 1.13466e-09, 0, 2.50453e-10, 1, 0, -3.33786e-06, -1.47202 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_r_shoulder_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_shoulder_jnt"]
-shape = SubResource( 27 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_r_elbow_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328277, -0.0425375, 0.998556, -0.99946, 1.30429e-06, -0.0328582, 0.001397, -0.999095, -0.0425146, -6.1275, -0.13768, -14.0132 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.82406e-08, 9.55906e-07, 1.63214 )
-body_offset = Transform( 1, 4.19732e-10, 1.11759e-08, -2.86036e-10, 1, -1.36752e-09, 0, 4.10147e-10, 1, 0, -9.53674e-07, -1.63214 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_r_elbow_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_elbow_jnt"]
-shape = SubResource( 28 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="Physical Bone enemy_r_wrist_jnt" type="PhysicalBone" parent="Rotation/Model/Root_Motion/Skeleton"]
-transform = Transform( -0.0328276, -0.0425946, 0.998553, -0.999459, 3.10616e-06, -0.0328581, 0.00139707, -0.999092, -0.0425718, -8.1632, -0.0706939, -13.9265 )
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 0
-joint_type = 1
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35475e-08, 1.43998e-06, 0.406491 )
-body_offset = Transform( 0.999999, -3.34694e-10, -1.49012e-08, 1.53887e-09, 0.999999, -2.3289e-08, -1.86265e-08, -2.90706e-09, 1, 5.96046e-08, -1.43051e-06, -0.406491 )
-mass = 1.0
-weight = 14.7
-friction = 1.0
-bounce = 0.0
-gravity_scale = 1.0
-bone_name = "enemy_r_wrist_jnt"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Rotation/Model/Root_Motion/Skeleton/Physical Bone enemy_r_wrist_jnt"]
-transform = Transform( 1, 5.02496e-11, 3.72529e-09, 3.95403e-10, 1, -1.58607e-08, 0, 8.19405e-10, 1, 0.0203091, 0.026351, -0.617748 )
-shape = SubResource( 29 )
-disabled = false
-_sections_unfolded = [ "shape" ]
-
-[node name="AnimationTree" type="AnimationTree" parent="Rotation/Model/Root_Motion"]
-tree_root = SubResource( 47 )
-anim_player = NodePath("../AnimationPlayer")
-active = true
-process_mode = 1
-root_motion_track = NodePath("")
-parameters/playback = SubResource( 48 )
-parameters/conditions/moving = false
-parameters/conditions/not_moving = false
-parameters/conditions/not_shooting = false
-parameters/conditions/shooting = false
-parameters/Moving/PointGun/blend_amount = 0
-parameters/Moving/WalkRun/blend_amount = 1.0
-parameters/Shooting/OneShot/active = false
-script = SubResource( 49 )
-_sections_unfolded = [ "Root Motion", "Script", "parameters", "parameters/Move", "parameters/Move/PointGun", "parameters/Move/WalkRun", "parameters/Moving", "parameters/Moving/PointGun", "parameters/Moving/WalkRun", "parameters/Shooting", "parameters/Shooting/OneShot", "parameters/conditions", "tree_root" ]
-
-[node name="ik" type="MeshInstance" parent="Rotation/Model"]
+[node name="ik" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113523, 1.35907, -0.00255115 )
 visible = false
 layers = 1
@@ -3909,26 +2807,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 51 )
+mesh = SubResource( 13 )
 skeleton = NodePath("..")
 material/0 = null
 
-[node name="GunSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
-
-[node name="HitSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-volume_db = 0.0
-pitch_scale = 0.2
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
-
-[connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
