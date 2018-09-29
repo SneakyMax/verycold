@@ -347,6 +347,7 @@ func _on_Enemy_body_entered(body):
 
 [sub_resource type="CapsuleShape" id=3]
 
+margin = 0.04
 radius = 0.383281
 height = 2.58835
 
@@ -406,7 +407,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 9 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
+node_connections = [ "output", 0, "PointGun", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=11]
@@ -442,7 +443,7 @@ nodes/Animation/position = Vector2( -20, 60 )
 nodes/OneShot/node = SubResource( 13 )
 nodes/OneShot/position = Vector2( 280, 120 )
 nodes/output/position = Vector2( 560, 120 )
-node_connections = [ "OneShot", 0, "Animation", "OneShot", 1, "Animation 2", "output", 0, "OneShot" ]
+node_connections = [ "output", 0, "OneShot", "OneShot", 0, "Animation", "OneShot", 1, "Animation 2" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
@@ -552,8 +553,6 @@ collision_layer = 1
 collision_mask = 1
 mode = 2
 mass = 1.0
-friction = 0.8
-bounce = 0.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.0
 custom_integrator = false

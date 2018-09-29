@@ -492,7 +492,7 @@ states/TossGunHoldTop/position = Vector2( -339, 166 )
 transitions = [ "HandOut", "StartHoverOver", SubResource( 14 ), "StartHoverOver", "HoveringOver", SubResource( 15 ), "HoveringOver", "EndHoverOver", SubResource( 16 ), "EndHoverOver", "HandOut", SubResource( 17 ), "HoveringOver", "RecallLeft", SubResource( 18 ), "RecallLeft", "HandOut", SubResource( 19 ), "HoveringOver", "RecallRight", SubResource( 20 ), "RecallRight", "HandOut", SubResource( 21 ), "HandOut", "PickUpGun", SubResource( 22 ), "HoveringOver", "PickUpGun", SubResource( 23 ), "PickUpGun", "HoldingGun", SubResource( 24 ), "HoldingGun", "TossGunHoldTop", SubResource( 25 ), "TossGunHoldTop", "HoldGunBarrel", SubResource( 26 ), "HoldGunBarrel", "ThrowGun", SubResource( 27 ), "ThrowGun", "HandOut", SubResource( 28 ), "PickUpGun", "ThrowGun", SubResource( 29 ), "TossGunHoldTop", "ThrowGun", SubResource( 30 ), "StartHoverOver", "RecallLeft", SubResource( 31 ), "StartHoverOver", "RecallRight", SubResource( 32 ), "StartHoverOver", "EndHoverOver", SubResource( 33 ), "StartHoverOver", "PickUpGun", SubResource( 34 ), "EndHoverOver", "PickUpGun", SubResource( 35 ), "RecallRight", "PickUpGun", SubResource( 36 ), "RecallLeft", "PickUpGun", SubResource( 37 ), "ThrowGun", "RecallRight", SubResource( 38 ), "ThrowGun", "RecallLeft", SubResource( 39 ), "RecallRight", "RecallLeft", SubResource( 40 ), "RecallLeft", "RecallRight", SubResource( 41 ), "ThrowGun", "PickUpGun", SubResource( 42 ), "EndHoverOver", "RecallRight", SubResource( 43 ), "EndHoverOver", "RecallLeft", SubResource( 44 ) ]
 start_node = ""
 end_node = ""
-graph_offset = Vector2( -533, -181.744 )
+graph_offset = Vector2( -458, -43.744 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=46]
 
