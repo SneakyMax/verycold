@@ -487,6 +487,7 @@ reverb_bus_uniformity = 0.0
 _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Target Area"]
+transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 shape = SubResource( 14 )
 disabled = false
 
@@ -514,8 +515,10 @@ reverb_bus_uniformity = 0.0
 _sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Pickup Area"]
+transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 shape = SubResource( 15 )
 disabled = false
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="body_entered" from="Pickup Area" to="." method="_on_Pickup_Area_body_entered"]
 
