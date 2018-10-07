@@ -86,11 +86,15 @@ func _unhandled_input(event):
 		pass
 		
 	if (event is InputEventMouseMotion and mouseMode == Input.MOUSE_MODE_CAPTURED):
-		yaw.set_transform( yaw.get_transform() \\
-			.rotated(Vector3.UP, deg2rad(-event.relative.x) * mouse_sensitivity_x))
-			
-		pitch.set_transform( pitch.get_transform() \\
-			.rotated(pitch.get_transform().basis.x, deg2rad(event.relative.y) * mouse_sensitivity_y))
+		yaw.set_transform(yaw.get_transform().rotated(Vector3.UP, deg2rad(-event.relative.x) * mouse_sensitivity_x).orthonormalized())
+		
+		if pitch.get_transform().basis.get_euler().x < PI / 2 and event.relative.y > 0:
+			pitch.set_transform( pitch.get_transform() \\
+				.rotated(pitch.get_transform().basis.x, deg2rad(event.relative.y) * mouse_sensitivity_y).orthonormalized())
+		
+		if pitch.get_transform().basis.get_euler().x > -PI / 2 and event.relative.y < 0:
+			pitch.set_transform( pitch.get_transform() \\
+				.rotated(pitch.get_transform().basis.x, deg2rad(event.relative.y) * mouse_sensitivity_y).orthonormalized())
 
 func fire_or_return(alt):
 	if (!hasGun):
