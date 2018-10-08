@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Fonts/robotolightfont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Sprites/Illustrator Images/Gun Illustration-03.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/robotomediumfont.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Audio/Uber.wav" type="AudioStream" id=3]
-[ext_resource path="res://Audio/Cold.wav" type="AudioStream" id=4]
 
 [sub_resource type="GDScript" id=1]
 
@@ -26,9 +24,6 @@ var canInput = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	last_changed_time = OS.get_ticks_msec();
-	uber_sound = get_node(\"Uber\")
-	cold_sound = get_node(\"Cold\")
 	set_process_input(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	canInput = true
@@ -44,21 +39,7 @@ func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			get_node(\"/root/Game\").next_level()
-			canInput = false
-
-func _process(delta):	
-	var now = OS.get_ticks_msec()
-	if now > last_changed_time + ( change_rate * 1000 ):
-		changeTitle()
-		
-func changeTitle():
-	last_changed_time = OS.get_ticks_msec()
-	if(get_node(\"TitleLbl\").text == \"UBER\"):
-		cold_sound.play()
-		get_node(\"TitleLbl\").text = \"COLD\"
-	elif(get_node(\"TitleLbl\").text == \"COLD\"):
-		uber_sound.play()
-		get_node(\"TitleLbl\").text = \"UBER\""
+			canInput = false"
 
 [node name="Start Menu" type="Control"]
 anchor_left = 0.0
@@ -74,34 +55,20 @@ size_flags_vertical = 1
 script = SubResource( 1 )
 _sections_unfolded = [ "Script" ]
 
-[node name="TitleLbl" type="Label" parent="."]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = ExtResource( 1 )
-text = "COLD"
-align = 1
-valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Script", "custom_fonts" ]
+[node name="Gun Illustration-03" type="Sprite" parent="."]
+position = Vector2( 1003.27, 536.742 )
+scale = Vector2( 0.234647, 0.234647 )
+texture = ExtResource( 1 )
 
 [node name="PressAnyKey" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -417.0
-margin_top = -153.0
-margin_right = 417.0
+margin_left = -382.0
+margin_top = -655.0
+margin_right = 452.0
+margin_bottom = -502.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -109,29 +76,12 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Press Any Key"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Anchor", "custom_fonts" ]
-
-[node name="Uber" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
-
-[node name="Cold" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
+_sections_unfolded = [ "Anchor", "Size Flags", "custom_colors", "custom_fonts" ]
 
