@@ -214,7 +214,7 @@ reverb_bus_amount = 0.0
 reverb_bus_uniformity = 0.0
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
-speed = 1.0
+speed = 10.0
 trail_thickness = 0.05
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
