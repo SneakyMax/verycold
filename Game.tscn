@@ -190,13 +190,15 @@ pause_mode = 2
 script = SubResource( 1 )
 _sections_unfolded = [ "Pause", "game_levels", "start_level" ]
 start_level = ExtResource( 1 )
-game_levels = [ "res://TutorialLevel.tscn", "res://Level.tscn", "res://Level2.tscn", "res://Level5.tscn", "res://Level3.tscn", "res://Level4.tscn" ]
+game_levels = [ "res://Level6.tscn", "res://Level.tscn", "res://Level2.tscn", "res://Level5.tscn", "res://Level3.tscn", "res://Level4.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -2.0
+margin_bottom = -2.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2

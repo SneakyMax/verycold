@@ -298,15 +298,19 @@ shadow_enabled = false
 
 [node name="Enemy2" parent="." instance=ExtResource( 9 )]
 transform = Transform( -0.186174, 0, 0.982517, 0, 1, 0, -0.982517, 0, -0.186174, 2.82564, 1.8546, -20.3512 )
+holds_still = true
 
 [node name="Enemy3" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.705517, 0, 0.708694, 0, 1, 0, -0.708694, 0, 0.705517, -21.5814, 1.8546, -0.984643 )
+holds_still = true
 
 [node name="Enemy4" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.0766163, 0, 0.997061, 0, 1, 0, -0.997061, 0, 0.0766163, -48.1826, 1.8546, 3.26646 )
+holds_still = true
 
 [node name="Enemy5" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.0766163, 0, 0.997061, 0, 1, 0, -0.997061, 0, 0.0766163, -48.1826, 1.8546, -1.29594 )
+holds_still = true
 
 [node name="Triggers" type="Node" parent="."]
 

@@ -146,6 +146,7 @@ far = 100.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 1.7, -0.7 )
 
 [node name="Text Trigger" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.6 )
 text = "A LITTLE MORE ACTION"
 
 [node name="Area" parent="Text Trigger" index="0"]
