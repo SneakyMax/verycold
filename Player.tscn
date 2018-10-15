@@ -188,10 +188,6 @@ func pickupGun():
 		
 	if not is_level_1 or level1AnimationShown:
 		anim.set_param(\"can_toss\", true)
-
-func _on_Player_body_entered(body):
-	if body.get_filename() == \"res://object scenes/Bullet.tscn\":
-		get_node(\"/root/Game\").player_died()
 		
 func delay(seconds : float = 1, start : bool = true):
 	var timer = Timer.new()
@@ -201,6 +197,9 @@ func delay(seconds : float = 1, start : bool = true):
 	if start:
 		timer.start()
 	return timer
+	
+func _on_bullet_entered():
+	get_node(\"/root/Game\").player_died()
 "
 
 [sub_resource type="CapsuleShape" id=3]
