@@ -25,6 +25,8 @@ export(float, 0, 100) var gun_speed = 1
 export(float, 0, 100) var jump_force = 1
 export(bool) var is_level_1
 
+var stop_factor = 0.88
+
 export(PackedScene) var gun_projectile
 
 var desiredMoveVector = Vector2()
@@ -141,7 +143,7 @@ func _process(delta):
 		Input.get_action_strength(\"move_forward\") - Input.get_action_strength(\"move_backward\")
 		)
 	
-	desiredMoveVector = moveVector.normalized()
+	desiredMoveVector = moveVector#.normalized()
 	
 func _physics_process(delta):
 	if (shotGun != null):
@@ -158,10 +160,15 @@ func _integrate_forces(state):
 	if globalAccelVector.length_squared() > 0.1:
 		state.add_force(globalAccelVector, Vector3())
 	
+	# Cap movement speed
 	var flat_motion = Vector2(state.linear_velocity.x, state.linear_velocity.z)
 	if (flat_motion.length_squared() > max_move_speed * max_move_speed):
 		flat_motion = flat_motion.normalized() * max_move_speed
 		state.linear_velocity = Vector3(flat_motion.x, state.linear_velocity.y, flat_motion.y)
+	
+	# Stop when not pressing anything
+	if desiredMoveVector.length_squared() < 0.01:
+		state.linear_velocity = Vector3(flat_motion.x * stop_factor, state.linear_velocity.y, flat_motion.y * stop_factor)
 	
 	if try_jump:
 		try_jump = false
