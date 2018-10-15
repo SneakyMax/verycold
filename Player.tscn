@@ -130,7 +130,8 @@ func fire_or_return(alt):
 	shotGun = projectile
 	
 func returnGun(alt):
-	if (shotGun and targetGun.is_colliding()):
+	var isColliding = targetGun.is_colliding() and targetGun.get_collider().name == \"Gun Target Area\"
+	if (shotGun and isColliding):
 		if alt:
 			anim.set_trigger(\"pull_right\")
 		else:
@@ -147,7 +148,8 @@ func _process(delta):
 	
 func _physics_process(delta):
 	if (shotGun != null):
-		var isColliding = targetGun.is_colliding()
+		var isColliding = targetGun.is_colliding() and targetGun.get_collider().name == \"Gun Target Area\"
+		
 		anim.set_dual(\"hovering_over\", isColliding)
 		if isColliding:
 			shotGun.glow()
@@ -340,7 +342,7 @@ disabled = false
 enabled = true
 exclude_parent = true
 cast_to = Vector3( 0, 0, -999 )
-collision_mask = 2
+collision_mask = 3
 collide_with_areas = true
 collide_with_bodies = true
 _sections_unfolded = [ "Collide With", "Transform" ]
