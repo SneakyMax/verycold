@@ -28,6 +28,10 @@ export(float, 0, 100) var view_range = 1000
 
 export(float, 0, 10) var shoot_rate
 
+export(float, 0, 30) var search_distance = 10
+
+export(bool) var holds_still = false
+
 export(PackedScene) var bullet_scene
 
 export(bool) var debug
@@ -128,6 +132,8 @@ func _process(_delta):
 			process_chasing(isInitial)
 		\"dead\":
 			process_dead(isInitial)
+		\"searching\":
+			process_searching(isInitial)
 			
 func _physics_process(delta):
 	if not is_inside_tree(): return
@@ -169,8 +175,12 @@ func process_shooting(isInitial):
 	last_player_pos = playerCam.global_transform.origin
 	
 	if not can_see_player:
-		set_path_to_point(last_player_pos)
-		state = \"chasing\"
+		if holds_still:
+			path = null
+			state = \"idle\"
+		else:
+			set_path_to_point(last_player_pos)
+			state = \"chasing\"
 		return
 	
 	stop_moving = true
@@ -219,7 +229,10 @@ func shoot():
 	bullet.start()
 	
 func process_moving_into_range(_isInitial):
+	isRunning = true
+	stop_moving = false
 	anim.set_dual(\"moving\", !can_see_player)
+	anim.set(\"parameters/Moving/WalkRun/blend_amount\", 1 if isRunning else 0)
 	
 func process_chasing(_isInitial):
 	isRunning = true
@@ -233,7 +246,7 @@ func process_chasing(_isInitial):
 		return
 	
 	if not path or path.size() == 0:
-		state = \"idle\"
+		state = \"searching\"
 		return
 
 func process_dead(isInitial):
@@ -242,6 +255,26 @@ func process_dead(isInitial):
 		mode = RigidBody.MODE_RIGID
 		set_collision_layer_bit(0, false)
 		# TODO ragdoll
+		
+func process_searching(_isInitial):
+	if not path or path.size() == 0:
+		getSearchPath()
+		
+	isRunning = false
+	stop_moving = false
+	anim.set_dual(\"moving\", !can_see_player)
+	anim.set(\"parameters/Moving/WalkRun/blend_amount\", 1 if isRunning else 0)
+	
+	if can_see_player:
+		state = \"shooting\"
+		path = null
+		return
+		
+func getSearchPath():
+	var direction = randf() * PI * 2
+	var unit = Vector3(cos(direction), 0, sin(direction))
+	var newPoint = global_transform.origin + (unit * search_distance)
+	set_path_to_point(newPoint)
 	
 func set_path_to_point(point: Vector3):
 	var nav : Navigation = get_tree().root.find_node(\"Navigation\", true, false)
@@ -290,6 +323,10 @@ func _integrate_forces(state):
 	
 	var toPoint = move_towards - global_transform.origin
 	var flatToPoint = Vector3(toPoint.x, 0, toPoint.z)
+	
+	var facing = rotator.global_transform.basis.z
+	if facing.dot(flatToPoint) < 0.5:
+		return
 	
 	state.add_central_force(flatToPoint.normalized() * accel)
 	
@@ -407,7 +444,7 @@ nodes/PointGun/position = Vector2( 380, 140 )
 nodes/WalkRun/node = SubResource( 9 )
 nodes/WalkRun/position = Vector2( 160, 60 )
 nodes/output/position = Vector2( 600, 100 )
-node_connections = [ "output", 0, "PointGun", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3" ]
+node_connections = [ "PointGun", 0, "WalkRun", "PointGun", 1, "Animation 3", "WalkRun", 0, "Animation", "WalkRun", 1, "Animation 2", "output", 0, "PointGun" ]
 _sections_unfolded = [ "Resource", "Script" ]
 
 [sub_resource type="AnimationNodeAnimation" id=11]
@@ -443,7 +480,7 @@ nodes/Animation/position = Vector2( -20, 60 )
 nodes/OneShot/node = SubResource( 13 )
 nodes/OneShot/position = Vector2( 280, 120 )
 nodes/output/position = Vector2( 560, 120 )
-node_connections = [ "output", 0, "OneShot", "OneShot", 0, "Animation", "OneShot", 1, "Animation 2" ]
+node_connections = [ "OneShot", 0, "Animation", "OneShot", 1, "Animation 2", "output", 0, "OneShot" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
@@ -579,6 +616,8 @@ accel = 30.0
 fov = 110.0
 view_range = 22.0
 shoot_rate = 1.1
+search_distance = 10
+holds_still = false
 bullet_scene = ExtResource( 1 )
 debug = null
 

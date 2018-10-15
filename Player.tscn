@@ -344,4 +344,3 @@ stream_paused = false
 mix_target = 0
 bus = "Master"
 
-[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]

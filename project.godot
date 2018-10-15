@@ -81,5 +81,6 @@ common/physics_fps=120
 
 [rendering]
 
-quality/directional_shadow/size=8192
+quality/shadow_atlas/quadrant_0_subdiv=2
+quality/voxel_cone_tracing/high_quality=false
 environment/default_environment="res://default_env.tres"
