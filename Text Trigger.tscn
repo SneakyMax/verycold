@@ -15,6 +15,7 @@ func _on_Player_Text_Trigger_body_entered(body):
 		queue_free()
 		if text != \"\":
 			get_node(\"/root/Game\").showBigText(text, total_text_time)
+			
 		emit_signal(\"triggered\")"
 
 [sub_resource type="BoxShape" id=2]
