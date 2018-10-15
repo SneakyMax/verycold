@@ -81,11 +81,6 @@ func _integrate_forces(state):
 	if (state.linear_velocity.length_squared() > recall_max_speed * recall_max_speed):
 		state.linear_velocity = state.linear_velocity.normalized() * recall_max_speed;
 
-func _on_Pickup_Area_body_entered(body):
-	queue_free()
-	player.pickupGun()
-	set_collision_layer_bit(0, false)
-
 func delay(seconds : float = 1, start : bool = true):
 	var timer = Timer.new()
 	add_child(timer)
@@ -520,7 +515,6 @@ shape = SubResource( 15 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
-[connection signal="body_entered" from="Pickup Area" to="." method="_on_Pickup_Area_body_entered"]
 
 [editable path="Highlighted Gun"]
 
