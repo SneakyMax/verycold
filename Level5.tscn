@@ -113,7 +113,7 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -46.6, 
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.3568, 0.251927, -17.9942 )
-text = "A BULLET'S NOTHING LIKE A FOUL BALL"
+text = "A LITTLE LESS CONVER SATION"
 total_text_time = 3.5
 
 [node name="Area" parent="Text Trigger" index="0"]
