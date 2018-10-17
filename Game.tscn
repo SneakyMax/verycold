@@ -190,7 +190,7 @@ pause_mode = 2
 script = SubResource( 1 )
 _sections_unfolded = [ "Pause", "game_levels", "start_level" ]
 start_level = ExtResource( 1 )
-game_levels = [ "res://Level4Hard.tscn", "res://Level5.tscn", "res://Level2.tscn", "res://Level3.tscn", "res://Level.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
+game_levels = [ "res://LevelHard.tscn", "res://Level5.tscn", "res://Level2.tscn", "res://Level3.tscn", "res://Level.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
 anchor_left = 0.0

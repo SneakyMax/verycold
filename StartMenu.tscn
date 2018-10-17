@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Sprites/Illustrator Images/Gun Illustration-03.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Illustrator Images/Gun Illustration-01.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/robotomediumfont.tres" type="DynamicFont" id=2]
 
 [sub_resource type="GDScript" id=1]
@@ -56,19 +56,20 @@ script = SubResource( 1 )
 _sections_unfolded = [ "Script" ]
 
 [node name="Gun Illustration-03" type="Sprite" parent="."]
-position = Vector2( 972.963, 538.9 )
+position = Vector2( 959.115, 538.9 )
 scale = Vector2( 0.239313, 0.239313 )
 texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="PressAnyKey" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -411.0
-margin_top = -655.0
-margin_right = 423.0
-margin_bottom = -502.0
+margin_left = -415.0
+margin_top = -663.0
+margin_right = 419.0
+margin_bottom = -510.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
