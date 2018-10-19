@@ -11,16 +11,24 @@ export(float, 0, 100) var speed
 
 export(float, 0, 100) var trail_thickness = 1
 
+export(float, 0, 10) var fade_time = 5
+
 var startPos : Vector3
 var geo : ImmediateGeometry
 var hit = false
 var mesh
 var collisionShape
+var mat : SpatialMaterial
+var start_color : Color
 
 func _ready():
 	geo = get_node(\"ImmediateGeometry\")
 	mesh = get_node(\"MeshInstance\")
 	collisionShape = get_node(\"CollisionShape\")
+	
+	mat = geo.material_override.duplicate()
+	geo.material_override = mat
+	start_color = mat.get(\"albedo_color\")
 
 func start():
 	startPos = global_transform.origin
@@ -59,13 +67,18 @@ func _on_Bullet_body_entered(body):
 	
 	if body.has_method(\"_on_bullet_entered\"):
 		body._on_bullet_entered()
+		
+	var tween = get_node(\"Tween\");
 	
-	get_node(\"Tween\").interpolate_property(
-		self, \"startPos\", startPos, pos.origin, 5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property(self, \"startPos\", startPos, pos.origin, fade_time, Tween.TRANS_SINE, Tween.EASE_IN)
+	tween.interpolate_property(mat, \"albedo_color\",
+		Color(start_color.r, start_color.g, start_color.b, start_color.a * 0.5),
+		Color(start_color.r, start_color.g, start_color.b, 0.05), fade_time, Tween.TRANS_SINE, Tween.EASE_IN)
+	tween.start()
 	
 	var timer = Timer.new()
 	add_child(timer)
-	timer.wait_time = 5
+	timer.wait_time = fade_time
 	timer.one_shot = true
 	timer.start()
 	
@@ -216,6 +229,7 @@ script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
 speed = 10.0
 trail_thickness = 0.05
+fade_time = 5
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.07, 0, 0, 0, -3.0598e-09, -0.07, 0, 0.07, -3.0598e-09, 0, -0.00414755, -0.0606634 )
