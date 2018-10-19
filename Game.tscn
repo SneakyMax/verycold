@@ -13,6 +13,7 @@ script/source = "extends Node
 export(PackedScene) var start_level
 
 export(Array, String) var game_levels
+export(Array, String) var hard_game_levels
 
 var levelHolder : Node
 var bigText : Label
@@ -29,10 +30,11 @@ var startSlomoTime
 var slomoSecondsFixed : float
 var slomoAmount
 
+var chosen_levels
+
 var textSound
 
 func _ready():
-	OS.window_fullscreen = true
 	levelHolder = get_node(\"Current Level\")
 	bigText = get_node(\"Overlay UI/Big Text\")
 	textSound = get_node(\"TextSound\")
@@ -59,19 +61,27 @@ func _process(delta):
 				isSlomo = false
 				
 func start_over():
+	chosen_levels = null
 	currentLevelIndex = -1
 	set_level(start_level)
+	
+func choose_level_type(type):
+	if type == \"hard\":
+		chosen_levels = hard_game_levels
+	else:
+		chosen_levels = game_levels
 				
 func next_level():
+	if not chosen_levels: return
 	currentLevelIndex += 1
-	if currentLevelIndex >= game_levels.size():
+	if currentLevelIndex >= chosen_levels.size():
 		start_over()
 		return
-	var newLevel = load(game_levels[currentLevelIndex])
+	var newLevel = load(chosen_levels[currentLevelIndex])
 	set_level(newLevel)
 	
 func restart_level():
-	set_level(load(game_levels[currentLevelIndex]))
+	set_level(load(chosen_levels[currentLevelIndex]))
 	
 func set_level(level : PackedScene):
 	Engine.time_scale = 1
@@ -188,9 +198,10 @@ func _process(_delta):
 [node name="Game" type="Node"]
 pause_mode = 2
 script = SubResource( 1 )
-_sections_unfolded = [ "Pause", "game_levels", "start_level" ]
+_sections_unfolded = [ "Pause", "game_levels", "hard_game_levels", "start_level" ]
 start_level = ExtResource( 1 )
-game_levels = [ "res://LevelHard.tscn", "res://Level5.tscn", "res://Level2.tscn", "res://Level3.tscn", "res://Level.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
+game_levels = [ "res://TutorialLevel.tscn", "res://Level.tscn", "res://Level2.tscn", "res://Level3.tscn", "res://Level4.tscn", "res://Level5.tscn", "res://Level6.tscn" ]
+hard_game_levels = [ "res://TutorialLevelHard.tscn", "res://LevelHard.tscn", "res://Level2Hard.tscn", "res://Level3Hard.tscn", "res://Level4Hard.tscn", "res://Level5Hard.tscn", "res://Level6Hard.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
 anchor_left = 0.0
