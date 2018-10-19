@@ -31,6 +31,7 @@ export(float, 0, 10) var shoot_rate
 export(float, 0, 30) var search_distance = 10
 
 export(bool) var is_wandering = false
+export(bool) var runs_when_wandering = false
 
 export(bool) var holds_still = false
 
@@ -262,7 +263,7 @@ func process_searching(_isInitial):
 	if not path or path.size() == 0:
 		getSearchPath()
 		
-	isRunning = false
+	isRunning = runs_when_wandering
 	stop_moving = false
 	anim.set_dual(\"moving\", !can_see_player)
 	anim.set(\"parameters/Moving/WalkRun/blend_amount\", 1 if isRunning else 0)
@@ -620,6 +621,7 @@ view_range = 22.0
 shoot_rate = 1.1
 search_distance = 10
 is_wandering = false
+runs_when_wandering = false
 holds_still = false
 bullet_scene = ExtResource( 1 )
 debug = null
