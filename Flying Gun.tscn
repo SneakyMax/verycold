@@ -15,10 +15,10 @@ absorbent = false
 
 script/source = "extends RigidBody
 
-export(float, 0, 100) var recall_accel
-export(float, 0, 100) var recall_max_speed
-export(float, -5, 5) var spin_speed
-export(float, 0, 100) var side_movement_force
+export(float, 0, 500) var recall_accel
+export(float, 0, 500) var recall_max_speed
+export(float, -20, 20) var spin_speed
+export(float, 0, 500) var side_movement_force
 export(float, 0, 2) var side_movement_time = 1
 
 var sideMovementTime = 1
@@ -74,14 +74,12 @@ func _physics_process(delta):
 			add_central_force(side_movement_force * dir)
 	
 func _integrate_forces(state):
-	if (!player || !recalling):
-		return
+	if (player && recalling):
+		var toPlayer = player.camera.global_transform.origin - global_transform.origin
+		state.add_central_force(toPlayer * recall_accel)
 		
-	var toPlayer = player.camera.global_transform.origin - global_transform.origin
-	state.add_central_force(toPlayer * recall_accel)
-	
-	if (state.linear_velocity.length_squared() > recall_max_speed * recall_max_speed):
-		state.linear_velocity = state.linear_velocity.normalized() * recall_max_speed;
+		if (state.linear_velocity.length_squared() > recall_max_speed * recall_max_speed):
+			state.linear_velocity = state.linear_velocity.normalized() * recall_max_speed;
 
 func delay(seconds : float = 1, start : bool = true):
 	var timer = Timer.new()
@@ -430,13 +428,13 @@ input_capture_on_drag = false
 collision_layer = 1
 collision_mask = 1
 mode = 0
-mass = 1.0
+mass = 10.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.1
 custom_integrator = false
 continuous_cd = true
-contacts_reported = 0
-contact_monitor = false
+contacts_reported = 3
+contact_monitor = true
 sleeping = false
 can_sleep = true
 axis_lock_linear_x = false
@@ -451,10 +449,10 @@ angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 script = SubResource( 2 )
 _sections_unfolded = [ "Angular", "Axis Lock", "Collision", "Linear", "Transform", "physics_material_override" ]
-recall_accel = 14.0
+recall_accel = 140.0
 recall_max_speed = 14.0
-spin_speed = -0.8
-side_movement_force = 50.0
+spin_speed = -8.0
+side_movement_force = 500.0
 side_movement_time = 0.4
 
 [node name="Gun" parent="." instance=ExtResource( 1 )]

@@ -786,8 +786,8 @@ func _process(_delta):
 	triggers.clear()
 	
 func set_param(name: String, value: bool):
-	if get(\"parameters/conditions/\" + name) != value:
-		print(\"%s: %s\" % [name, value])
+	#if get(\"parameters/conditions/\" + name) != value:
+	#	print(\"%s: %s\" % [name, value])
 	set(\"parameters/conditions/\" + name, value)
 	
 func set_dual(name : String, value : bool):
@@ -798,7 +798,7 @@ func set_trigger(name):
 	set_param(name, true)
 	triggers.append(name)"
 
-[node name="Player Hand" index="0" instance=ExtResource( 1 )]
+[node name="Player Hand" instance=ExtResource( 1 )]
 
 [node name="Gun" parent="Armature" index="1"]
 material/0 = SubResource( 1 )

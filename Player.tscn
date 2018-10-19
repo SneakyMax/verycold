@@ -23,7 +23,7 @@ export(float, 0, 2) var mouse_sensitivity_x = 1
 export(float, 0, 2) var mouse_sensitivity_y = 1
 export(float, 0, 100) var joy_aim_sensitivity_x = 1
 export(float, 0, 100) var joy_aim_sensitivity_y = 1
-export(float, 0, 100) var gun_speed = 1
+export(float, 0, 1000) var gun_speed = 1
 export(float, 0, 100) var jump_force = 1
 export(bool) var is_level_1
 
@@ -288,7 +288,7 @@ mouse_sensitivity_x = 0.169
 mouse_sensitivity_y = 0.169
 joy_aim_sensitivity_x = 50.0
 joy_aim_sensitivity_y = 50.0
-gun_speed = 20.0
+gun_speed = 200.0
 jump_force = 6.0
 is_level_1 = null
 gun_projectile = ExtResource( 1 )
