@@ -107,11 +107,11 @@ func move_aim(x, y):
 			.rotated(pitch.get_transform().basis.x, deg2rad(y)).orthonormalized())
 
 func fire_or_return(alt):
-	if not canThrow: return
-	
 	if (!hasGun):
 		returnGun(alt)
 		return
+		
+	if not canThrow: return		
 	
 	hasGun = false
 	get_node(\"throwGun\").pitch_scale = Engine.time_scale
