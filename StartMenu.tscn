@@ -34,9 +34,10 @@ func _input(event):
 
 	if (event.is_action_pressed(\"escape\")):
 		get_tree().quit()
+		canInput = false
 		return
 
-	if event is InputEventKey:
+	if event is InputEventKey or event is InputEventJoypadButton:
 		if event.pressed:
 			get_node(\"/root/Game\").next_level()
 			canInput = false"

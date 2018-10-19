@@ -21,6 +21,8 @@ export(float, 0, 100) var max_move_speed = 1
 export(float, 0, 100) var accel_speed = 1
 export(float, 0, 2) var mouse_sensitivity_x = 1
 export(float, 0, 2) var mouse_sensitivity_y = 1
+export(float, 0, 100) var joy_aim_sensitivity_x = 1
+export(float, 0, 100) var joy_aim_sensitivity_y = 1
 export(float, 0, 100) var gun_speed = 1
 export(float, 0, 100) var jump_force = 1
 export(bool) var is_level_1
@@ -88,15 +90,18 @@ func _unhandled_input(event):
 		pass
 		
 	if (event is InputEventMouseMotion and mouseMode == Input.MOUSE_MODE_CAPTURED):
-		yaw.set_transform(yaw.get_transform().rotated(Vector3.UP, deg2rad(-event.relative.x) * mouse_sensitivity_x).orthonormalized())
+		move_aim(event.relative.x * mouse_sensitivity_x, event.relative.y * mouse_sensitivity_y)
+				
+func move_aim(x, y):
+	yaw.set_transform(yaw.get_transform().rotated(Vector3.UP, deg2rad(-x)).orthonormalized())
 		
-		if pitch.get_transform().basis.get_euler().x < PI / 2 and event.relative.y > 0:
-			pitch.set_transform( pitch.get_transform() \\
-				.rotated(pitch.get_transform().basis.x, deg2rad(event.relative.y) * mouse_sensitivity_y).orthonormalized())
-		
-		if pitch.get_transform().basis.get_euler().x > -PI / 2 and event.relative.y < 0:
-			pitch.set_transform( pitch.get_transform() \\
-				.rotated(pitch.get_transform().basis.x, deg2rad(event.relative.y) * mouse_sensitivity_y).orthonormalized())
+	if pitch.get_transform().basis.get_euler().x < PI / 2 and y > 0:
+		pitch.set_transform( pitch.get_transform() \\
+			.rotated(pitch.get_transform().basis.x, deg2rad(y)).orthonormalized())
+	
+	if pitch.get_transform().basis.get_euler().x > -PI / 2 and y < 0:
+		pitch.set_transform( pitch.get_transform() \\
+			.rotated(pitch.get_transform().basis.x, deg2rad(y)).orthonormalized())
 
 func fire_or_return(alt):
 	if (!hasGun):
@@ -140,11 +145,19 @@ func returnGun(alt):
 	
 func _process(delta):
 	var moveVector = Vector2(
-		Input.get_action_strength(\"strafe_left\") - Input.get_action_strength(\"strafe_right\"),
-		Input.get_action_strength(\"move_forward\") - Input.get_action_strength(\"move_backward\")
+		sqr_strength(\"strafe_left\") - sqr_strength(\"strafe_right\"),
+		sqr_strength(\"move_forward\") - sqr_strength(\"move_backward\")
 		)
 	
 	desiredMoveVector = moveVector#.normalized()
+	
+	var controller_aim_y = sqr_strength(\"look_down\") - sqr_strength(\"look_up\");
+	var controller_aim_x = sqr_strength(\"look_right\") - sqr_strength(\"look_left\");
+	move_aim(controller_aim_x * joy_aim_sensitivity_x * delta, controller_aim_y * joy_aim_sensitivity_y * delta)
+	
+func sqr_strength(action):
+	var val = Input.get_action_strength(action)
+	return val * val
 	
 func _physics_process(delta):
 	if (shotGun != null):
@@ -258,6 +271,8 @@ max_move_speed = 8.0
 accel_speed = 40.0
 mouse_sensitivity_x = 0.169
 mouse_sensitivity_y = 0.169
+joy_aim_sensitivity_x = 50.0
+joy_aim_sensitivity_y = 50.0
 gun_speed = 20.0
 jump_force = 6.0
 is_level_1 = null
