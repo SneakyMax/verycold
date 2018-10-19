@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Flying Gun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Models/humanoid.dae" type="PackedScene" id=2]
@@ -40,6 +40,8 @@ var shotGun
 var camera : Camera
 var try_jump = false
 var anim : AnimationTree
+var preventSpawning : Area
+var canThrow : bool
 
 var throwGun_sound
 
@@ -57,6 +59,7 @@ func _ready():
 	throwGun_sound = get_node(\"throwGun\")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	anim = get_node(\"Yaw/Pitch/Player Hand/Armature/AnimationTree\")
+	preventSpawning = get_node(\"Yaw/Pitch/Gun Spawn Position/Prevent Spawning\")
 	startAnimation()
 	
 func startAnimation():
@@ -104,6 +107,8 @@ func move_aim(x, y):
 			.rotated(pitch.get_transform().basis.x, deg2rad(y)).orthonormalized())
 
 func fire_or_return(alt):
+	if not canThrow: return
+	
 	if (!hasGun):
 		returnGun(alt)
 		return
@@ -149,6 +154,8 @@ func _process(delta):
 		sqr_strength(\"move_forward\") - sqr_strength(\"move_backward\")
 		)
 	
+	anim.set_dual(\"can_throw\", canThrow)
+	
 	desiredMoveVector = moveVector#.normalized()
 	
 	var controller_aim_y = sqr_strength(\"look_down\") - sqr_strength(\"look_up\");
@@ -160,6 +167,8 @@ func sqr_strength(action):
 	return val * val
 	
 func _physics_process(delta):
+	canThrow = preventSpawning.get_overlapping_bodies().size() == 0
+	
 	if (shotGun != null):
 		var isColliding = targetGun.is_colliding() and targetGun.get_collider().name == \"Gun Target Area\"
 		
@@ -201,8 +210,9 @@ func pickupGun():
 	shotGun = null
 	hasGun = true
 	find_node(\"Gun\").visible = true
-	anim.set_trigger(\"pick_up\")
+	anim.set_param(\"pick_up\", true)
 	yield(delay(0.54), \"timeout\")
+	anim.set_param(\"pick_up\", false)	
 	
 	if is_level_1 and not level1PickedUpGun:
 		level1PickedUpGun = true
@@ -239,6 +249,11 @@ height = 2.50823
 
 margin = 0.04
 extents = Vector3( 4.10969, 1.75175, 0.276674 )
+
+[sub_resource type="BoxShape" id=5]
+
+margin = 0.04
+extents = Vector3( 0.400685, 0.400041, 0.860694 )
 
 [node name="Player" type="RigidBody"]
 input_ray_pickable = true
@@ -373,6 +388,34 @@ cast_to = Vector3( 0, -1, 0 )
 collision_mask = 1
 collide_with_areas = false
 collide_with_bodies = true
+
+[node name="Prevent Spawning" type="Area" parent="Yaw/Pitch/Gun Spawn Position"]
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 1
+collision_mask = 1
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape" type="CollisionShape" parent="Yaw/Pitch/Gun Spawn Position/Prevent Spawning"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.43692 )
+shape = SubResource( 5 )
+disabled = false
 
 [node name="Player Hand" parent="Yaw/Pitch" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, -0.39, 0.73 )

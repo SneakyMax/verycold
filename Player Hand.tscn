@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://Models/player_hand.escn" type="PackedScene" id=1]
 [ext_resource path="res://Models/gun_texture.png" type="Texture" id=2]
@@ -126,125 +126,125 @@ filter_enabled = false
 filters = [  ]
 animation = "EndHoverOver"
 
+[sub_resource type="AnimationNodeAnimation" id=69]
+
+filter_enabled = false
+filters = [  ]
+animation = "GunAgainstWall"
+
 [sub_resource type="AnimationNodeAnimation" id=4]
 
 filter_enabled = false
 filters = [  ]
-animation = "HandOut"
+animation = "GunAgainstWall"
 
 [sub_resource type="AnimationNodeAnimation" id=5]
 
 filter_enabled = false
 filters = [  ]
-animation = "HoldGunBarrel"
+animation = "HandOut"
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 
 filter_enabled = false
 filters = [  ]
-animation = "HoldingGun"
+animation = "HandOutAgainstWall"
 
 [sub_resource type="AnimationNodeAnimation" id=7]
 
 filter_enabled = false
 filters = [  ]
-animation = "HoveringOver"
+animation = "HandOutGoingAgainstWall"
 
 [sub_resource type="AnimationNodeAnimation" id=8]
 
 filter_enabled = false
 filters = [  ]
-animation = "PickUpGun"
+animation = "HandOutLeavingWall"
 
 [sub_resource type="AnimationNodeAnimation" id=9]
 
 filter_enabled = false
 filters = [  ]
-animation = "RecallLeft"
+animation = "HoldGunBarrel"
 
 [sub_resource type="AnimationNodeAnimation" id=10]
 
 filter_enabled = false
 filters = [  ]
-animation = "RecallRight"
+animation = "HoldingGun"
+
+[sub_resource type="AnimationNodeAnimation" id=70]
+
+filter_enabled = false
+filters = [  ]
+animation = "HoldingGunGoingAgainstWall"
 
 [sub_resource type="AnimationNodeAnimation" id=11]
 
 filter_enabled = false
 filters = [  ]
-animation = "StartHoverOver"
+animation = "HoldingGunGoingAgainstWall"
+
+[sub_resource type="AnimationNodeAnimation" id=71]
+
+filter_enabled = false
+filters = [  ]
+animation = "HoldingGunLeavingWall"
 
 [sub_resource type="AnimationNodeAnimation" id=12]
 
 filter_enabled = false
 filters = [  ]
-animation = "ThrowGun"
+animation = "HoldingGunLeavingWall"
 
 [sub_resource type="AnimationNodeAnimation" id=13]
 
 filter_enabled = false
 filters = [  ]
+animation = "HoveringOver"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+
+filter_enabled = false
+filters = [  ]
+animation = "PickUpGun"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+
+filter_enabled = false
+filters = [  ]
+animation = "RecallLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+
+filter_enabled = false
+filters = [  ]
+animation = "RecallRight"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+
+filter_enabled = false
+filters = [  ]
+animation = "StartHoverOver"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+
+filter_enabled = false
+filters = [  ]
+animation = "ThrowGun"
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+
+filter_enabled = false
+filters = [  ]
 animation = "TossGunHoldTop"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "hovering_over"
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
-
-switch_mode = 2
-auto_advance = true
-advance_condition = ""
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "not_hovering_over"
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
-
-switch_mode = 2
-auto_advance = true
-advance_condition = ""
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "pull_left"
-xfade_time = 0.3
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
-
-switch_mode = 2
-auto_advance = true
-advance_condition = ""
-xfade_time = 0.0
-priority = 1
-disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pull_right"
+advance_condition = "hovering_over"
 xfade_time = 0.0
 priority = 1
 disabled = false
@@ -262,84 +262,21 @@ disabled = false
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pick_up"
+advance_condition = "not_hovering_over"
 xfade_time = 0.0
-priority = 2
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
-switch_mode = 0
-auto_advance = false
-advance_condition = "pick_up"
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
 xfade_time = 0.0
-priority = 2
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=24]
-
-switch_mode = 2
-auto_advance = true
-advance_condition = ""
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
-
-switch_mode = 2
-auto_advance = false
-advance_condition = "can_toss"
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
-
-switch_mode = 2
-auto_advance = true
-advance_condition = ""
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "throw_gun"
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
-
-switch_mode = 2
-auto_advance = true
-advance_condition = ""
-xfade_time = 0.0
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "throw_gun"
-xfade_time = 0.3
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
-
-switch_mode = 0
-auto_advance = false
-advance_condition = "throw_gun"
-xfade_time = 0.3
-priority = 1
-disabled = false
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 
 switch_mode = 0
 auto_advance = false
@@ -348,12 +285,75 @@ xfade_time = 0.3
 priority = 1
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
 
 switch_mode = 0
 auto_advance = false
 advance_condition = "pull_right"
-xfade_time = 0.3
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pick_up"
+xfade_time = 0.0
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pick_up"
+xfade_time = 0.0
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+
+switch_mode = 2
+auto_advance = false
+advance_condition = "can_toss"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
 priority = 1
 disabled = false
 
@@ -361,45 +361,45 @@ disabled = false
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "not_hovering_over"
-xfade_time = 0.3
+advance_condition = "throw_gun"
+xfade_time = 0.0
 priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
-switch_mode = 0
-auto_advance = false
-advance_condition = "pick_up"
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
 xfade_time = 0.0
-priority = 2
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=35]
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pick_up"
-xfade_time = 0.0
-priority = 2
+advance_condition = "throw_gun"
+xfade_time = 0.3
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=36]
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pick_up"
-xfade_time = 0.0
-priority = 2
+advance_condition = "throw_gun"
+xfade_time = 0.3
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pick_up"
-xfade_time = 0.0
-priority = 2
+advance_condition = "pull_left"
+xfade_time = 0.3
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=38]
@@ -415,16 +415,16 @@ disabled = false
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pull_left"
+advance_condition = "not_hovering_over"
 xfade_time = 0.3
-priority = 2
+priority = 1
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=40]
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pull_left"
+advance_condition = "pick_up"
 xfade_time = 0.0
 priority = 2
 disabled = false
@@ -433,7 +433,7 @@ disabled = false
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pull_right"
+advance_condition = "pick_up"
 xfade_time = 0.0
 priority = 2
 disabled = false
@@ -451,12 +451,30 @@ disabled = false
 
 switch_mode = 0
 auto_advance = false
-advance_condition = "pull_right"
-xfade_time = 0.3
+advance_condition = "pick_up"
+xfade_time = 0.0
 priority = 2
 disabled = false
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=44]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pull_right"
+xfade_time = 0.3
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=45]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pull_left"
+xfade_time = 0.3
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
 
 switch_mode = 0
 auto_advance = false
@@ -465,40 +483,283 @@ xfade_time = 0.0
 priority = 2
 disabled = false
 
-[sub_resource type="AnimationNodeStateMachine" id=45]
+[sub_resource type="AnimationNodeStateMachineTransition" id=47]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pull_right"
+xfade_time = 0.0
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pick_up"
+xfade_time = 0.0
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pull_right"
+xfade_time = 0.3
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pull_left"
+xfade_time = 0.0
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "not_can_throw"
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=53]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_throw"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=55]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "throw_gun"
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=56]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "not_can_throw"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=57]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=58]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_throw"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=59]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=60]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pick_up"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=64]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "hovering_over"
+xfade_time = 0.0
+priority = 2
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=65]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pick_up"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=66]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "pick_up"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=67]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_throw"
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=68]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_throw"
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=72]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "not_can_throw"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=73]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_throw"
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=74]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=75]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_throw"
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=76]
+
+switch_mode = 2
+auto_advance = true
+advance_condition = ""
+xfade_time = 0.0
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=77]
+
+switch_mode = 0
+auto_advance = false
+advance_condition = "can_toss"
+xfade_time = 0.2
+priority = 1
+disabled = false
+
+[sub_resource type="AnimationNodeStateMachine" id=61]
 
 states/EndHoverOver/node = SubResource( 3 )
-states/EndHoverOver/position = Vector2( 772, 136 )
-states/HandOut/node = SubResource( 4 )
-states/HandOut/position = Vector2( -25, 93 )
-states/HoldGunBarrel/node = SubResource( 5 )
-states/HoldGunBarrel/position = Vector2( -219, 303.256 )
-states/HoldingGun/node = SubResource( 6 )
-states/HoldingGun/position = Vector2( -325, 33 )
-states/HoveringOver/node = SubResource( 7 )
-states/HoveringOver/position = Vector2( 614, -83 )
-states/PickUpGun/node = SubResource( 8 )
-states/PickUpGun/position = Vector2( -245, -119 )
-states/RecallLeft/node = SubResource( 9 )
-states/RecallLeft/position = Vector2( 257, -153 )
-states/RecallRight/node = SubResource( 10 )
-states/RecallRight/position = Vector2( 432, 271.256 )
-states/StartHoverOver/node = SubResource( 11 )
-states/StartHoverOver/position = Vector2( 232, 53 )
-states/ThrowGun/node = SubResource( 12 )
-states/ThrowGun/position = Vector2( -16.602, 286.256 )
-states/TossGunHoldTop/node = SubResource( 13 )
-states/TossGunHoldTop/position = Vector2( -339, 166 )
-transitions = [ "HandOut", "StartHoverOver", SubResource( 14 ), "StartHoverOver", "HoveringOver", SubResource( 15 ), "HoveringOver", "EndHoverOver", SubResource( 16 ), "EndHoverOver", "HandOut", SubResource( 17 ), "HoveringOver", "RecallLeft", SubResource( 18 ), "RecallLeft", "HandOut", SubResource( 19 ), "HoveringOver", "RecallRight", SubResource( 20 ), "RecallRight", "HandOut", SubResource( 21 ), "HandOut", "PickUpGun", SubResource( 22 ), "HoveringOver", "PickUpGun", SubResource( 23 ), "PickUpGun", "HoldingGun", SubResource( 24 ), "HoldingGun", "TossGunHoldTop", SubResource( 25 ), "TossGunHoldTop", "HoldGunBarrel", SubResource( 26 ), "HoldGunBarrel", "ThrowGun", SubResource( 27 ), "ThrowGun", "HandOut", SubResource( 28 ), "PickUpGun", "ThrowGun", SubResource( 29 ), "TossGunHoldTop", "ThrowGun", SubResource( 30 ), "StartHoverOver", "RecallLeft", SubResource( 31 ), "StartHoverOver", "RecallRight", SubResource( 32 ), "StartHoverOver", "EndHoverOver", SubResource( 33 ), "StartHoverOver", "PickUpGun", SubResource( 34 ), "EndHoverOver", "PickUpGun", SubResource( 35 ), "RecallRight", "PickUpGun", SubResource( 36 ), "RecallLeft", "PickUpGun", SubResource( 37 ), "ThrowGun", "RecallRight", SubResource( 38 ), "ThrowGun", "RecallLeft", SubResource( 39 ), "RecallRight", "RecallLeft", SubResource( 40 ), "RecallLeft", "RecallRight", SubResource( 41 ), "ThrowGun", "PickUpGun", SubResource( 42 ), "EndHoverOver", "RecallRight", SubResource( 43 ), "EndHoverOver", "RecallLeft", SubResource( 44 ) ]
+states/EndHoverOver/position = Vector2( -15.204, -521 )
+states/GunAgainstWall/node = SubResource( 4 )
+states/GunAgainstWall/position = Vector2( -200, 378 )
+"states/GunAgainstWall 2/node" = SubResource( 69 )
+"states/GunAgainstWall 2/position" = Vector2( -540, -148 )
+states/HandOut/node = SubResource( 5 )
+states/HandOut/position = Vector2( 265, -134 )
+states/HandOutAgainstWall/node = SubResource( 6 )
+states/HandOutAgainstWall/position = Vector2( 514, -59 )
+states/HandOutGoingAgainstWall/node = SubResource( 7 )
+states/HandOutGoingAgainstWall/position = Vector2( 442, 18.256 )
+states/HandOutLeavingWall/node = SubResource( 8 )
+states/HandOutLeavingWall/position = Vector2( 522, -226 )
+states/HoldGunBarrel/node = SubResource( 9 )
+states/HoldGunBarrel/position = Vector2( -195, 165.256 )
+states/HoldingGun/node = SubResource( 10 )
+states/HoldingGun/position = Vector2( -250, -81 )
+states/HoldingGunGoingAgainstWall/node = SubResource( 11 )
+states/HoldingGunGoingAgainstWall/position = Vector2( -325, 287 )
+"states/HoldingGunGoingAgainstWall 2/node" = SubResource( 70 )
+"states/HoldingGunGoingAgainstWall 2/position" = Vector2( -486, -214 )
+states/HoldingGunLeavingWall/node = SubResource( 12 )
+states/HoldingGunLeavingWall/position = Vector2( -56, 287 )
+"states/HoldingGunLeavingWall 2/node" = SubResource( 71 )
+"states/HoldingGunLeavingWall 2/position" = Vector2( -521, -74 )
+states/HoveringOver/node = SubResource( 13 )
+states/HoveringOver/position = Vector2( -15.204, -425 )
+states/PickUpGun/node = SubResource( 14 )
+states/PickUpGun/position = Vector2( -195, -195 )
+states/RecallLeft/node = SubResource( 15 )
+states/RecallLeft/position = Vector2( 248, -521 )
+states/RecallRight/node = SubResource( 16 )
+states/RecallRight/position = Vector2( 338, -441 )
+states/StartHoverOver/node = SubResource( 17 )
+states/StartHoverOver/position = Vector2( -16.602, -326 )
+states/ThrowGun/node = SubResource( 18 )
+states/ThrowGun/position = Vector2( 94.398, 18.256 )
+states/TossGunHoldTop/node = SubResource( 19 )
+states/TossGunHoldTop/position = Vector2( -304, 56 )
+transitions = [ "HandOut", "StartHoverOver", SubResource( 20 ), "StartHoverOver", "HoveringOver", SubResource( 21 ), "HoveringOver", "EndHoverOver", SubResource( 22 ), "EndHoverOver", "HandOut", SubResource( 23 ), "HoveringOver", "RecallLeft", SubResource( 24 ), "RecallLeft", "HandOut", SubResource( 25 ), "HoveringOver", "RecallRight", SubResource( 26 ), "RecallRight", "HandOut", SubResource( 27 ), "HandOut", "PickUpGun", SubResource( 28 ), "HoveringOver", "PickUpGun", SubResource( 29 ), "PickUpGun", "HoldingGun", SubResource( 30 ), "HoldingGun", "TossGunHoldTop", SubResource( 31 ), "TossGunHoldTop", "HoldGunBarrel", SubResource( 32 ), "HoldGunBarrel", "ThrowGun", SubResource( 33 ), "ThrowGun", "HandOut", SubResource( 34 ), "PickUpGun", "ThrowGun", SubResource( 35 ), "TossGunHoldTop", "ThrowGun", SubResource( 36 ), "StartHoverOver", "RecallLeft", SubResource( 37 ), "StartHoverOver", "RecallRight", SubResource( 38 ), "StartHoverOver", "EndHoverOver", SubResource( 39 ), "StartHoverOver", "PickUpGun", SubResource( 40 ), "EndHoverOver", "PickUpGun", SubResource( 41 ), "RecallRight", "PickUpGun", SubResource( 42 ), "RecallLeft", "PickUpGun", SubResource( 43 ), "ThrowGun", "RecallRight", SubResource( 44 ), "ThrowGun", "RecallLeft", SubResource( 45 ), "RecallRight", "RecallLeft", SubResource( 46 ), "RecallLeft", "RecallRight", SubResource( 47 ), "ThrowGun", "PickUpGun", SubResource( 48 ), "EndHoverOver", "RecallRight", SubResource( 49 ), "EndHoverOver", "RecallLeft", SubResource( 50 ), "HoldGunBarrel", "HoldingGunGoingAgainstWall", SubResource( 51 ), "HoldingGunGoingAgainstWall", "GunAgainstWall", SubResource( 52 ), "GunAgainstWall", "HoldingGunLeavingWall", SubResource( 53 ), "HoldingGunLeavingWall", "HoldGunBarrel", SubResource( 54 ), "HoldingGunLeavingWall", "ThrowGun", SubResource( 55 ), "HandOut", "HandOutGoingAgainstWall", SubResource( 56 ), "HandOutGoingAgainstWall", "HandOutAgainstWall", SubResource( 57 ), "HandOutAgainstWall", "HandOutLeavingWall", SubResource( 58 ), "HandOutLeavingWall", "HandOut", SubResource( 59 ), "HandOutLeavingWall", "PickUpGun", SubResource( 60 ), "HandOutLeavingWall", "StartHoverOver", SubResource( 64 ), "HandOutGoingAgainstWall", "PickUpGun", SubResource( 65 ), "HandOutAgainstWall", "PickUpGun", SubResource( 66 ), "HandOutGoingAgainstWall", "HandOut", SubResource( 67 ), "HoldingGunGoingAgainstWall", "HoldGunBarrel", SubResource( 68 ), "HoldingGun", "HoldingGunGoingAgainstWall 2", SubResource( 72 ), "HoldingGunGoingAgainstWall 2", "HoldingGun", SubResource( 73 ), "HoldingGunGoingAgainstWall 2", "GunAgainstWall 2", SubResource( 74 ), "GunAgainstWall 2", "HoldingGunLeavingWall 2", SubResource( 75 ), "HoldingGunLeavingWall 2", "HoldingGun", SubResource( 76 ), "HoldingGunLeavingWall 2", "TossGunHoldTop", SubResource( 77 ) ]
 start_node = ""
 end_node = ""
-graph_offset = Vector2( -464, -195.744 )
+graph_offset = Vector2( -841, -352 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=46]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=62]
 
 resource_local_to_scene = true
 
-[sub_resource type="GDScript" id=47]
+[sub_resource type="GDScript" id=63]
 
 script/source = "extends AnimationTree
 
@@ -528,7 +789,7 @@ func set_trigger(name):
 	set_param(name, true)
 	triggers.append(name)"
 
-[node name="Player Hand" index="0" instance=ExtResource( 1 )]
+[node name="Player Hand" instance=ExtResource( 1 )]
 
 [node name="Gun" parent="Armature" index="1"]
 material/0 = SubResource( 1 )
@@ -539,18 +800,20 @@ material/0 = SubResource( 2 )
 _sections_unfolded = [ "material" ]
 
 [node name="AnimationTree" type="AnimationTree" parent="Armature" index="3"]
-tree_root = SubResource( 45 )
+tree_root = SubResource( 61 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 process_mode = 1
 root_motion_track = NodePath("")
-parameters/playback = SubResource( 46 )
+parameters/playback = SubResource( 62 )
+parameters/conditions/can_throw = false
 parameters/conditions/can_toss = false
 parameters/conditions/hovering_over = false
+parameters/conditions/not_can_throw = false
 parameters/conditions/not_hovering_over = false
 parameters/conditions/pick_up = false
 parameters/conditions/pull_left = false
 parameters/conditions/pull_right = false
 parameters/conditions/throw_gun = false
-script = SubResource( 47 )
+script = SubResource( 63 )
 
