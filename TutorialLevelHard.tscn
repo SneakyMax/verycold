@@ -124,6 +124,7 @@ data = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Navigation" type="Navigation" parent="."]
+editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMesh" type="NavigationMeshInstance" parent="Navigation"]
