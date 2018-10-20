@@ -490,33 +490,39 @@ _sections_unfolded = [ "Omni" ]
 
 [node name="Enemy3" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, -8.6, 2.1, -18.9 )
+runs_when_wandering = true
 
 [node name="Enemy4" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, -22.6, 2.1, -18.9 )
+runs_when_wandering = true
 
 [node name="Enemy9" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, -21.6, 2.1, -28.9 )
+runs_when_wandering = true
 
 [node name="Enemy10" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -7.6, 2.1, -28.9 )
+is_wandering = true
 
 [node name="Enemy12" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, -2.6, 2.1, -31.9 )
+runs_when_wandering = true
 
 [node name="Enemy5" parent="." instance=ExtResource( 9 )]
 transform = Transform( -0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, -26.6, 2.1, 5.2 )
+runs_when_wandering = true
 
 [node name="Enemy8" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -22.2, 2.1, -9.1 )
+runs_when_wandering = true
 
 [node name="Enemy6" parent="." instance=ExtResource( 9 )]
 transform = Transform( -0.939692, 0, 0.34202, 0, 1, 0, -0.34202, 0, -0.939692, -16.8, 2.1, 4.5 )
+runs_when_wandering = true
 
 [node name="Enemy7" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.906308, 0, 0.422619, 0, 1, 0, -0.422619, 0, 0.906308, -8.8, 2.1, -6.2 )
-
-[node name="Enemy11" parent="." instance=ExtResource( 9 )]
-transform = Transform( 0.906308, 0, 0.422619, 0, 1, 0, -0.422619, 0, 0.906308, -18.8, 2.1, -17.2 )
+runs_when_wandering = true
 
 [node name="GIProbe" type="GIProbe" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2278, 6.36314, -12.3983 )

@@ -641,15 +641,19 @@ _sections_unfolded = [ "Omni" ]
 
 [node name="Enemy6" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, -11.5, 2.1, 75.9 )
+runs_when_wandering = true
 
 [node name="Enemy7" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.422618, 0, 0.906307, 0, 1, 0, -0.906307, 0, -0.422618, -11.5, 2.1, 68.6 )
+runs_when_wandering = true
 
 [node name="Enemy8" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.173648, 0, -0.984807, 0, 1, 0, 0.984807, 0, -0.173648, 16.5, 2.1, 68.6 )
+runs_when_wandering = true
 
 [node name="Enemy9" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.766044, 0, -0.642787, 0, 1, 0, 0.642787, 0, -0.766044, 16.5, 2.1, 83.6 )
+runs_when_wandering = true
 
 [node name="Enemy10" parent="." instance=ExtResource( 5 )]
 transform = Transform( 0.996194, 0, 0.0871556, 0, 1, 0, -0.0871556, 0, 0.996194, 6.2, 2.1, 136.4 )
