@@ -542,10 +542,6 @@ environment = ExtResource( 27 )
 transform = Transform( -0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, -45.1, 2.1, -10.3 )
 runs_when_wandering = true
 
-[node name="Enemy12" parent="." instance=ExtResource( 28 )]
-transform = Transform( 0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707106, -38.1, 2.1, 1.7 )
-runs_when_wandering = true
-
 [node name="Enemy5" parent="." instance=ExtResource( 28 )]
 transform = Transform( -0.34202, 0, 0.939692, 0, 1, 0, -0.939692, 0, -0.34202, -44.4, 2.1, 7.6 )
 runs_when_wandering = true
@@ -584,10 +580,6 @@ holds_still = true
 
 [node name="Enemy15" parent="." instance=ExtResource( 28 )]
 transform = Transform( -0.996195, 0, -0.087157, 0, 1, 0, 0.087157, 0, -0.996195, 2.4, 2.1, -11.1 )
-runs_when_wandering = true
-
-[node name="Enemy10" parent="." instance=ExtResource( 28 )]
-transform = Transform( 0.996195, 0, -0.087155, 0, 1, 0, 0.087155, 0, 0.996195, 9.2, 2.1, -9.1 )
 runs_when_wandering = true
 
 [node name="Enemy14" parent="." instance=ExtResource( 28 )]
