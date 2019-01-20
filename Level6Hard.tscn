@@ -61,31 +61,12 @@ func _on_Tutorial_End_Trigger_triggered():
 [sub_resource type="BoxShape" id=2]
 
 resource_local_to_scene = true
-margin = 0.04
 extents = Vector3( 4.50977, 1, 4.04098 )
-_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="NavigationMesh" id=3]
 
 vertices = PoolVector3Array( 0.200001, 0.390081, -11.9, 0.800001, 0.390081, -12.2, 0.800001, 0.390081, -18.8, -8.8, 0.390081, -18.8, -8.8, 0.390081, -9.5, -8.8, 0.390081, -9.5, 0.200001, 0.390081, -9.5, 0.200001, 0.390081, -11.9, 0.800001, 0.390081, -12.2, 10.4, 0.390081, -11.9, 10.4, 0.390081, -18.8, 0.800001, 0.390081, -18.8, 10.4, 15.3901, -3.2, 10.7, 15.3901, -11, 10.4, 15.3901, -11.6, 1.4, 15.3901, -11.6, 1.4, 15.3901, -3.5, 1.4, 15.3901, 29.8, 1.4, 15.3901, 38.2, 10.7, 15.3901, 38.2, 10.7, 15.3901, 29.8, 1.4, 15.3901, 21.7, 1.4, 15.3901, 29.8, 10.7, 15.3901, 29.8, 10.7, 15.3901, 21.7, 10.4, 15.3901, -3.2, 1.4, 15.3901, -3.5, 1.4, 15.3901, 4.9, 10.7, 15.3901, 4.9, 10.7, 15.3901, 21.7, 10.7, 15.3901, 13.3, 1.4, 15.3901, 13.3, 1.4, 15.3901, 21.7, 1.4, 15.3901, 55, 10.7, 15.3901, 55, 10.7, 15.3901, 46.6, 1.4, 15.3901, 46.6, 1.4, 15.3901, 38.2, 1.4, 15.3901, 46.6, 10.7, 15.3901, 46.6, 10.7, 15.3901, 38.2, 10.7, 15.3901, 13.3, 10.7, 15.3901, 4.9, 1.4, 15.3901, 4.9, 1.4, 15.3901, 13.3, -8.8, 0.390081, 38.5, 0.200001, 0.390081, 38.5, 0.200001, 0.390081, 26.5, -8.8, 0.390081, 26.5, -8.8, 0.390081, 14.5, -8.8, 0.390081, 26.5, 0.200001, 0.390081, 26.5, 0.200001, 0.390081, 14.5, 0.200001, 0.390081, 2.5, 0.200001, 0.390081, -9.5, -8.8, 0.390081, -9.5, -8.8, 0.390081, 2.5, -8.8, 0.390081, 2.5, -8.8, 0.390081, 14.5, 0.200001, 0.390081, 14.5, 0.200001, 0.390081, 2.5, 10.1, 0.390081, -1.4, 10.1, 0.390081, -9.2, 2.9, 0.390081, -9.2, 2.9, 0.390081, -1.4, 10.1, 0.390081, 30.7, 10.1, 0.390081, 22.9, 2.9, 0.390081, 22.9, 2.9, 0.390081, 30.7, 2.9, 0.390081, 55, 10.1, 0.390081, 55, 10.1, 0.390081, 46.9, 2.9, 0.390081, 46.9, 2.9, 0.390081, 38.8, 2.9, 0.390081, 46.9, 10.1, 0.390081, 46.9, 10.1, 0.390081, 38.8, 10.1, 0.390081, 6.7, 10.1, 0.390081, -1.4, 2.9, 0.390081, -1.4, 2.9, 0.390081, 6.7, 2.9, 0.390081, 30.7, 2.9, 0.390081, 38.8, 10.1, 0.390081, 38.8, 10.1, 0.390081, 30.7, 10.1, 0.390081, 14.8, 10.1, 0.390081, 6.7, 2.9, 0.390081, 6.7, 2.9, 0.390081, 14.8, 10.1, 0.390081, 22.9, 10.1, 0.390081, 14.8, 2.9, 0.390081, 14.8, 2.9, 0.390081, 22.9, 0.200001, 0.390081, 38.5, -8.8, 0.390081, 38.5, -9.1, 0.390081, 41.2, 0.200001, 0.390081, 46.9, -7.6, 0.390081, 55.3, 0.200001, 0.390081, 46.9, -9.1, 0.390081, 41.2, -16, 0.390081, 41.2, -15.4, 0.390081, 55.3, -7.6, 0.390081, 55.3, 0.200001, 0.390081, 55.3, 0.200001, 0.390081, 46.9, -16, 0.390081, 41.2, -16, 0.390081, 55.9, -15.4, 0.390081, 55.3, -22.3, 0.390081, 41.2, -28.6, 0.390081, 41.2, -28.6, 0.390081, 48.7, -28.6, 0.390081, 56.5, -16.6, 0.390081, 56.5, -16, 0.390081, 55.9, -16, 0.390081, 41.2, -22.3, 0.390081, 41.2, -28.6, 0.390081, 48.7, 29.6, 0.390081, 74.8, 30.2, 0.390081, 74.8, 30.2, 0.390081, 66.4, 29.6, 0.390081, 65.5, 20.3, 0.390081, 55.3, 28.4, 0.390081, 55.3, 30.2, 0.390081, 49.6, 30.2, 0.390081, 41.2, 21.2, 0.390081, 41.2, 12.5, 0.390081, 48.1, 29.6, 0.390081, 65.5, 30.2, 0.390081, 66.4, 30.2, 0.390081, 58, 29.6, 0.390081, 56.2, 21.2, 0.390081, 41.2, 12.5, 0.390081, 41.2, 12.5, 0.390081, 48.1, 29.6, 0.390081, 56.2, 30.2, 0.390081, 58, 30.2, 0.390081, 49.6, 28.4, 0.390081, 55.3, 29.6, 0.390081, 56.2, 30.2, 0.390081, 49.6, 12.5, 0.390081, 48.1, 12.5, 0.390081, 55.3, 20.3, 0.390081, 55.3, 19.7, 14.3901, 56.5, 11.9, 14.3901, 56.5, 11.9, 15.1901, 57.1, 15.02, 15.1901, 56.86, 16.58, 14.3901, 56.74, 28.4, 15.1901, 57.4, 27.5, 14.3901, 56.5, 19.7, 14.3901, 56.5, 11.9, 15.1901, 57.1, 32.3, 15.1901, 66.4, 16.58, 14.3901, 56.74, 15.02, 15.1901, 56.86, 10.7, 15.3901, 57.1, 10.7, 15.3901, 55, 1.4, 15.3901, 55, 1.4, 15.3901, 57.1, 32.3, 15.1901, 66.4, 10.7, 15.3901, 57.1, 1.4, 15.3901, 57.1, 32.3, 15.1901, 66.4, 32.3, 15.1901, 57.4, 28.4, 15.1901, 57.4, 25.1, 15.3901, 93.4, 32.3, 15.1901, 93.4, 32.3, 15.1901, 84.4, 0.5, 15.3901, 94, 0.5, 15.3901, 95.8, 24.8, 15.3901, 95.8, 25.1, 15.3901, 93.4, 25.1, 15.3901, 93.4, 32.3, 15.1901, 84.4, 32.3, 15.1901, 75.4, 25.1, 15.3901, 93.4, 32.3, 15.1901, 75.4, 32.3, 15.1901, 66.4, 1.4, 15.3901, 57.1, 0.800001, 15.3901, 57.1, 0.5, 15.3901, 94, 32.3, 15.1901, 66.4, 11.9, 15.1901, 57.1, 10.7, 15.3901, 57.1, 2.9, 0.390081, 94.9, 10.1, 0.390081, 94.9, 10.4, 0.390081, 92.2, 2.6, 0.390081, 91.9, 2.6, 0.390081, 57.7, -14.2, 0.390081, 74.8, 2.6, 0.390081, 91.9, 18.5, 0.390081, 92.2, 26.9, 0.390081, 74.8, 10.4, 0.390081, 57.7, 10.4, 0.390081, 57.7, 10.1, 0.390081, 55, 2.9, 0.390081, 55, 2.6, 0.390081, 57.7, 18.5, 0.390081, 92.2, 26.9, 0.390081, 83.5, 26.9, 0.390081, 74.8, -5.8, 0.390081, 57.7, -14.2, 0.390081, 57.7, -14.2, 0.390081, 66.1, 26.9, 0.390081, 66.1, 26.9, 0.390081, 57.7, 18.5, 0.390081, 57.7, -14.2, 0.390081, 83.5, -14.2, 0.390081, 92.2, -5.8, 0.390081, 92.2, 18.5, 0.390081, 92.2, 26.9, 0.390081, 92.2, 26.9, 0.390081, 83.5, 2.6, 0.390081, 91.9, 10.4, 0.390081, 92.2, 18.5, 0.390081, 92.2, 26.9, 0.390081, 66.1, 18.5, 0.390081, 57.7, 10.4, 0.390081, 57.7, 26.9, 0.390081, 74.8, 2.6, 0.390081, 57.7, -5.8, 0.390081, 57.7, -14.2, 0.390081, 66.1, -14.2, 0.390081, 74.8, -14.2, 0.390081, 83.5, -5.8, 0.390081, 92.2, 2.6, 0.390081, 91.9, -14.2, 0.390081, 74.8, -13.3, 0.390081, 100, -13.3, 0.390081, 94.6, -15.7, 0.390081, 94.6, -13.3, 0.390081, 100, -15.7, 0.390081, 94.6, -16.6, 0.390081, 93.4, -21.1, 0.390081, 100, -28.6, 0.390081, 78.1, -28.6, 0.390081, 88.9, -16.6, 0.390081, 84.1, -16.6, 0.390081, 74.8, -28.6, 0.390081, 88.9, -28.6, 0.390081, 100, -21.1, 0.390081, 100, -16.6, 0.390081, 93.4, -16.6, 0.390081, 84.1, -28.6, 0.390081, 67.3, -28.6, 0.390081, 78.1, -16.6, 0.390081, 74.8, -16.6, 0.390081, 65.5, -16.6, 0.390081, 65.5, -16.6, 0.390081, 56.5, -28.6, 0.390081, 56.5, -28.6, 0.390081, 67.3, 0.200001, 15.1901, 57.1, 0.200001, 14.3901, 56.5, -7.3, 14.3901, 56.5, -4.3, 14.3901, 56.74, -2.8, 15.1901, 56.86, -7.3, 14.3901, 56.5, -14.5, 14.3901, 56.5, -15.7, 15.1901, 57.4, 0.200001, 15.1901, 57.1, -2.8, 15.1901, 56.86, -4.3, 14.3901, 56.74, -25.6, 15.1901, 84.4, -25.6, 15.1901, 93.4, -19.3, 15.1901, 93.4, -15.7, 15.1901, 57.4, -25.6, 15.1901, 57.4, -25.6, 15.1901, 66.4, -25.6, 15.1901, 84.4, -19.3, 15.1901, 93.4, -12.7, 15.1901, 93.4, 0.5, 15.3901, 94, 0.800001, 15.3901, 57.1, 0.200001, 15.3901, 93.4, 0.800001, 15.3901, 57.1, 0.200001, 15.1901, 57.1, -15.7, 15.1901, 57.4, -15.7, 15.1901, 57.4, -25.6, 15.1901, 66.4, -25.6, 15.1901, 75.4, -25.6, 15.1901, 84.4, -12.7, 15.1901, 93.4, -6.4, 15.1901, 93.4, -25.6, 15.1901, 75.4, -25.6, 15.1901, 84.4, -6.4, 15.1901, 93.4, 0.200001, 15.3901, 93.4, 0.800001, 15.3901, 57.1, -15.7, 15.1901, 57.4, 29.6, 0.390081, 93.4, 28.7, 0.390081, 93.7, 28.4, 0.390081, 94.6, 30.2, 0.390081, 97.3, 28.4, 0.390081, 103.9, 28.7, 0.390081, 105.1, 30.2, 0.390081, 105.1, 30.2, 0.390081, 97.3, 30.2, 0.390081, 97.3, 30.2, 0.390081, 89.8, 29.6, 0.390081, 93.4, 30.2, 0.390081, 82.3, 30.2, 0.390081, 74.8, 29.6, 0.390081, 74.8, 29.6, 0.390081, 84.1, 20.3, 0.390081, 94.6, 12.5, 0.390081, 94.6, 12.5, 0.390081, 103.9, 20.3, 0.390081, 103.9, 30.2, 0.390081, 89.8, 30.2, 0.390081, 82.3, 29.6, 0.390081, 84.1, 29.6, 0.390081, 93.4, 28.4, 0.390081, 103.9, 30.2, 0.390081, 97.3, 28.4, 0.390081, 94.6, 20.3, 0.390081, 94.6, 20.3, 0.390081, 103.9, -8.8, 0.390081, 112.9, -4.3, 0.390081, 112.9, -4, 0.390081, 111.7, -8.8, 0.390081, 106.6, -4, 0.390081, 111.7, 0.5, 0.390081, 111.7, 0.5, 0.390081, 103, -8.8, 0.390081, 100.3, -8.8, 0.390081, 106.6, -13.3, 0.390081, 94.6, -13.3, 0.390081, 100, -8.8, 0.390081, 100.3, -6.4, 0.390081, 94.6, 0.5, 0.390081, 103, 0.5, 0.390081, 94.6, -6.4, 0.390081, 94.6, -8.8, 0.390081, 100.3, 2.9, 0.390081, 103.6, 10.1, 0.390081, 103.6, 10.1, 0.390081, 94.9, 2.9, 0.390081, 94.9, 18.5, 15.3901, 163.6, 24.8, 15.3901, 163.6, 24.8, 15.3901, 154.9, 0.5, 15.3901, 154.9, 0.5, 15.3901, 163.6, 12.5, 15.3901, 163.6, 12.5, 15.3901, 163.6, 18.5, 15.3901, 163.6, 24.8, 15.3901, 154.9, 24.8, 15.3901, 146.5, 0.5, 15.3901, 146.5, 0.5, 15.3901, 154.9, 12.5, 15.3901, 163.6, 0.5, 15.3901, 129.7, 0.5, 15.3901, 138.1, 24.8, 15.3901, 138.1, 24.8, 15.3901, 129.7, 0.5, 15.3901, 146.5, 12.5, 15.3901, 163.6, 24.8, 15.3901, 146.5, 24.8, 15.3901, 138.1, 0.5, 15.3901, 138.1, 24.8, 15.3901, 95.8, 0.5, 15.3901, 95.8, 0.5, 15.3901, 104.2, 24.8, 15.3901, 104.2, 0.5, 15.3901, 121, 0.5, 15.3901, 129.7, 24.8, 15.3901, 129.7, 24.8, 15.3901, 121, 0.5, 15.3901, 104.2, 0.5, 15.3901, 112.6, 24.8, 15.3901, 112.6, 24.8, 15.3901, 104.2, 0.5, 15.3901, 112.6, 0.5, 15.3901, 121, 24.8, 15.3901, 121, 24.8, 15.3901, 112.6, 11.6, 0.390081, 111.7, 11.6, 0.390081, 106.3, 10.1, 0.390081, 106, 10.1, 0.390081, 106, 10.1, 0.390081, 103.6, 2.9, 0.390081, 103.6, 2.9, 0.390081, 111.7, 11.6, 0.390081, 111.7, 10.1, 0.390081, 106, 2.9, 0.390081, 103.6, 30.2, 0.390081, 105.1, 28.7, 0.390081, 105.1, 28.4, 0.390081, 106.3, 30.2, 0.390081, 112, 20.6, 0.390081, 117.4, 23.3, 0.390081, 117.4, 30.2, 0.390081, 112, 28.4, 0.390081, 106.3, 20.6, 0.390081, 106.3, 23.3, 0.390081, 117.4, 23.6, 0.390081, 118.9, 30.2, 0.390081, 118.9, 30.2, 0.390081, 112, 13.4, 0.390081, 113.8, 11, 0.390081, 114.1, 11.3, 0.390081, 117.4, 18.2, 0.390081, 117.4, 11.6, 0.390081, 106.3, 11.6, 0.390081, 111.7, 13.4, 0.390081, 112, 13.4, 0.390081, 112, 18.2, 0.390081, 117.4, 18.2, 0.390081, 106.3, 11.6, 0.390081, 106.3, 13.4, 0.390081, 112, 13.4, 0.390081, 113.8, 18.2, 0.390081, 117.4, -4, 0.390081, 114.1, -4.3, 0.390081, 112.9, -8.8, 0.390081, 112.9, -8.8, 0.390081, 119.5, -8.8, 0.390081, 139.3, -2.8, 0.390081, 139.3, -2.5, 0.390081, 137.8, -8.8, 0.390081, 132.7, -8.8, 0.390081, 132.7, -2.5, 0.390081, 137.8, 0.5, 0.390081, 137.8, 0.5, 0.390081, 125.8, -8.8, 0.390081, 126.1, 0.5, 0.390081, 114.1, -4, 0.390081, 114.1, -8.8, 0.390081, 119.5, -8.8, 0.390081, 126.1, 0.5, 0.390081, 125.8, 9.2, 0.390081, 117.7, 11.3, 0.390081, 117.4, 11, 0.390081, 114.1, 2.9, 0.390081, 114.1, 2.9, 0.390081, 137.8, 9.2, 0.390081, 137.8, 9.2, 0.390081, 127.6, 2.9, 0.390081, 125.8, 9.2, 0.390081, 117.7, 2.9, 0.390081, 114.1, 2.9, 0.390081, 125.8, 9.2, 0.390081, 127.6, 30.2, 0.390081, 118.9, 23.6, 0.390081, 118.9, 23.3, 0.390081, 120.1, 30.2, 0.390081, 129.4, 14.3, 0.390081, 137.8, 14.6, 0.390081, 140.2, 22.4, 0.390081, 140.2, 11.9, 0.390081, 128.8, 11.9, 0.390081, 137.8, 14.3, 0.390081, 137.8, 23.3, 0.390081, 120.1, 11.9, 0.390081, 120.1, 11.9, 0.390081, 128.8, 14.3, 0.390081, 137.8, 22.4, 0.390081, 140.2, 30.2, 0.390081, 129.4, 22.4, 0.390081, 140.2, 30.2, 0.390081, 140.2, 30.2, 0.390081, 129.4, -2.5, 0.390081, 140.5, -2.8, 0.390081, 139.3, -8.8, 0.390081, 139.3, -8.8, 0.390081, 149.5, -8.8, 0.390081, 160, 1.1, 0.390081, 160, 1.4, 0.390081, 158.5, -8.8, 0.390081, 149.5, -8.8, 0.390081, 160, 1.4, 0.390081, 158.5, 10.4, 0.390081, 149.5, 3.8, 0.390081, 140.5, -2.5, 0.390081, 140.5, 10.4, 0.390081, 149.5, 10.4, 0.390081, 140.5, 3.8, 0.390081, 140.5, 1.4, 0.390081, 158.5, 10.4, 0.390081, 158.5, 10.4, 0.390081, 149.5 )
 polygons = [ PoolIntArray( 4, 0, 3 ), PoolIntArray( 0, 1, 3 ), PoolIntArray( 1, 2, 3 ), PoolIntArray( 7, 5, 6 ), PoolIntArray( 11, 8, 10 ), PoolIntArray( 8, 9, 10 ), PoolIntArray( 16, 12, 15 ), PoolIntArray( 12, 13, 15 ), PoolIntArray( 13, 14, 15 ), PoolIntArray( 20, 17, 19 ), PoolIntArray( 17, 18, 19 ), PoolIntArray( 24, 21, 23 ), PoolIntArray( 21, 22, 23 ), PoolIntArray( 28, 25, 27 ), PoolIntArray( 25, 26, 27 ), PoolIntArray( 32, 29, 31 ), PoolIntArray( 29, 30, 31 ), PoolIntArray( 36, 33, 35 ), PoolIntArray( 33, 34, 35 ), PoolIntArray( 40, 37, 39 ), PoolIntArray( 37, 38, 39 ), PoolIntArray( 44, 41, 43 ), PoolIntArray( 41, 42, 43 ), PoolIntArray( 48, 45, 47 ), PoolIntArray( 45, 46, 47 ), PoolIntArray( 52, 49, 51 ), PoolIntArray( 49, 50, 51 ), PoolIntArray( 56, 53, 55 ), PoolIntArray( 53, 54, 55 ), PoolIntArray( 60, 57, 59 ), PoolIntArray( 57, 58, 59 ), PoolIntArray( 64, 61, 63 ), PoolIntArray( 61, 62, 63 ), PoolIntArray( 68, 65, 67 ), PoolIntArray( 65, 66, 67 ), PoolIntArray( 72, 69, 71 ), PoolIntArray( 69, 70, 71 ), PoolIntArray( 76, 73, 75 ), PoolIntArray( 73, 74, 75 ), PoolIntArray( 80, 77, 79 ), PoolIntArray( 77, 78, 79 ), PoolIntArray( 84, 81, 83 ), PoolIntArray( 81, 82, 83 ), PoolIntArray( 88, 85, 87 ), PoolIntArray( 85, 86, 87 ), PoolIntArray( 92, 89, 91 ), PoolIntArray( 89, 90, 91 ), PoolIntArray( 96, 93, 95 ), PoolIntArray( 93, 94, 95 ), PoolIntArray( 101, 97, 100 ), PoolIntArray( 97, 99, 100 ), PoolIntArray( 97, 98, 99 ), PoolIntArray( 104, 102, 103 ), PoolIntArray( 107, 105, 106 ), PoolIntArray( 110, 108, 109 ), PoolIntArray( 116, 111, 115 ), PoolIntArray( 111, 114, 115 ), PoolIntArray( 111, 112, 114 ), PoolIntArray( 112, 113, 114 ), PoolIntArray( 120, 117, 119 ), PoolIntArray( 117, 118, 119 ), PoolIntArray( 126, 121, 125 ), PoolIntArray( 121, 122, 125 ), PoolIntArray( 122, 123, 125 ), PoolIntArray( 123, 124, 125 ), PoolIntArray( 130, 127, 129 ), PoolIntArray( 127, 128, 129 ), PoolIntArray( 133, 131, 132 ), PoolIntArray( 136, 134, 135 ), PoolIntArray( 139, 137, 138 ), PoolIntArray( 142, 140, 141 ), PoolIntArray( 145, 146, 144 ), PoolIntArray( 146, 147, 144 ), PoolIntArray( 147, 143, 144 ), PoolIntArray( 152, 148, 151 ), PoolIntArray( 148, 154, 151 ), PoolIntArray( 148, 153, 154 ), PoolIntArray( 148, 150, 153 ), PoolIntArray( 148, 149, 150 ), PoolIntArray( 158, 155, 157 ), PoolIntArray( 155, 156, 157 ), PoolIntArray( 161, 159, 160 ), PoolIntArray( 164, 162, 163 ), PoolIntArray( 167, 165, 166 ), PoolIntArray( 171, 168, 170 ), PoolIntArray( 168, 169, 170 ), PoolIntArray( 174, 172, 173 ), PoolIntArray( 180, 175, 179 ), PoolIntArray( 175, 178, 179 ), PoolIntArray( 175, 176, 178 ), PoolIntArray( 176, 177, 178 ), PoolIntArray( 183, 181, 182 ), PoolIntArray( 187, 184, 186 ), PoolIntArray( 184, 185, 186 ), PoolIntArray( 193, 188, 192 ), PoolIntArray( 188, 191, 192 ), PoolIntArray( 188, 190, 191 ), PoolIntArray( 188, 189, 190 ), PoolIntArray( 197, 194, 196 ), PoolIntArray( 194, 195, 196 ), PoolIntArray( 200, 198, 199 ), PoolIntArray( 203, 201, 202 ), PoolIntArray( 206, 204, 205 ), PoolIntArray( 209, 207, 208 ), PoolIntArray( 212, 210, 211 ), PoolIntArray( 215, 213, 214 ), PoolIntArray( 219, 216, 218 ), PoolIntArray( 216, 217, 218 ), PoolIntArray( 223, 220, 222 ), PoolIntArray( 220, 221, 222 ), PoolIntArray( 227, 224, 226 ), PoolIntArray( 224, 225, 226 ), PoolIntArray( 230, 228, 229 ), PoolIntArray( 234, 231, 233 ), PoolIntArray( 231, 232, 233 ), PoolIntArray( 238, 235, 237 ), PoolIntArray( 235, 236, 237 ), PoolIntArray( 243, 239, 242 ), PoolIntArray( 239, 241, 242 ), PoolIntArray( 239, 240, 241 ), PoolIntArray( 247, 244, 246 ), PoolIntArray( 244, 245, 246 ), PoolIntArray( 251, 248, 250 ), PoolIntArray( 248, 249, 250 ), PoolIntArray( 254, 255, 253 ), PoolIntArray( 255, 256, 253 ), PoolIntArray( 256, 252, 253 ), PoolIntArray( 260, 261, 259 ), PoolIntArray( 261, 262, 259 ), PoolIntArray( 262, 257, 259 ), PoolIntArray( 257, 258, 259 ), PoolIntArray( 265, 263, 264 ), PoolIntArray( 268, 266, 267 ), PoolIntArray( 271, 269, 270 ), PoolIntArray( 274, 272, 273 ), PoolIntArray( 277, 275, 276 ), PoolIntArray( 280, 278, 279 ), PoolIntArray( 283, 281, 282 ), PoolIntArray( 289, 284, 288 ), PoolIntArray( 284, 285, 288 ), PoolIntArray( 285, 286, 288 ), PoolIntArray( 286, 287, 288 ), PoolIntArray( 293, 290, 292 ), PoolIntArray( 290, 291, 292 ), PoolIntArray( 297, 294, 296 ), PoolIntArray( 294, 295, 296 ), PoolIntArray( 300, 298, 299 ), PoolIntArray( 304, 301, 303 ), PoolIntArray( 301, 302, 303 ), PoolIntArray( 308, 305, 307 ), PoolIntArray( 305, 306, 307 ), PoolIntArray( 312, 309, 311 ), PoolIntArray( 309, 310, 311 ), PoolIntArray( 317, 313, 316 ), PoolIntArray( 313, 314, 316 ), PoolIntArray( 314, 315, 316 ), PoolIntArray( 321, 318, 320 ), PoolIntArray( 318, 319, 320 ), PoolIntArray( 326, 322, 325 ), PoolIntArray( 322, 323, 325 ), PoolIntArray( 323, 324, 325 ), PoolIntArray( 330, 327, 329 ), PoolIntArray( 327, 328, 329 ), PoolIntArray( 334, 331, 333 ), PoolIntArray( 331, 332, 333 ), PoolIntArray( 338, 335, 337 ), PoolIntArray( 335, 336, 337 ), PoolIntArray( 341, 339, 340 ), PoolIntArray( 344, 342, 343 ), PoolIntArray( 348, 345, 347 ), PoolIntArray( 345, 346, 347 ), PoolIntArray( 351, 349, 350 ), PoolIntArray( 355, 352, 354 ), PoolIntArray( 352, 353, 354 ), PoolIntArray( 360, 356, 359 ), PoolIntArray( 356, 358, 359 ), PoolIntArray( 356, 357, 358 ), PoolIntArray( 364, 361, 363 ), PoolIntArray( 361, 362, 363 ), PoolIntArray( 368, 365, 367 ), PoolIntArray( 365, 366, 367 ), PoolIntArray( 372, 369, 371 ), PoolIntArray( 369, 370, 371 ), PoolIntArray( 376, 373, 375 ), PoolIntArray( 373, 374, 375 ), PoolIntArray( 379, 377, 378 ), PoolIntArray( 382, 380, 381 ), PoolIntArray( 386, 383, 385 ), PoolIntArray( 383, 384, 385 ), PoolIntArray( 390, 387, 389 ), PoolIntArray( 387, 388, 389 ), PoolIntArray( 395, 391, 394 ), PoolIntArray( 391, 392, 394 ), PoolIntArray( 392, 393, 394 ), PoolIntArray( 399, 396, 398 ), PoolIntArray( 396, 397, 398 ), PoolIntArray( 403, 400, 402 ), PoolIntArray( 400, 401, 402 ), PoolIntArray( 406, 404, 405 ), PoolIntArray( 410, 407, 409 ), PoolIntArray( 407, 408, 409 ), PoolIntArray( 413, 411, 412 ), PoolIntArray( 417, 414, 416 ), PoolIntArray( 414, 415, 416 ), PoolIntArray( 421, 418, 420 ), PoolIntArray( 418, 419, 420 ), PoolIntArray( 426, 422, 425 ), PoolIntArray( 422, 423, 425 ), PoolIntArray( 423, 424, 425 ), PoolIntArray( 431, 427, 430 ), PoolIntArray( 427, 429, 430 ), PoolIntArray( 427, 428, 429 ), PoolIntArray( 435, 432, 434 ), PoolIntArray( 432, 433, 434 ), PoolIntArray( 439, 436, 438 ), PoolIntArray( 436, 437, 438 ), PoolIntArray( 443, 440, 442 ), PoolIntArray( 440, 441, 442 ), PoolIntArray( 447, 444, 446 ), PoolIntArray( 444, 445, 446 ), PoolIntArray( 450, 448, 449 ), PoolIntArray( 453, 451, 452 ), PoolIntArray( 459, 454, 458 ), PoolIntArray( 454, 457, 458 ), PoolIntArray( 454, 456, 457 ), PoolIntArray( 454, 455, 456 ), PoolIntArray( 462, 460, 461 ), PoolIntArray( 466, 463, 465 ), PoolIntArray( 463, 464, 465 ), PoolIntArray( 469, 467, 468 ), PoolIntArray( 475, 470, 474 ), PoolIntArray( 470, 473, 474 ), PoolIntArray( 470, 472, 473 ), PoolIntArray( 470, 471, 472 ), PoolIntArray( 478, 476, 477 ), PoolIntArray( 481, 479, 480 ) ]
-sample_partition_type/sample_partition_type = 0
-cell/size = 0.3
-cell/height = 0.2
-agent/height = 2.0
-agent/radius = 0.6
-agent/max_climb = 0.9
-agent/max_slope = 45.0
-region/min_size = 8.0
-region/merge_size = 20.0
-edge/max_length = 12.0
-edge/max_error = 1.3
-polygon/verts_per_poly = 6.0
-detail/sample_distance = 6.0
-detail/sample_max_error = 1.0
-filter/low_hanging_obstacles = false
-filter/ledge_spans = false
-filter/filter_walkable_low_height_spans = false
 
 [sub_resource type="GIProbeData" id=4]
 
@@ -98,15 +79,13 @@ energy = 1.8
 bias = 1.417
 normal_bias = 0.0
 propagation = 0.8
-interior = false
-compress = false
 
 [node name="Level" type="Spatial"]
 script = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 2.4, -7.1 )
+is_level_1 = false
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4432, 0.251927, 26.4058 )
@@ -116,117 +95,97 @@ text = "YOU KNOW KUNG FU?"
 shape = SubResource( 2 )
 
 [node name="Navigation" type="Navigation" parent="."]
-up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
 navmesh = SubResource( 3 )
-enabled = true
 
 [node name="Floors" type="Spatial" parent="Navigation/NavigationMeshInstance"]
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x20" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, -9.4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x21" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, 10.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x22" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, 30.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x23" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, 50.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x29" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, -0.653, 50.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x30" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, -0.653, 70.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x31" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, -0.653, 90.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x24" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, 70.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x25" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8, -0.653, 70.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x28" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8, -0.653, 50.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x26" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8, -0.653, 90.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x35" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8, -0.653, 110.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x36" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8, -0.653, 130.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x27" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.799999, -0.653, 90.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x32" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.799999, -0.653, 110.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x33" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.799999, -0.653, 130.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x34" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.799999, -0.653, 150.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Walls" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 
 [node name="Wall 20x1x6" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 3.41649, 0, -1.4934e-07, 1.5, 0, 22.8 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 3.41649, 0, -1.4934e-007, 1.5, 0, 22.8 )
 
 [node name="Wall 20x1x7" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 3.41649, 0, -1.4934e-07, 11.3, 0, 22.8 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 3.41649, 0, -1.4934e-007, 11.3, 0, 22.8 )
 
 [node name="Wall 20x1x8" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.637069, 0, -2.78472e-08, 11.3, 0, 99.2 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 0.637069, 0, -2.78472e-008, 11.3, 0, 99.2 )
 
 [node name="Wall 20x1x23" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.637069, 0, -2.78472e-08, 19.4, 0, 111.9 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 0.637069, 0, -2.78472e-008, 19.4, 0, 111.9 )
 
 [node name="Wall 20x1x24" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 0.637069, 0, 0, 0, 3.5, 0, 0, 0, 1, 16.4, 0, 118.8 )
 
 [node name="Wall 20x1x9" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.980106, 0, -4.28419e-08, 1.7, 0, 102.6 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 0.980106, 0, -4.28419e-008, 1.7, 0, 102.6 )
 
 [node name="Wall 20x1x25" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 1.29374, 0, -5.65513e-08, 1.7, 0, 126.2 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 1.29374, 0, -5.65513e-008, 1.7, 0, 126.2 )
 
 [node name="Wall 20x1x26" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.980106, 0, -4.28419e-08, 10.5, 0, 129 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 0.980106, 0, -4.28419e-008, 10.5, 0, 129 )
 
 [node name="Wall 20x1x11" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -3.8706e-08, -2.52, 3.14722e-08, 0, -1.5299e-07, -1, 3.56654, -4.43671e-07, 5.541e-15, 11, 14.5, 23.7 )
+transform = Transform( -3.8706e-008, -2.52, 3.14722e-008, 0, -1.5299e-007, -1, 3.56654, -4.43671e-007, 5.541e-015, 11, 14.5, 23.7 )
 
 [node name="Wall 20x1x15" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -9.68626e-08, -6.30635, 7.87599e-08, 0, -1.5299e-07, -1, 3.56654, -4.43671e-07, 5.541e-15, 25.3935, 14.5, 128.4 )
+transform = Transform( -9.68626e-008, -6.30635, 7.87599e-008, 0, -1.5299e-007, -1, 3.56654, -4.43671e-007, 5.541e-015, 25.3935, 14.5, 128.4 )
 
 [node name="Wall 20x1x19" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -2.2643e-07, -14.742, 1.84112e-07, 0, -1.5299e-07, -1, 1.85371, -2.30598e-07, 2.87993e-15, 33, 14.4, 75.4 )
+transform = Transform( -2.2643e-007, -14.742, 1.84112e-007, 0, -1.5299e-007, -1, 1.85371, -2.30598e-007, 2.87993e-015, 33, 14.4, 75.4 )
 
 [node name="Wall 20x1x10" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 0.8085, 0, 0, 0, 3.5, 0, 0, 0, 1, 10, 0, -10.5 )
@@ -250,10 +209,10 @@ transform = Transform( 0.8085, 0, 0, 0, 3.5, 0, 0, 0, 1, 19.8, 0, 56.4 )
 transform = Transform( 0.8085, 0, 0, 0, 3.5, 0, 0, 0, 1, -7, 0, 56.4 )
 
 [node name="Wall 20x1x13" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -3.53407e-08, 0, 1, 0, 3.5, 0, -1.81912, 0, -9.83506e-08, 28.2, 0, 74.8 )
+transform = Transform( -3.53407e-008, 0, 1, 0, 3.5, 0, -1.81912, 0, -9.83506e-008, 28.2, 0, 74.8 )
 
 [node name="Wall 20x1x17" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -3.53407e-08, 0, 1, 0, 3.5, 0, -1.81912, 0, -9.83506e-08, -15.5, 0, 74.8 )
+transform = Transform( -3.53407e-008, 0, 1, 0, 3.5, 0, -1.81912, 0, -9.83506e-008, -15.5, 0, 74.8 )
 
 [node name="Wall 20x1x14" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 0.818606, 0, 0, 0, 3.5, 0, 0, 0, 1, 19.9, 0, 93.4 )
@@ -267,422 +226,203 @@ transform = Transform( 0.818606, 0, 0, 0, 3.5, 0, 0, 0, 1, -7, 0, 93.4 )
 
 [node name="OmniLight4" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46509, 8.64949, 0 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight6" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46509, 8.64949, 13 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight7" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46509, 8.64949, 20.8 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight8" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46509, 8.64949, 31.9 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight9" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46509, 8.64949, 43.1 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight11" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.63491, 8.64949, 65.8 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight12" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.16509, 8.64949, 65.8 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight13" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1651, 8.64949, 65.8 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight14" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1651, 8.64949, 76.6 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight15" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1651, 8.64949, 87.1 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight16" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.56509, 8.64949, 87.1 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight19" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.56509, 8.64949, 103.9 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight20" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.56509, 8.64949, 120.9 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight21" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.56509, 8.64949, 145.6 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight17" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33491, 8.64949, 87.1 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight18" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.33491, 8.64949, 72.6 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight5" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.40956, 8.71641, -12.1389 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="Enemy6" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.707106, 0, 0.707106, 0, 1, 0, -0.707106, 0, -0.707106, -11.5, 2.1, 75.9 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy7" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.422618, 0, 0.906307, 0, 1, 0, -0.906307, 0, -0.422618, -11.5, 2.1, 68.6 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy8" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.173648, 0, -0.984807, 0, 1, 0, 0.984807, 0, -0.173648, 16.5, 2.1, 68.6 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy9" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.766044, 0, -0.642787, 0, 1, 0, 0.642787, 0, -0.766044, 16.5, 2.1, 83.6 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy11" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.987906, 0, -0.155052, 0, 1, 0, 0.155052, 0, -0.987906, 8.63527, 2.1, 83.6 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy12" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.976944, 0, 0.213493, 0, 1, 0, -0.213493, 0, -0.976944, -3.25949, 2.1, 83.6 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy13" parent="." instance=ExtResource( 5 )]
 transform = Transform( -0.976944, 0, 0.213493, 0, 1, 0, -0.213493, 0, -0.976944, 1.86405, 2.1, 71.7261 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy10" parent="." instance=ExtResource( 5 )]
 transform = Transform( 0.996194, 0, 0.0871556, 0, 1, 0, -0.0871556, 0, 0.996194, 6.2, 2.1, 136.4 )
 runs_when_wandering = true
+debug = false
 
 [node name="GIProbe" type="GIProbe" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1722, 6.36314, 88.9017 )
-layers = 1
-subdiv = 1
 extents = Vector3( 27.5552, 10, 108.315 )
-dynamic_range = 4
 energy = 1.8
 propagation = 0.8
 bias = 1.417
-normal_bias = 0.0
-interior = false
-compress = false
 data = SubResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -690,313 +430,61 @@ environment = ExtResource( 6 )
 
 [node name="Project Director" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9, 3.5, 87.7 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 7 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix" ]
 
 [node name="Gameplay Design" type="Sprite3D" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11, 3.5, 109.2 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 11, 3.5, 109.2 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 8 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix", "Transform" ]
 
 [node name="Modeling" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6, 3.5, 98.4 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 9 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix" ]
 
 [node name="Level Design" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6, 3.5, 113.1 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 10 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix" ]
 
 [node name="Chef" type="Sprite3D" parent="."]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.8, 3.5, 115.9 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 10.8, 3.5, 115.9 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 11 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix", "Transform" ]
 
 [node name="Programming" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9, 3.5, 87.7 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 12 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix" ]
 
 [node name="Animation" type="Sprite3D" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 22.5, 3.5, 64.3 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 22.5, 3.5, 64.3 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 13 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix", "Transform" ]
 
 [node name="Lighting" type="Sprite3D" parent="."]
 transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -10.1, 3.5, 64.3 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
-flip_h = false
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 14 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix", "Transform" ]
 
 [node name="Sound" type="Sprite3D" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 22.5, 3.5, 76.7 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 22.5, 3.5, 76.7 )
 flip_h = true
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 15 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix", "Transform" ]
 
 [node name="Rigging" type="Sprite3D" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.1, 3.5, 76.7 )
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-centered = true
-offset = Vector2( 0, 0 )
-flip_h = false
-flip_v = false
-modulate = Color( 1, 1, 1, 1 )
-opacity = 1.0
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -10.1, 3.5, 76.7 )
 pixel_size = 0.001
-axis = 2
-transparent = true
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture = ExtResource( 16 )
-vframes = 1
-hframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
-_sections_unfolded = [ "Matrix", "Transform" ]
 
 
 [editable path="Text Trigger"]

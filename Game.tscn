@@ -173,20 +173,15 @@ colors = PoolColorArray( 1, 1, 1, 1 )
 
 [sub_resource type="GradientTexture" id=3]
 
-flags = 4
 gradient = SubResource( 2 )
 width = 1423
-_sections_unfolded = [ "gradient" ]
 
 [sub_resource type="DynamicFont" id=4]
 
 size = 295
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
-use_mipmaps = false
-use_filter = false
 font_data = ExtResource( 2 )
-_sections_unfolded = [ "Fallback", "Font", "Settings", "font_data" ]
 
 [sub_resource type="GDScript" id=5]
 
@@ -198,106 +193,53 @@ func _process(_delta):
 [node name="Game" type="Node"]
 pause_mode = 2
 script = SubResource( 1 )
-_sections_unfolded = [ "Pause", "game_levels", "hard_game_levels", "start_level" ]
 start_level = ExtResource( 1 )
-game_levels = [ "res://TutorialLevel.tscn", "res://Level.tscn", "res://Level3.tscn", "res://Level2.tscn", "res://Level5.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
-hard_game_levels = [ "res://TutorialLevelHard.tscn", "res://Level3Hard.tscn", "res://Level4Hard.tscn", "res://LevelHard.tscn", "res://Level5Hard.tscn", "res://Level2Hard.tscn", "res://Level6Hard.tscn" ]
+game_levels = [ "res://Level2.tscn", "res://Level.tscn", "res://Level3.tscn", "res://Level2.tscn", "res://Level5.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
+hard_game_levels = [ "res://LevelHard.tscn", "res://Level3Hard.tscn", "res://Level4Hard.tscn", "res://LevelHard.tscn", "res://Level5Hard.tscn", "res://Level2Hard.tscn", "res://Level6Hard.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -2.0
 margin_bottom = -2.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Anchor", "Mouse", "Pause", "Rect" ]
 
 [node name="Dead" type="TextureRect" parent="Overlay UI"]
 visible = false
 modulate = Color( 1, 0, 0, 0.552941 )
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = SubResource( 3 )
 expand = true
-stretch_mode = 0
-_sections_unfolded = [ "Material", "Mouse", "Theme", "Visibility", "texture" ]
 
 [node name="Big Text" type="Label" parent="Overlay UI"]
-anchor_left = 0.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -172.0
 margin_bottom = 175.0
 rect_pivot_offset = Vector2( 512, 124 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 script = SubResource( 5 )
-_sections_unfolded = [ "Anchor", "Custom Fonts", "Grow Direction", "Margin", "Rect", "Theme", "custom_fonts", "custom_fonts/font", "custom_styles" ]
 
 [node name="Current Level" type="Node" parent="."]
 pause_mode = 1
-_sections_unfolded = [ "Pause", "Script" ]
 
 [node name="TextSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -3.391
 pitch_scale = 0.8
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
 
 [node name="Audio" type="Node" parent="."]
-_sections_unfolded = [ "Pause" ]
 
 [node name="Uber" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource( 4 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
 
 [node name="Cold" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource( 5 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
 
 [node name="Tween" type="Tween" parent="."]
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
-_sections_unfolded = [ "playback" ]
 

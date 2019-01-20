@@ -19,10 +19,16 @@ config/name="Verycold"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/fps/force_fps=60
+settings/stdout/print_fps=true
+
 [display]
 
 window/size/width=1920
 window/size/height=1080
+window/vsync/use_vsync=false
 
 [input]
 
@@ -126,6 +132,24 @@ common/physics_fps=120
 
 [rendering]
 
+quality/filters/anisotropic_filter_level=1
+quality/directional_shadow/size=2048
+quality/shadow_atlas/size=2048
 quality/shadow_atlas/quadrant_0_subdiv=2
+quality/shadow_atlas/quadrant_2_subdiv=2
+quality/shadow_atlas/quadrant_3_subdiv=3
+quality/shadows/filter_mode=0
+quality/reflections/texture_array_reflections=false
+quality/reflections/high_quality_ggx=false
+quality/shading/force_vertex_shading=true
+quality/shading/force_lambert_over_burley=true
+quality/shading/force_blinn_over_ggx=true
+quality/depth_prepass/enable=false
+quality/subsurface_scattering/quality=0
+quality/subsurface_scattering/scale=0
+quality/subsurface_scattering/weight_samples=false
 quality/voxel_cone_tracing/high_quality=false
+quality/reflections/atlas_size=1024
+quality/reflections/atlas_subdiv=4
 environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false

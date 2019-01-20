@@ -47,31 +47,12 @@ func find_enemies(node : Node):
 [sub_resource type="BoxShape" id=2]
 
 resource_local_to_scene = true
-margin = 0.04
 extents = Vector3( 4.50977, 1, 1.81298 )
-_sections_unfolded = [ "Resource" ]
 
 [sub_resource type="NavigationMesh" id=3]
 
 vertices = PoolVector3Array( -28.8, 0.390081, -38.8671, -28.8, 0.390081, -36.7671, -27.9, 0.390081, -36.4671, -21, 0.390081, -36.4671, -21.6, 0.390081, -38.8671, -6.9, 0.390081, -36.4671, 0.300003, 0.390081, -36.4671, 0.300003, 0.390081, -38.8671, -7.2, 0.390081, -38.8671, -7.2, 0.390081, -38.8671, -14.4, 0.390081, -38.8671, -13.8, 0.390081, -36.4671, -6.9, 0.390081, -36.4671, -14.4, 0.390081, -38.8671, -21.6, 0.390081, -38.8671, -21, 0.390081, -36.4671, -13.8, 0.390081, -36.4671, 10.2, 0.390081, -32.2671, 10.2, 0.390081, -38.8671, 2.7, 0.390081, -38.8671, 2.7, 0.390081, -32.2671, 10.2, 0.390081, -18.7671, 10.2, 0.390081, -25.3671, 2.7, 0.390081, -25.3671, 2.7, 0.390081, -18.7671, 2.7, 0.390081, -18.7671, 2.7, 0.390081, -11.8671, 10.2, 0.390081, -11.8671, 10.2, 0.390081, -18.7671, 10.2, 0.390081, -25.3671, 10.2, 0.390081, -32.2671, 2.7, 0.390081, -32.2671, 2.7, 0.390081, -25.3671, -20.4, 15.3901, -35.5671, -30.6, 15.3901, -35.5671, -30.6, 15.3901, -28.6671, -30.6, 15.3901, 14.2329, -30.6, 15.3901, 21.4329, -20.4, 15.3901, 21.4329, 10.5, 15.3901, -28.6671, 10.5, 15.3901, -35.5671, 0, 15.3901, -35.5671, 0, 15.3901, 21.4329, 10.5, 15.3901, 21.4329, 10.5, 15.3901, 14.2329, -20.4, 15.3901, -35.5671, -30.6, 15.3901, -28.6671, -30.6, 15.3901, -21.4671, 10.5, 15.3901, -21.4671, 10.5, 15.3901, -28.6671, 0, 15.3901, -35.5671, -30.6, 15.3901, 7.0329, -30.6, 15.3901, 14.2329, -20.4, 15.3901, 21.4329, 0, 15.3901, 21.4329, 10.5, 15.3901, 14.2329, 10.5, 15.3901, 7.0329, -20.4, 15.3901, -35.5671, -30.6, 15.3901, -21.4671, -30.6, 15.3901, -14.2671, 10.5, 15.3901, -14.2671, 10.5, 15.3901, -21.4671, 0, 15.3901, -35.5671, -30.6, 15.3901, -0.167095, -30.6, 15.3901, 7.0329, -20.4, 15.3901, 21.4329, -10.2, 15.3901, 21.4329, 0, 15.3901, 21.4329, 10.5, 15.3901, 7.0329, 10.5, 15.3901, -0.167095, -10.2, 15.3901, 21.4329, -10.2, 15.3901, -35.5671, -20.4, 15.3901, -35.5671, -30.6, 15.3901, -14.2671, -30.6, 15.3901, -7.0671, 10.5, 15.3901, -14.2671, 0, 15.3901, -35.5671, -10.2, 15.3901, -35.5671, 10.5, 15.3901, -7.0671, -30.6, 15.3901, -7.0671, -30.6, 15.3901, -0.167095, -10.2, 15.3901, 21.4329, 10.5, 15.3901, -0.167095, 10.5, 15.3901, -7.0671, -10.2, 15.3901, -35.5671, -25.8, 0.390081, -27.1671, -24.9, 0.390081, -25.9671, -24, 0.390081, -26.2671, -24, 0.390081, -28.0671, -23.1, 0.390081, -28.9671, -21.3, 0.390081, -28.6671, -21, 0.390081, -34.0671, -25.8, 0.390081, -27.1671, -24, 0.390081, -28.0671, -23.1, 0.390081, -28.9671, -21, 0.390081, -34.0671, -27.6, 0.390081, -34.0671, -27.6, 0.390081, -26.5671, -17.1, 0.390081, -32.2671, -17.4, 0.390081, -34.0671, -21, 0.390081, -34.0671, -14.1, 0.390081, -28.9671, -14.1, 0.390081, -32.2671, -17.1, 0.390081, -32.2671, -15.9, 0.390081, -28.0671, -20.4, 0.390081, -27.1671, -15.9, 0.390081, -26.8671, -15.9, 0.390081, -28.0671, -17.1, 0.390081, -32.2671, -21, 0.390081, -34.0671, -21.3, 0.390081, -28.6671, -14.1, 0.390081, -32.2671, -14.1, 0.390081, -28.9671, -12.9, 0.390081, -28.6671, -11.7, 0.390081, -32.2671, -6.3, 0.390081, -34.0671, -11.4, 0.390081, -34.0671, -11.7, 0.390081, -32.2671, -8.1, 0.390081, -28.3671, -6.3, 0.390081, -28.9671, -12.3, 0.390081, -27.1671, -8.1, 0.390081, -27.1671, -8.1, 0.390081, -28.3671, -11.7, 0.390081, -32.2671, -12.9, 0.390081, -28.6671, -4.8, 0.390081, -28.0671, -4.8, 0.390081, -26.5671, -2.1, 0.390081, -25.9671, -0.899998, 0.390081, -27.1671, -4.8, 0.390081, -28.0671, -0.899998, 0.390081, -27.1671, 0.300003, 0.390081, -27.1671, 0.300003, 0.390081, -34.0671, -6.3, 0.390081, -34.0671, -6.3, 0.390081, -28.9671, -20.4, 0.390081, -16.6671, -15.9, 0.390081, -16.6671, -15.9, 0.390081, -17.5671, -21.3, 0.390081, -18.4671, -15, 0.390081, -18.4671, -14.1, 0.390081, -18.4671, -14.1, 0.390081, -25.3671, -15, 0.390081, -25.3671, -15.9, 0.390081, -26.8671, -20.4, 0.390081, -27.1671, -21.3, 0.390081, -25.3671, -21.3, 0.390081, -25.3671, -21.3, 0.390081, -18.4671, -15.9, 0.390081, -17.5671, -15, 0.390081, -18.4671, -15, 0.390081, -25.3671, -15.9, 0.390081, -26.8671, -12.3, 0.390081, -17.5671, -12.3, 0.390081, -16.6671, -8.1, 0.390081, -16.6671, -8.1, 0.390081, -17.8671, -14.1, 0.390081, -25.3671, -14.1, 0.390081, -18.4671, -13.2, 0.390081, -18.4671, -13.2, 0.390081, -25.3671, -8.1, 0.390081, -27.1671, -12.3, 0.390081, -27.1671, -12.3, 0.390081, -26.2671, -8.1, 0.390081, -25.9671, -13.2, 0.390081, -25.3671, -13.2, 0.390081, -18.4671, -8.1, 0.390081, -17.8671, -6.6, 0.390081, -18.4671, -6.6, 0.390081, -25.3671, -8.1, 0.390081, -25.9671, -13.2, 0.390081, -18.4671, -12.3, 0.390081, -17.5671, -8.1, 0.390081, -17.8671, -8.1, 0.390081, -25.9671, -12.3, 0.390081, -26.2671, -13.2, 0.390081, -25.3671, -4.8, 0.390081, -16.0671, -2.4, 0.390081, -15.7671, -2.1, 0.390081, -16.3671, -4.8, 0.390081, -17.8671, -1.2, 0.390081, -24.1671, -5.4, 0.390081, -25.3671, -6.6, 0.390081, -25.3671, -6.6, 0.390081, -18.4671, -2.1, 0.390081, -25.9671, -4.8, 0.390081, -26.5671, -5.4, 0.390081, -25.3671, -1.2, 0.390081, -24.1671, -6.6, 0.390081, -18.4671, -4.8, 0.390081, -17.8671, 0.300003, 0.390081, -16.3671, 0.300003, 0.390081, -24.1671, -1.2, 0.390081, -24.1671, -4.8, 0.390081, -17.8671, -2.1, 0.390081, -16.3671, 0.300003, 0.390081, -16.3671, -23.4, 0.390081, -25.3671, -24, 0.390081, -26.2671, -24.9, 0.390081, -25.9671, -25.2, 0.390081, -24.4671, -27.6, 0.390081, -16.6671, -24, 0.390081, -16.6671, -23.7, 0.390081, -18.1671, -25.2, 0.390081, -24.4671, -27.6, 0.390081, -24.4671, -21.3, 0.390081, -25.3671, -23.4, 0.390081, -25.3671, -25.2, 0.390081, -24.4671, -23.7, 0.390081, -18.1671, -21.3, 0.390081, -18.4671, -35.7, 0.390081, 8.2329, -30, 0.390081, 8.2329, -30, 0.390081, 1.3329, -30, 0.390081, -12.4671, -30, 0.390081, -19.0671, -39.3, 0.390081, -19.0671, -39.3, 0.390081, -19.0671, -48.6, 0.390081, -19.0671, -48.6, 0.390081, -12.1671, -48.6, 0.390081, 9.43291, -36, 0.390081, 9.43291, -35.7, 0.390081, 8.2329, -48.6, 0.390081, 2.2329, -39.3, 0.390081, -19.0671, -48.6, 0.390081, -12.1671, -48.6, 0.390081, -4.9671, -35.7, 0.390081, 8.2329, -30, 0.390081, 1.3329, -30, 0.390081, -5.5671, -30, 0.390081, -5.5671, -30, 0.390081, -12.4671, -39.3, 0.390081, -19.0671, -48.6, 0.390081, -4.9671, -48.6, 0.390081, 2.2329, -35.7, 0.390081, 8.2329, -27.6, 0.390081, -2.5671, -26.1, 0.390081, -2.8671, -25.8, 0.390081, -4.6671, -25.8, 0.390081, -4.6671, -23.7, 0.390081, -4.6671, -24, 0.390081, -7.0671, -24, 0.390081, -15.7671, -24, 0.390081, -16.6671, -27.6, 0.390081, -16.6671, -23.1, 0.390081, -14.8671, -24, 0.390081, -15.7671, -27.6, 0.390081, -16.6671, -27.6, 0.390081, -9.7671, -27.6, 0.390081, -9.7671, -27.6, 0.390081, -2.5671, -25.8, 0.390081, -4.6671, -24, 0.390081, -7.0671, -27.6, 0.390081, -9.7671, -23.1, 0.390081, -7.9671, -21.6, 0.390081, -7.9671, -21.6, 0.390081, -14.8671, -23.1, 0.390081, -14.8671, -27.6, 0.390081, -9.7671, -24, 0.390081, -7.0671, -23.1, 0.390081, -7.9671, -20.4, 0.390081, -6.1671, -15.9, 0.390081, -6.1671, -15.9, 0.390081, -7.0671, -20.7, 0.390081, -7.3671, -15.9, 0.390081, -15.7671, -15.9, 0.390081, -16.6671, -20.4, 0.390081, -16.6671, -15, 0.390081, -14.8671, -20.7, 0.390081, -15.4671, -21.6, 0.390081, -14.8671, -21.6, 0.390081, -7.9671, -15.9, 0.390081, -7.0671, -14.1, 0.390081, -7.9671, -15.9, 0.390081, -15.7671, -20.4, 0.390081, -16.6671, -20.7, 0.390081, -15.4671, -15, 0.390081, -14.8671, -14.1, 0.390081, -7.9671, -14.1, 0.390081, -14.8671, -15, 0.390081, -14.8671, -21.6, 0.390081, -7.9671, -20.7, 0.390081, -7.3671, -15.9, 0.390081, -7.0671, -2.4, 0.390081, -15.7671, -4.8, 0.390081, -16.0671, -5.7, 0.390081, -14.8671, -2.4, 0.390081, -10.9671, -8.1, 0.390081, -16.6671, -12.3, 0.390081, -16.6671, -12.3, 0.390081, -15.7671, -8.1, 0.390081, -15.4671, -14.1, 0.390081, -7.9671, -12.9, 0.390081, -7.6671, -7.8, 0.390081, -7.6671, -12.3, 0.390081, -6.1671, -8.1, 0.390081, -6.1671, -7.8, 0.390081, -7.6671, -12.9, 0.390081, -7.6671, -7.8, 0.390081, -7.6671, -6, 0.390081, -7.9671, -2.4, 0.390081, -10.9671, -7.2, 0.390081, -14.8671, -13.2, 0.390081, -14.8671, -14.1, 0.390081, -7.9671, -2.4, 0.390081, -10.9671, -5.7, 0.390081, -14.8671, -7.2, 0.390081, -14.8671, -8.1, 0.390081, -15.4671, -12.3, 0.390081, -15.7671, -13.2, 0.390081, -14.8671, -7.2, 0.390081, -14.8671, -13.2, 0.390081, -14.8671, -14.1, 0.390081, -14.8671, -14.1, 0.390081, -7.9671, -2.1, 0.390081, -10.3671, -2.4, 0.390081, -10.9671, -6, 0.390081, -7.9671, -4.8, 0.390081, -7.0671, 0.300003, 0.390081, -4.3671, -4.8, 0.390081, -4.9671, -6.6, 0.390081, -4.3671, -6.6, 0.390081, 2.5329, -5.1, 0.390081, 2.8329, 0.300003, 0.390081, 1.9329, -2.1, 0.390081, -10.3671, -4.8, 0.390081, -7.0671, -4.8, 0.390081, -4.9671, 0.300003, 0.390081, -4.3671, 0.300003, 0.390081, -10.3671, 2.7, 0.390081, -0.167095, 9.3, 0.390081, -0.167095, 9.3, 0.390081, -9.1671, 2.7, 0.390081, -9.1671, -23.7, 0.390081, 1.6329, -22.8, 0.390081, 2.5329, -21.3, 0.390081, 2.5329, -15.9, 0.390081, -5.2671, -15.9, 0.390081, -6.1671, -20.4, 0.390081, -6.1671, -21.3, 0.390081, 2.5329, -20.7, 0.390081, 3.4329, -15.9, 0.390081, 3.4329, -15.9, 0.390081, -5.2671, -20.4, 0.390081, -6.1671, -21.3, 0.390081, -4.3671, -15, 0.390081, -4.3671, -21.3, 0.390081, 2.5329, -15.9, 0.390081, 3.4329, -15, 0.390081, 2.5329, -15, 0.390081, -4.3671, -21.3, 0.390081, -4.3671, -23.7, 0.390081, 1.6329, -15, 0.390081, 2.5329, -14.1, 0.390081, 2.5329, -14.1, 0.390081, -4.3671, -15, 0.390081, -4.3671, -21.3, 0.390081, -4.3671, -23.4, 0.390081, -4.3671, -23.7, 0.390081, 1.6329, -8.4, 0.390081, 6.1329, -7.8, 0.390081, 5.8329, -8.1, 0.390081, 3.1329, -12.3, 0.390081, 3.4329, -12.3, 0.390081, 5.2329, -12.3, 0.390081, 5.2329, -13.2, 0.390081, 6.1329, -8.4, 0.390081, 6.1329, -8.1, 0.390081, -6.1671, -12.3, 0.390081, -6.1671, -12.3, 0.390081, -5.2671, -8.1, 0.390081, -4.9671, -13.2, 0.390081, -4.3671, -13.2, 0.390081, 2.5329, -8.1, 0.390081, 3.1329, -6.6, 0.390081, 2.5329, -6.6, 0.390081, -4.3671, -8.1, 0.390081, -4.9671, -8.1, 0.390081, -4.9671, -12.3, 0.390081, -5.2671, -13.2, 0.390081, -4.3671, -14.1, 0.390081, -4.3671, -14.1, 0.390081, 2.5329, -13.2, 0.390081, 2.5329, -13.2, 0.390081, -4.3671, -13.2, 0.390081, 2.5329, -12.3, 0.390081, 3.4329, -8.1, 0.390081, 3.1329, -24, 0.390081, 3.1329, -22.8, 0.390081, 2.5329, -23.7, 0.390081, 1.6329, -25.8, 0.390081, 1.6329, -14.1, 0.390081, 8.2329, -13.8, 0.390081, 6.1329, -15, 0.390081, 6.1329, -25.8, 0.390081, 1.6329, -27.6, 0.390081, -0.767097, -27.6, 0.390081, 8.2329, -24, 0.390081, 5.2329, -25.8, 0.390081, 1.6329, -26.1, 0.390081, -0.467098, -27.6, 0.390081, -0.767097, -14.1, 0.390081, 8.2329, -15, 0.390081, 6.1329, -15.9, 0.390081, 5.2329, -20.7, 0.390081, 5.5329, -21, 0.390081, 8.2329, -24, 0.390081, 5.2329, -24, 0.390081, 3.1329, -25.8, 0.390081, 1.6329, -15.9, 0.390081, 5.2329, -15.9, 0.390081, 3.4329, -20.7, 0.390081, 3.4329, -20.7, 0.390081, 5.5329, -27.6, 0.390081, 8.2329, -23.1, 0.390081, 6.1329, -24, 0.390081, 5.2329, -23.1, 0.390081, 6.1329, -27.6, 0.390081, 8.2329, -21, 0.390081, 8.2329, -20.7, 0.390081, 5.5329, 2.7, 0.390081, 2.2329, 1.5, 0.390081, 2.5329, 1.5, 0.390081, 8.2329, 9.3, 0.390081, -0.167095, 2.7, 0.390081, -0.167095, 2.7, 0.390081, 2.2329, 2.7, 0.390081, 2.2329, 1.5, 0.390081, 8.2329, 9.3, 0.390081, 8.2329, 9.3, 0.390081, -0.167095, -7.8, 0.390081, 5.8329, -8.4, 0.390081, 6.1329, -8.1, 0.390081, 8.2329, 1.5, 0.390081, 8.2329, -5.7, 0.390081, 6.1329, 1.5, 0.390081, 8.2329, 1.5, 0.390081, 2.5329, 0.600002, 0.390081, 2.5329, -4.8, 0.390081, 5.2329, -5.7, 0.390081, 6.1329, 0.600002, 0.390081, 2.5329, 0.300003, 0.390081, 1.9329, -5.1, 0.390081, 2.8329, -4.8, 0.390081, 5.2329, -30, 0.390081, 20.2329, -30, 0.390081, 10.6329, -35.7, 0.390081, 10.6329, -39.3, 0.390081, 20.2329, -39.3, 0.390081, 20.2329, -35.7, 0.390081, 10.6329, -36, 0.390081, 9.43291, -48.6, 0.390081, 9.43291, -48.6, 0.390081, 20.2329, -27.6, 0.390081, 10.6329, -27.6, 0.390081, 20.2329, -18.3, 0.390081, 20.2329, -18.3, 0.390081, 10.6329, 0.600002, 0.390081, 10.6329, -8.7, 0.390081, 10.6329, -8.7, 0.390081, 20.2329, 0.600002, 0.390081, 20.2329, 0.600002, 0.390081, 20.2329, 10.2, 0.390081, 20.2329, 10.2, 0.390081, 10.6329, 0.600002, 0.390081, 10.6329, -8.7, 0.390081, 10.6329, -18.3, 0.390081, 10.6329, -18.3, 0.390081, 20.2329, -8.7, 0.390081, 20.2329 )
 polygons = [ PoolIntArray( 4, 0, 3 ), PoolIntArray( 0, 2, 3 ), PoolIntArray( 0, 1, 2 ), PoolIntArray( 8, 5, 7 ), PoolIntArray( 5, 6, 7 ), PoolIntArray( 12, 9, 11 ), PoolIntArray( 9, 10, 11 ), PoolIntArray( 16, 13, 15 ), PoolIntArray( 13, 14, 15 ), PoolIntArray( 20, 17, 19 ), PoolIntArray( 17, 18, 19 ), PoolIntArray( 24, 21, 23 ), PoolIntArray( 21, 22, 23 ), PoolIntArray( 28, 25, 27 ), PoolIntArray( 25, 26, 27 ), PoolIntArray( 32, 29, 31 ), PoolIntArray( 29, 30, 31 ), PoolIntArray( 35, 33, 34 ), PoolIntArray( 38, 36, 37 ), PoolIntArray( 41, 39, 40 ), PoolIntArray( 44, 42, 43 ), PoolIntArray( 47, 45, 46 ), PoolIntArray( 50, 48, 49 ), PoolIntArray( 53, 51, 52 ), PoolIntArray( 56, 54, 55 ), PoolIntArray( 59, 57, 58 ), PoolIntArray( 62, 60, 61 ), PoolIntArray( 66, 63, 65 ), PoolIntArray( 63, 64, 65 ), PoolIntArray( 70, 67, 69 ), PoolIntArray( 67, 68, 69 ), PoolIntArray( 74, 71, 73 ), PoolIntArray( 71, 72, 73 ), PoolIntArray( 78, 75, 77 ), PoolIntArray( 75, 76, 77 ), PoolIntArray( 84, 79, 83 ), PoolIntArray( 79, 82, 83 ), PoolIntArray( 79, 80, 82 ), PoolIntArray( 80, 81, 82 ), PoolIntArray( 88, 85, 87 ), PoolIntArray( 85, 86, 87 ), PoolIntArray( 91, 89, 90 ), PoolIntArray( 97, 92, 96 ), PoolIntArray( 92, 93, 96 ), PoolIntArray( 93, 94, 96 ), PoolIntArray( 94, 95, 96 ), PoolIntArray( 100, 98, 99 ), PoolIntArray( 104, 101, 103 ), PoolIntArray( 101, 102, 103 ), PoolIntArray( 110, 105, 109 ), PoolIntArray( 105, 108, 109 ), PoolIntArray( 105, 107, 108 ), PoolIntArray( 105, 106, 107 ), PoolIntArray( 114, 111, 113 ), PoolIntArray( 111, 112, 113 ), PoolIntArray( 119, 115, 118 ), PoolIntArray( 115, 117, 118 ), PoolIntArray( 115, 116, 117 ), PoolIntArray( 124, 120, 123 ), PoolIntArray( 120, 122, 123 ), PoolIntArray( 120, 121, 122 ), PoolIntArray( 128, 125, 127 ), PoolIntArray( 125, 126, 127 ), PoolIntArray( 134, 129, 133 ), PoolIntArray( 129, 130, 133 ), PoolIntArray( 130, 131, 133 ), PoolIntArray( 131, 132, 133 ), PoolIntArray( 138, 135, 137 ), PoolIntArray( 135, 136, 137 ), PoolIntArray( 142, 139, 141 ), PoolIntArray( 139, 140, 141 ), PoolIntArray( 145, 143, 144 ), PoolIntArray( 151, 146, 150 ), PoolIntArray( 146, 149, 150 ), PoolIntArray( 146, 148, 149 ), PoolIntArray( 146, 147, 148 ), PoolIntArray( 155, 152, 154 ), PoolIntArray( 152, 153, 154 ), PoolIntArray( 159, 156, 158 ), PoolIntArray( 156, 157, 158 ), PoolIntArray( 163, 160, 162 ), PoolIntArray( 160, 161, 162 ), PoolIntArray( 169, 164, 168 ), PoolIntArray( 164, 167, 168 ), PoolIntArray( 164, 166, 167 ), PoolIntArray( 164, 165, 166 ), PoolIntArray( 172, 170, 171 ), PoolIntArray( 175, 173, 174 ), PoolIntArray( 179, 176, 178 ), PoolIntArray( 176, 177, 178 ), PoolIntArray( 183, 180, 182 ), PoolIntArray( 180, 181, 182 ), PoolIntArray( 187, 184, 186 ), PoolIntArray( 184, 185, 186 ), PoolIntArray( 192, 188, 191 ), PoolIntArray( 188, 189, 191 ), PoolIntArray( 189, 190, 191 ), PoolIntArray( 195, 193, 194 ), PoolIntArray( 199, 196, 198 ), PoolIntArray( 196, 197, 198 ), PoolIntArray( 204, 200, 203 ), PoolIntArray( 200, 202, 203 ), PoolIntArray( 200, 201, 202 ), PoolIntArray( 209, 205, 208 ), PoolIntArray( 205, 206, 208 ), PoolIntArray( 206, 207, 208 ), PoolIntArray( 212, 210, 211 ), PoolIntArray( 215, 213, 214 ), PoolIntArray( 218, 216, 217 ), PoolIntArray( 222, 219, 221 ), PoolIntArray( 219, 220, 221 ), PoolIntArray( 225, 223, 224 ), PoolIntArray( 228, 226, 227 ), PoolIntArray( 234, 229, 233 ), PoolIntArray( 229, 232, 233 ), PoolIntArray( 229, 230, 232 ), PoolIntArray( 230, 231, 232 ), PoolIntArray( 237, 235, 236 ), PoolIntArray( 240, 238, 239 ), PoolIntArray( 243, 241, 242 ), PoolIntArray( 247, 244, 246 ), PoolIntArray( 244, 245, 246 ), PoolIntArray( 251, 248, 250 ), PoolIntArray( 248, 249, 250 ), PoolIntArray( 256, 252, 255 ), PoolIntArray( 252, 253, 255 ), PoolIntArray( 253, 254, 255 ), PoolIntArray( 259, 257, 258 ), PoolIntArray( 263, 260, 262 ), PoolIntArray( 260, 261, 262 ), PoolIntArray( 266, 264, 265 ), PoolIntArray( 272, 267, 271 ), PoolIntArray( 267, 270, 271 ), PoolIntArray( 267, 268, 270 ), PoolIntArray( 268, 269, 270 ), PoolIntArray( 276, 273, 275 ), PoolIntArray( 273, 274, 275 ), PoolIntArray( 279, 277, 278 ), PoolIntArray( 282, 280, 281 ), PoolIntArray( 286, 283, 285 ), PoolIntArray( 283, 284, 285 ), PoolIntArray( 290, 287, 289 ), PoolIntArray( 287, 288, 289 ), PoolIntArray( 293, 291, 292 ), PoolIntArray( 297, 294, 296 ), PoolIntArray( 294, 295, 296 ), PoolIntArray( 303, 298, 302 ), PoolIntArray( 298, 299, 302 ), PoolIntArray( 299, 301, 302 ), PoolIntArray( 299, 300, 301 ), PoolIntArray( 306, 304, 305 ), PoolIntArray( 310, 307, 309 ), PoolIntArray( 307, 308, 309 ), PoolIntArray( 313, 311, 312 ), PoolIntArray( 317, 314, 316 ), PoolIntArray( 314, 315, 316 ), PoolIntArray( 323, 318, 322 ), PoolIntArray( 318, 321, 322 ), PoolIntArray( 318, 319, 321 ), PoolIntArray( 319, 320, 321 ), PoolIntArray( 328, 324, 327 ), PoolIntArray( 324, 325, 327 ), PoolIntArray( 325, 326, 327 ), PoolIntArray( 332, 329, 331 ), PoolIntArray( 329, 330, 331 ), PoolIntArray( 335, 333, 334 ), PoolIntArray( 338, 336, 337 ), PoolIntArray( 341, 339, 340 ), PoolIntArray( 345, 342, 344 ), PoolIntArray( 342, 343, 344 ), PoolIntArray( 351, 346, 350 ), PoolIntArray( 346, 347, 350 ), PoolIntArray( 347, 348, 350 ), PoolIntArray( 348, 349, 350 ), PoolIntArray( 355, 352, 354 ), PoolIntArray( 352, 353, 354 ), PoolIntArray( 358, 356, 357 ), PoolIntArray( 363, 359, 362 ), PoolIntArray( 359, 360, 362 ), PoolIntArray( 360, 361, 362 ), PoolIntArray( 366, 364, 365 ), PoolIntArray( 370, 367, 369 ), PoolIntArray( 367, 368, 369 ), PoolIntArray( 376, 371, 375 ), PoolIntArray( 371, 374, 375 ), PoolIntArray( 371, 373, 374 ), PoolIntArray( 371, 372, 373 ), PoolIntArray( 379, 377, 378 ), PoolIntArray( 383, 380, 382 ), PoolIntArray( 380, 381, 382 ), PoolIntArray( 386, 384, 385 ), PoolIntArray( 390, 387, 389 ), PoolIntArray( 387, 388, 389 ), PoolIntArray( 393, 391, 392 ), PoolIntArray( 397, 394, 396 ), PoolIntArray( 394, 395, 396 ), PoolIntArray( 400, 398, 399 ), PoolIntArray( 405, 401, 404 ), PoolIntArray( 401, 402, 404 ), PoolIntArray( 402, 403, 404 ), PoolIntArray( 408, 406, 407 ), PoolIntArray( 412, 409, 411 ), PoolIntArray( 409, 410, 411 ), PoolIntArray( 415, 413, 414 ), PoolIntArray( 419, 416, 418 ), PoolIntArray( 416, 417, 418 ), PoolIntArray( 422, 420, 421 ), PoolIntArray( 425, 423, 424 ), PoolIntArray( 429, 426, 428 ), PoolIntArray( 426, 427, 428 ), PoolIntArray( 434, 430, 433 ), PoolIntArray( 430, 431, 433 ), PoolIntArray( 431, 432, 433 ), PoolIntArray( 439, 435, 438 ), PoolIntArray( 435, 437, 438 ), PoolIntArray( 435, 436, 437 ), PoolIntArray( 443, 440, 442 ), PoolIntArray( 440, 441, 442 ), PoolIntArray( 447, 444, 446 ), PoolIntArray( 444, 445, 446 ), PoolIntArray( 452, 448, 451 ), PoolIntArray( 448, 449, 451 ), PoolIntArray( 449, 450, 451 ), PoolIntArray( 456, 453, 455 ), PoolIntArray( 453, 454, 455 ), PoolIntArray( 460, 457, 459 ), PoolIntArray( 457, 458, 459 ), PoolIntArray( 464, 461, 463 ), PoolIntArray( 461, 462, 463 ), PoolIntArray( 468, 465, 467 ), PoolIntArray( 465, 466, 467 ) ]
-sample_partition_type/sample_partition_type = 0
-cell/size = 0.3
-cell/height = 0.2
-agent/height = 2.0
-agent/radius = 0.6
-agent/max_climb = 0.9
-agent/max_slope = 45.0
-region/min_size = 8.0
-region/merge_size = 20.0
-edge/max_length = 12.0
-edge/max_error = 1.3
-polygon/verts_per_poly = 6.0
-detail/sample_distance = 6.0
-detail/sample_max_error = 1.0
-filter/low_hanging_obstacles = false
-filter/ledge_spans = false
-filter/filter_walkable_low_height_spans = false
 
 [sub_resource type="GIProbeData" id=4]
 
@@ -84,15 +65,13 @@ energy = 1.61
 bias = 1.322
 normal_bias = 0.0
 propagation = 0.78
-interior = false
-compress = false
 
 [node name="Level" type="Spatial"]
 script = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 2.4, -7.1 )
+is_level_1 = false
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.14323, 0.251927, -2.2942 )
@@ -102,60 +81,49 @@ text = "THEY'RE IN MY WORLD NOW"
 shape = SubResource( 2 )
 
 [node name="Navigation" type="Navigation" parent="."]
-up_vector = Vector3( 0, 1, 0 )
 
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
 navmesh = SubResource( 3 )
-enabled = true
 
 [node name="Floors" type="Spatial" parent="Navigation/NavigationMeshInstance"]
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x20" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, -9.4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x21" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, -0.653, 10.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x22" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, -0.653, 10.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x23" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.2, -0.653, 10.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x24" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.2, -0.653, -9.4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x25" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, -0.653, -9.4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x26" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2, -0.653, -29.4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="FloorTiled20x27" parent="Navigation/NavigationMeshInstance/Floors" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.799999, -0.653, -29.4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Walls" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 
 [node name="Wall 20x1x4" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 0.952875, 0, -4.16515e-08, 10.5, 0, -0.500002 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 0.952875, 0, -4.16515e-008, 10.5, 0, -0.500002 )
 
 [node name="Wall 20x1x6" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 2.86671, 0, -1.25308e-07, 1.5, 0, -27 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 2.86671, 0, -1.25308e-007, 1.5, 0, -27 )
 
 [node name="Wall 20x1x8" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 3.5, 0, 3.25908, 0, -1.42459e-07, -28.9, 0, -3.3 )
+transform = Transform( -4.37114e-008, 0, -1, 0, 3.5, 0, 3.25908, 0, -1.42459e-007, -28.9, 0, -3.3 )
 
 [node name="Wall 20x1x11" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
-transform = Transform( -1.61275e-07, -10.5, 1.31134e-07, 0, -1.5299e-07, -1, 2.89012, -3.59526e-07, 4.49012e-15, 11, 14.5, -7 )
+transform = Transform( -1.61275e-007, -10.5, 1.31134e-007, 0, -1.5299e-007, -1, 2.89012, -3.59526e-007, 4.49012e-015, 11, 14.5, -7 )
 
 [node name="Wall 20x1x10" parent="Navigation/NavigationMeshInstance/Walls" instance=ExtResource( 4 )]
 transform = Transform( 0.8085, 0, 0, 0, 3.5, 0, 0, 0, 1, 10, 0, -10.5 )
@@ -170,372 +138,213 @@ transform = Transform( 2.31, 0, 0, 0, 3.5, 0, 0, 0, 1, -12.1, 0, 9.5 )
 
 [node name="Pillar" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -6.5, 0, 4.3 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar8" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -6.5, 0, -16.7 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar4" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -14.1, 0, 4.3 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar9" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -14.1, 0, -16.7 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar6" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -22.3, 0, 4.3 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar10" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -22.3, 0, -16.7 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar2" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -6.5, 0, -6.1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar11" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -6.5, 0, -27.1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar3" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -14.1, 0, -6.1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar12" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -14.1, 0, -27.1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar5" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -22.3, 0, -6.1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pillar7" parent="Navigation/NavigationMeshInstance/Pillars" instance=ExtResource( 5 )]
 transform = Transform( 2, 0, 0, 0, 7, 0, 0, 0, 2, -22.3, 0, -27.1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Clutter" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 
 [node name="Bench" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 6 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -9.6, 0, 7.7 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Bench2" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 6 )]
-transform = Transform( -6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, -1, 0, -14.8 )
-_sections_unfolded = [ "Transform" ]
+transform = Transform( -6.55671e-008, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-008, -1, 0, -14.8 )
 
 [node name="Bench3" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 6 )]
-transform = Transform( -1.5, 0, -1.31134e-07, 0, 1.5, 0, 1.31134e-07, 0, -1.5, -16, 0, -33.8 )
-_sections_unfolded = [ "Transform" ]
+transform = Transform( -1.5, 0, -1.31134e-007, 0, 1.5, 0, 1.31134e-007, 0, -1.5, -16, 0, -33.8 )
 
 [node name="Counter" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 7 )]
-transform = Transform( -5.24537e-08, 0, 1.2, 0, 1.2, 0, -1.2, 0, -5.24537e-08, -24.7, 0, -2.1 )
-_sections_unfolded = [ "Transform" ]
+transform = Transform( -5.24537e-008, 0, 1.2, 0, 1.2, 0, -1.2, 0, -5.24537e-008, -24.7, 0, -2.1 )
 
 [node name="Chair" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1, -26.4, 0, -1.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Chair2" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 8 )]
 transform = Transform( -0.573576, 0, 0.819152, 0, 1.25, 0, -0.819152, 0, -0.573576, -26.4, 0, -25.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Chair3" parent="Navigation/NavigationMeshInstance/Clutter" instance=ExtResource( 8 )]
 transform = Transform( 0.766044, 0, 0.642788, 0, 1.25, 0, -0.642788, 0, 0.766044, -0.4, 0, -25.6 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="OmniLight" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.42945, 8.64949, 0 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight4" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46509, 8.64949, 0 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight5" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.40956, 8.71641, -12.1389 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight6" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.40956, 8.71641, -23.1389 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight10" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4096, 8.71641, -19.1389 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight11" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4096, 8.71641, -18.1389 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight9" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.40956, 8.71641, -31.1389 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight2" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0324, 8.64949, 0 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight3" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1963, 8.64949, -9.39021 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight7" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1963, 8.64949, -22.3902 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="OmniLight8" type="OmniLight" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1963, 8.64949, -30.3902 )
-layers = 1
-light_color = Color( 1, 1, 1, 1 )
 light_energy = 0.5
 light_indirect_energy = 2.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
-shadow_enabled = false
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_bias = 0.15
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
+light_bake_mode = 2
 omni_range = 15.874
-omni_attenuation = 1.0
-omni_shadow_mode = 1
-omni_shadow_detail = 1
-_sections_unfolded = [ "Omni" ]
+omni_shadow_mode = 0
+omni_shadow_detail = 0
 
 [node name="Enemy3" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, -8.6, 2.1, -18.9 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy4" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, -22.6, 2.1, -18.9 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy9" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, 0.573577, 0, 1, 0, -0.573577, 0, 0.819152, -21.6, 2.1, -28.9 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy10" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -7.6, 2.1, -28.9 )
 is_wandering = true
+debug = false
 
 [node name="Enemy12" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, -2.6, 2.1, -31.9 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy5" parent="." instance=ExtResource( 9 )]
 transform = Transform( -0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, -26.6, 2.1, 5.2 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy8" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, -22.2, 2.1, -9.1 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy6" parent="." instance=ExtResource( 9 )]
 transform = Transform( -0.939692, 0, 0.34202, 0, 1, 0, -0.34202, 0, -0.939692, -16.8, 2.1, 4.5 )
 runs_when_wandering = true
+debug = false
 
 [node name="Enemy7" parent="." instance=ExtResource( 9 )]
 transform = Transform( 0.906308, 0, 0.422619, 0, 1, 0, -0.422619, 0, 0.906308, -8.8, 2.1, -6.2 )
 runs_when_wandering = true
+debug = false
 
 [node name="GIProbe" type="GIProbe" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2278, 6.36314, -12.3983 )
-layers = 1
-subdiv = 1
 extents = Vector3( 29.0616, 10, 46.2445 )
-dynamic_range = 4
 energy = 1.61
 propagation = 0.78
 bias = 1.322
-normal_bias = 0.0
-interior = false
-compress = false
 data = SubResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
