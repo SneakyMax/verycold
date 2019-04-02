@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/scorch_01.png-c7effb9bd03a76db8b6d6debd20c909f.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

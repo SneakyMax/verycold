@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/crosshair170.png-2257ba6756a762d3588a6a272ff795f6.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

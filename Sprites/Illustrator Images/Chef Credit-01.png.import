@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/Chef Credit-01.png-397ed104ba8757c84b790fbfd8d350ac.s3tc.stex"
 path.etc2="res://.import/Chef Credit-01.png-397ed104ba8757c84b790fbfd8d350ac.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
 
 [deps]
 

@@ -9,9 +9,6 @@
 [sub_resource type="PhysicsMaterial" id=1]
 
 friction = 0.97
-rough = false
-bounce = 0.0
-absorbent = false
 
 [sub_resource type="GDScript" id=2]
 
@@ -26,6 +23,8 @@ export(float, 0, 200) var joy_aim_sensitivity_y = 1
 export(float, 0, 1000) var gun_speed = 1
 export(float, 0, 100) var jump_force = 1
 export(bool) var is_level_1
+
+var count_down = 2
 
 var stop_factor = 0.88
 
@@ -154,6 +153,11 @@ func _process(delta):
 		sqr_strength(\"move_forward\") - sqr_strength(\"move_backward\")
 		)
 	
+	if count_down < 0:
+		count_down -= 1
+		if count_down == 0:
+			camera.visible = false
+	
 	anim.set_dual(\"can_throw\", canThrow)
 	
 	desiredMoveVector = moveVector#.normalized()
@@ -241,47 +245,26 @@ func _on_Pick_Up_Gun_area_entered(area):
 
 [sub_resource type="CapsuleShape" id=3]
 
-margin = 0.04
 radius = 0.55387
 height = 2.50823
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=6]
 
-margin = 0.04
 extents = Vector3( 4.10969, 1.75175, 0.276674 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=7]
 
-margin = 0.04
 extents = Vector3( 0.400685, 0.400041, 0.860694 )
 
 [node name="Player" type="RigidBody"]
-input_ray_pickable = true
-input_capture_on_drag = false
 collision_layer = 4
-collision_mask = 1
 mode = 2
-mass = 1.0
 physics_material_override = SubResource( 1 )
-gravity_scale = 1.0
-custom_integrator = false
 continuous_cd = true
 contacts_reported = 10
 contact_monitor = true
-sleeping = false
 can_sleep = false
-axis_lock_linear_x = false
-axis_lock_linear_y = false
-axis_lock_linear_z = false
-axis_lock_angular_x = false
-axis_lock_angular_y = false
-axis_lock_angular_z = false
-linear_velocity = Vector3( 0, 0, 0 )
-linear_damp = -1.0
-angular_velocity = Vector3( 0, 0, 0 )
-angular_damp = -1.0
 script = SubResource( 2 )
-_sections_unfolded = [ "Angular", "Collision", "Linear", "Transform" ]
 max_move_speed = 8.0
 accel_speed = 40.0
 mouse_sensitivity_x = 0.169
@@ -290,132 +273,56 @@ joy_aim_sensitivity_x = 130.0
 joy_aim_sensitivity_y = 110.0
 gun_speed = 200.0
 jump_force = 6.0
-is_level_1 = null
 gun_projectile = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, 1, 0, -1, -4.37114e-008, 0, 0, 0 )
 shape = SubResource( 3 )
-disabled = false
-_sections_unfolded = [ "Transform", "shape" ]
 
 [node name="Humanoid Reference" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.589347, 0, 0, 0, 0.589657, 0, 0, 0, 0.589657, 0.0144887, -1.79667, 0 )
 visible = false
-_sections_unfolded = [ "Transform" ]
 
 [node name="Yaw" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 0 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Pitch" type="Spatial" parent="Yaw"]
-_sections_unfolded = [ "Transform" ]
 
 [node name="Head" type="Spatial" parent="Yaw/Pitch"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-_sections_unfolded = [ "Transform" ]
+transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Yaw/Pitch/Head"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32473e-07, 0, 0 )
-keep_aspect = 1
-cull_mask = 1048575
-environment = null
-h_offset = 0.0
-v_offset = 0.0
-doppler_tracking = 0
-projection = 0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32473e-007, 0, 0 )
 current = true
-fov = 70.0
-size = 1.0
-near = 0.05
-far = 100.0
-_sections_unfolded = [ "Transform" ]
 
 [node name="Look" type="RayCast" parent="Yaw/Pitch/Head"]
 enabled = true
-exclude_parent = true
 cast_to = Vector3( 0, 0, -999 )
-collision_mask = 1
-collide_with_areas = false
-collide_with_bodies = true
-_sections_unfolded = [ "Collide With", "Matrix", "Transform" ]
 
 [node name="Pick Up Gun" type="Area" parent="Yaw/Pitch/Head/Look"]
-transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.12, 0 )
-input_ray_pickable = false
-input_capture_on_drag = false
-space_override = 0
-gravity_point = false
-gravity_distance_scale = 0.0
-gravity_vec = Vector3( 0, -1, 0 )
-gravity = 9.8
-linear_damp = 0.1
-angular_damp = 1.0
-priority = 0.0
-monitoring = true
-monitorable = true
+transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0, -1.12, 0 )
 collision_layer = 4
 collision_mask = 4
-audio_bus_override = false
-audio_bus_name = "Master"
-reverb_bus_enable = false
-reverb_bus_name = "Master"
-reverb_bus_amount = 0.0
-reverb_bus_uniformity = 0.0
-_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Yaw/Pitch/Head/Look/Pick Up Gun"]
-shape = SubResource( 4 )
-disabled = false
+shape = SubResource( 6 )
 
 [node name="Target Gun" type="RayCast" parent="Yaw/Pitch/Head"]
 enabled = true
-exclude_parent = true
 cast_to = Vector3( 0, 0, -999 )
 collision_mask = 3
 collide_with_areas = true
-collide_with_bodies = true
-_sections_unfolded = [ "Collide With", "Transform" ]
 
 [node name="Gun Spawn Position" type="Position3D" parent="Yaw/Pitch"]
-transform = Transform( 1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -0.838549, -0.315495, 2.04427 )
-_sections_unfolded = [ "Transform" ]
+transform = Transform( 1, 0, 7.10543e-015, 0, 1, 0, -7.10543e-015, 0, 1, -0.838549, -0.315495, 2.04427 )
 
 [node name="Direction" type="RayCast" parent="Yaw/Pitch/Gun Spawn Position"]
-enabled = false
-exclude_parent = true
-cast_to = Vector3( 0, -1, 0 )
-collision_mask = 1
-collide_with_areas = false
-collide_with_bodies = true
 
 [node name="Prevent Spawning" type="Area" parent="Yaw/Pitch/Gun Spawn Position"]
-input_ray_pickable = false
-input_capture_on_drag = false
-space_override = 0
-gravity_point = false
-gravity_distance_scale = 0.0
-gravity_vec = Vector3( 0, -1, 0 )
-gravity = 9.8
-linear_damp = 0.1
-angular_damp = 1.0
-priority = 0.0
-monitoring = true
-monitorable = true
-collision_layer = 1
-collision_mask = 1
-audio_bus_override = false
-audio_bus_name = "Master"
-reverb_bus_enable = false
-reverb_bus_name = "Master"
-reverb_bus_amount = 0.0
-reverb_bus_uniformity = 0.0
-_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="Yaw/Pitch/Gun Spawn Position/Prevent Spawning"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.43692 )
-shape = SubResource( 5 )
-disabled = false
+shape = SubResource( 7 )
 
 [node name="Player Hand" parent="Yaw/Pitch" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, -0.39, 0.73 )
@@ -431,22 +338,11 @@ margin_right = 32.0
 margin_bottom = 32.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 32, 32 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 4 )
 stretch_mode = 5
-_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Mouse", "Rect", "texture" ]
 
 [node name="throwGun" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-stream_paused = false
-mix_target = 0
-bus = "Master"
 
 [connection signal="area_entered" from="Yaw/Pitch/Head/Look/Pick Up Gun" to="." method="_on_Pick_Up_Gun_area_entered"]
