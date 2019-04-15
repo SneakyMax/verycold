@@ -35,12 +35,14 @@ var chosen_levels
 var textSound
 
 func _ready():
+	var material = preload(\"res://glow_material.tres\")
+	material = preload(\"res://highlight_material.tres\")
 	levelHolder = get_node(\"Current Level\")
 	bigText = get_node(\"Overlay UI/Big Text\")
 	textSound = get_node(\"TextSound\")
 	tween = get_node(\"Tween\")
 	start_over()
-	
+
 func slomo(secondsFixed : float, amount: float):
 	Engine.time_scale = amount
 	isSlomo = true
@@ -59,18 +61,18 @@ func _process(delta):
 			Engine.time_scale = timeScale
 			if timeScale == 1:
 				isSlomo = false
-				
+
 func start_over():
 	chosen_levels = null
 	currentLevelIndex = -1
 	set_level(start_level)
-	
+
 func choose_level_type(type):
 	if type == \"hard\":
 		chosen_levels = hard_game_levels
 	else:
 		chosen_levels = game_levels
-				
+
 func next_level():
 	if not chosen_levels: return
 	currentLevelIndex += 1
@@ -79,14 +81,14 @@ func next_level():
 		return
 	var newLevel = load(chosen_levels[currentLevelIndex])
 	set_level(newLevel)
-	
+
 func restart_level():
 	set_level(load(chosen_levels[currentLevelIndex]))
-	
+
 func set_level(level : PackedScene):
 	Engine.time_scale = 1
 	get_tree().paused = false
-	
+
 	if is_instance_valid(current_level):
 		current_level.queue_free()
 		yield(get_tree(), \"idle_frame\")
@@ -101,50 +103,50 @@ func player_died():
 	var dead = get_node(\"Overlay UI\").find_node(\"Dead\")
 	dead.visible = true
 	tween().interpolate_property(dead, \"modulate:a\", 0.5, 1, 1, Tween.TRANS_QUAD, Tween.EASE_OUT)
-	
+
 	yield(delay(2, true, false), \"timeout\")
-	
+
 	restart_level()
 	dead.modulate.a = 0
 	dead.visible = false
-	
+
 func delay(seconds : float = 1, start : bool = true, pausable : bool = true):
 	var timer = Timer.new()
-	
+
 	var parent = get_node(\"Current Level\") if pausable else self
 	parent.add_child(timer)
-	
+
 	timer.one_shot = true
 	timer.wait_time = seconds
 	if start:
 		timer.start()
 	return timer
-	
+
 func clearBigText():
 	bigText.text = \"\"
-	
+
 func showBigText(text : String, totalTime : float = 2):
 	if currentBigTextTimer and !currentBigTextTimer.is_stopped():
 		currentBigTextTimer.stop()
-	
+
 	var words = text.split(\" \")
 	var timer = delay(totalTime / words.size())
 	timer.one_shot = false
 	currentBigTextTimer = timer
-	
+
 	for word in words:
 		textSound.play()
 		bigText.text = word
 		bigText.rect_scale = Vector2(1.0, 1.0)
-		tween.interpolate_property(bigText, \"rect_scale\", 
+		tween.interpolate_property(bigText, \"rect_scale\",
 			Vector2(1.0, 1.0),
 			Vector2(0.75, 0.75),
 			min(0.5, timer.wait_time), Tween.TRANS_QUAD, Tween.EASE_OUT)
 		tween.start()
 		yield(timer, \"timeout\")
-	
+
 	clearBigText()
-	
+
 func playGameName(times : int):
 	var timer = delay(0.65, true, false)
 	timer.one_shot = false
@@ -156,10 +158,10 @@ func playGameName(times : int):
 		get_node(\"Audio/Cold\").pitch_scale = Engine.time_scale
 		get_node(\"Audio/Cold\").play()
 		yield(timer, \"timeout\")
-	
+
 func level_add(obj):
 	current_level.add_child(obj)
-	
+
 func tween():
 	var tween = Tween.new()
 	add_child(tween)
