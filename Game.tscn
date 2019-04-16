@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://StartMenu.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Fonts/Roboto-Light.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/Font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Audio/CameraShutter_2.wav" type="AudioStream" id=3]
 [ext_resource path="res://Audio/Uber.wav" type="AudioStream" id=4]
 [ext_resource path="res://Audio/Cold.wav" type="AudioStream" id=5]
@@ -37,11 +37,15 @@ var textSound
 func _ready():
 	var material = preload(\"res://glow_material.tres\")
 	material = preload(\"res://highlight_material.tres\")
+
+
 	levelHolder = get_node(\"Current Level\")
 	bigText = get_node(\"Overlay UI/Big Text\")
 	textSound = get_node(\"TextSound\")
 	tween = get_node(\"Tween\")
 	start_over()
+
+	showBigText(\".\", 0.1, false)
 
 func slomo(secondsFixed : float, amount: float):
 	Engine.time_scale = amount
@@ -125,7 +129,7 @@ func delay(seconds : float = 1, start : bool = true, pausable : bool = true):
 func clearBigText():
 	bigText.text = \"\"
 
-func showBigText(text : String, totalTime : float = 2):
+func showBigText(text : String, totalTime : float = 2, playsound: bool = true):
 	if currentBigTextTimer and !currentBigTextTimer.is_stopped():
 		currentBigTextTimer.stop()
 
@@ -135,7 +139,8 @@ func showBigText(text : String, totalTime : float = 2):
 	currentBigTextTimer = timer
 
 	for word in words:
-		textSound.play()
+		if playsound:
+			textSound.play()
 		bigText.text = word
 		bigText.rect_scale = Vector2(1.0, 1.0)
 		tween.interpolate_property(bigText, \"rect_scale\",
@@ -178,14 +183,7 @@ colors = PoolColorArray( 1, 1, 1, 1 )
 gradient = SubResource( 2 )
 width = 1423
 
-[sub_resource type="DynamicFont" id=4]
-
-size = 295
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 2 )
-
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 
 script/source = "extends Label
 
@@ -222,10 +220,10 @@ anchor_bottom = 0.5
 margin_top = -172.0
 margin_bottom = 175.0
 rect_pivot_offset = Vector2( 512, 124 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = ExtResource( 2 )
 align = 1
 valign = 1
-script = SubResource( 5 )
+script = SubResource( 4 )
 
 [node name="Current Level" type="Node" parent="."]
 pause_mode = 1
