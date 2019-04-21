@@ -92,12 +92,11 @@ script = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -46.6, 2.4, -11.2 )
-is_level_1 = false
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.3568, 0.251927, -17.9942 )
 text = "A LITTLE MORE ACTION"
-total_text_time = 3.5
+total_text_time = 1.5
 
 [node name="Area" parent="Text Trigger" index="0"]
 shape = SubResource( 2 )
