@@ -275,7 +275,7 @@ mouse_sensitivity_x = 0.169
 mouse_sensitivity_y = 0.169
 joy_aim_sensitivity_x = 130.0
 joy_aim_sensitivity_y = 110.0
-gun_speed = 200.0
+gun_speed = 210.0
 jump_force = 6.0
 gun_projectile = ExtResource( 1 )
 
