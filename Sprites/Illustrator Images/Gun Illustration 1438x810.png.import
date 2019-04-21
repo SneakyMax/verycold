@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Gun Illustration-01.png-fc19ab80b5a49dd29885b2704303ec27.stex"
+path="res://.import/Gun Illustration 1438x810.png-49af67ef38cfdca610f8f38a40d19835.stex"
 
 [deps]
 
-source_file="res://Sprites/Illustrator Images/Gun Illustration-01.png"
-dest_files=[ "res://.import/Gun Illustration-01.png-fc19ab80b5a49dd29885b2704303ec27.stex" ]
+source_file="res://Sprites/Illustrator Images/Gun Illustration 1438x810.png"
+dest_files=[ "res://.import/Gun Illustration 1438x810.png-49af67ef38cfdca610f8f38a40d19835.stex" ]
 
 [params]
 

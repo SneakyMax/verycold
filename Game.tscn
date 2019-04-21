@@ -194,8 +194,8 @@ func _process(_delta):
 pause_mode = 2
 script = SubResource( 1 )
 start_level = ExtResource( 1 )
-game_levels = [ "res://TutorialLevel.tscn", "res://Level.tscn", "res://Level3.tscn", "res://Level2.tscn", "res://Level5.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
-hard_game_levels = [ "res://TutorialLevelHard.tscn", "res://Level3Hard.tscn", "res://Level4Hard.tscn", "res://LevelHard.tscn", "res://Level5Hard.tscn", "res://Level2Hard.tscn", "res://Level6Hard.tscn" ]
+game_levels = [ "res://Level2.tscn", "res://Level.tscn", "res://Level3.tscn", "res://Level2.tscn", "res://Level5.tscn", "res://Level4.tscn", "res://Level6.tscn" ]
+hard_game_levels = [ "res://Level2Hard.tscn", "res://Level3Hard.tscn", "res://Level4Hard.tscn", "res://LevelHard.tscn", "res://Level5Hard.tscn", "res://Level2Hard.tscn", "res://Level6Hard.tscn" ]
 
 [node name="Overlay UI" type="Control" parent="."]
 anchor_right = 1.0
