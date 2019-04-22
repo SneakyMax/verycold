@@ -71,11 +71,10 @@ script = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 2.4, -7.1 )
-is_level_1 = false
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.14323, 0.251927, -2.2942 )
-text = "THEY'RE IN MY WORLD NOW"
+text = "ONLY THOSE LEFT BEHIND FEEL EMPTY"
 
 [node name="Area" parent="Text Trigger" index="0"]
 shape = SubResource( 2 )
