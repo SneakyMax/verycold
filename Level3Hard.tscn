@@ -74,7 +74,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 2.4, -7.1 )
 
 [node name="Text Trigger" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.14323, 0.251927, -2.2942 )
-text = "ONLY THOSE LEFT BEHIND FEEL EMPTY"
+text = "THEY WONT STOP RUNNING"
 
 [node name="Area" parent="Text Trigger" index="0"]
 shape = SubResource( 2 )
