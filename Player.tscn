@@ -156,7 +156,7 @@ func _process(delta):
 		sqr_strength(\"strafe_left\") - sqr_strength(\"strafe_right\"),
 		sqr_strength(\"move_forward\") - sqr_strength(\"move_backward\")
 		)
-
+		
 	if count_down < 0:
 		count_down -= 1
 		if count_down == 0:

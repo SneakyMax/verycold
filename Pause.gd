@@ -1,4 +1,5 @@
 extends Control
+var isPaused = true
 
 func _input(event):
 	if event.is_action_pressed("pause_button"):
